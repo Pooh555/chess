@@ -5,10 +5,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
-public class GamePanel extends JPanel implements Runnable{
-    public static final int WIDTH = 1100; // Panel's width
-    public static final int HEIGHT = 800; // Panel's height
-    public static final Color BACKGROUND_COLOR = new Color(0, 0, 0); // Background color
+public class GamePanel extends JPanel implements Runnable {
+    public static final int WIDTH = 1100; // panel's width
+    public static final int HEIGHT = 800; // panel's height
+    public static final Color BACKGROUND_COLOR = new Color(0, 0, 0); // background color
     public int FPS = 360; // FPS
 
     Thread gameThread;
@@ -25,20 +25,20 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     public void run() {
-        
-        // Game loop
-        double drawInterval = 1000000000/FPS; // 1 tick
-        double delta = 0; // How much time hass passed since the last render
-        long lastTime = System.nanoTime(); // Time of the last render
-        long currentTime; // Current time
 
-        while(gameThread != null) {
+        // game loop
+        double drawInterval = 1000000000 / FPS; // 1 tick
+        double delta = 0; // how much time hass passed since the last render
+        long lastTime = System.nanoTime(); // time of the last render
+        long currentTime; // current time
+
+        while (gameThread != null) {
             currentTime = System.nanoTime();
 
-            delta += (currentTime - lastTime)/drawInterval;
+            delta += (currentTime - lastTime) / drawInterval;
             lastTime = currentTime;
 
-            if(delta >= 1) {
+            if (delta >= 1) {
                 update();
                 repaint();
                 delta--;
@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable{
     private void update() {
 
     }
-    
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
     }
