@@ -15,6 +15,8 @@ public class Main {
         window.setLocationRelativeTo(null); // window will appear in the center of the monitor
         window.setVisible(true); // window is visible on the screen
 
+        System.out.println("game panel initializezd");
+
         gp.launchGame(); // lauch Chess
     }
 }

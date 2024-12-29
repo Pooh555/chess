@@ -7,10 +7,10 @@ public class King extends Piece {
         super(color, col, row);
 
         if(color == GamePanel.WHITE) {
-            image = getImage("/piece/w-king");
+            image = getImage("/pieces/w-king");
         }
-        if(color == GamePanel.BLACK) {
-            image = getImage("/piece/b-king");
+        else {
+            image = getImage("/pieces/b-king");
         }
     }
 }

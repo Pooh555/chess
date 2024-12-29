@@ -5,22 +5,25 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
-import java.util.ArrayList;
 
-import pieces.Piece;
-import pieces.Pawn;
-import pieces.Knight;
 import pieces.Bishop;
-import pieces.Rook;
-import pieces.Queen;
 import pieces.King;
+import pieces.Knight;
+import pieces.Pawn;
+import pieces.Piece;
+import pieces.Queen;
+import pieces.Rook;
+
+import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
     // GAME INFO
     public static final int WIDTH = 1100; // panel's width
     public static final int HEIGHT = 800; // panel's height
     public int FPS = 360; // FPS
-    Board board = new Board(); // initialize the board
+    Thread gameThread;
+    Board board = new Board(); // initialize board
+    Mouse mouse = new Mouse(); // initialize mouse
 
     // COLOR
     public static final Color BACKGROUND_COLOR = new Color(0, 0, 0);
@@ -32,16 +35,20 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Piece> pieces = new ArrayList<>();
     public static ArrayList<Piece> simPieces = new ArrayList<>();
 
-    Thread gameThread;
-
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(BACKGROUND_COLOR);
+        System.out.println("board initialized");
+        setPieces();
+        copyPieces(pieces, simPieces);
+        System.out.println("pieces initialized");
     }
 
     public void launchGame() {
         gameThread = new Thread(this);
         gameThread.start();
+
+        System.out.println("Chess launched");
     }
 
     public void setPieces() {
@@ -80,7 +87,14 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new Rook(BLACK, 7, 0));
         pieces.add(new Queen(BLACK, 3, 0));
         pieces.add(new King(BLACK, 4, 0));
+    }
 
+    private void copyPieces(ArrayList<Piece> source, ArrayList<Piece> target) {
+        target.clear();
+
+        for(int i = 0; i < source.size(); i++) {
+            target.add(source.get(i));
+        }
     }
 
     @Override
@@ -111,12 +125,19 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g; // convert Graphics g into Graphics2D because the function "draw" accepts g as
                                         // Graphics2D object
 
+        // board
         board.draw(g2);
+
+        // pieces
+        for(Piece p: simPieces) {
+            p.draw(g2);
+        }
     }
 }

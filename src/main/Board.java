@@ -11,7 +11,7 @@ public class Board {
     public static final int SQUARE_SIZE = 100;
     public static final int HALF_SQUARE_SIZE = SQUARE_SIZE / 2;
 
-    // paint the chessboard
+    // draw the chessboard
     public void draw(Graphics2D g2) {
 
         int count = 0;
@@ -36,5 +36,4 @@ public class Board {
             else count--;
         }
     }
-
 }

@@ -7,10 +7,10 @@ public class Bishop extends Piece {
         super(color, col, row);
 
         if(color == GamePanel.WHITE) {
-            image = getImage("/piece/w-bishop");
+            image = getImage("/pieces/w-bishop");
         }
-        if(color == GamePanel.BLACK) {
-            image = getImage("/piece/b-bishop");
+        else {
+            image = getImage("/pieces/b-bishop");
         }
     }
 }
