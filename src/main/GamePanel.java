@@ -29,19 +29,20 @@ public class GamePanel extends JPanel implements Runnable {
     Board board = new Board(); // initialize board
     Mouse mouse = new Mouse(); // initialize mouse
 
-    // COLOR
+    // color
     public static final Color BACKGROUND_COLOR = new Color(0, 0, 0);
     public static final Color FOREGROUND_TEXT_COLOR = new Color(255, 201, 201);
     public static final int WHITE = 0;
     public static final int BLACK = 1;
     int currentColor = WHITE;
 
-    // PIECES
+    // pieces
     public static ArrayList<Piece> pieces = new ArrayList<>();
     public static ArrayList<Piece> simPieces = new ArrayList<>();
     Piece activeP; // active piece
+    public static Piece castlingP; // castling piece
 
-    // BOOLEAN
+    // booelan
     boolean canMove;
     boolean validSquare;
 
@@ -74,13 +75,13 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new Pawn(WHITE, 5, 6));
         pieces.add(new Pawn(WHITE, 6, 6));
         pieces.add(new Pawn(WHITE, 7, 6));
-        pieces.add(new Knight(WHITE, 1, 7));
-        pieces.add(new Knight(WHITE, 6, 7));
-        pieces.add(new Bishop(WHITE, 2, 7));
-        pieces.add(new Bishop(WHITE, 5, 7));
+        // pieces.add(new Knight(WHITE, 1, 7));
+        // pieces.add(new Knight(WHITE, 6, 7));
+        // pieces.add(new Bishop(WHITE, 2, 7));
+        // pieces.add(new Bishop(WHITE, 5, 7));
         pieces.add(new Rook(WHITE, 0, 7));
         pieces.add(new Rook(WHITE, 7, 7));
-        pieces.add(new Queen(WHITE, 3, 7));
+        // pieces.add(new Queen(WHITE, 3, 7));
         pieces.add(new King(WHITE, 4, 7));
 
         // black side
@@ -157,6 +158,11 @@ public class GamePanel extends JPanel implements Runnable {
                     // remove the captured piece from the board during simulation phase
                     copyPieces(simPieces, pieces);
                     activeP.updatePosition();
+                    checkCastling();
+
+                    if (castlingP != null)
+                        castlingP.updatePosition();
+
                     changeTurn();
                 } else {
                     // invalid move, reset all states
@@ -175,6 +181,13 @@ public class GamePanel extends JPanel implements Runnable {
         // reset pieces list every loop to restore the removed piece
         copyPieces(pieces, simPieces);
 
+        // reset the castling piece's position
+        if (castlingP != null) {
+            castlingP.col = castlingP.preCol;
+            castlingP.x = castlingP.getX(castlingP.col);
+            castlingP = null;
+        }
+
         // update the piece's position when being held
         activeP.x = mouse.x - Board.HALF_SQUARE_SIZE;
         activeP.y = mouse.y - Board.HALF_SQUARE_SIZE;
@@ -190,6 +203,17 @@ public class GamePanel extends JPanel implements Runnable {
                 simPieces.remove(activeP.hitP.getIndex());
 
             validSquare = true;
+        }
+    }
+
+    private void checkCastling() {
+        if (castlingP != null) {
+            if (castlingP.col == 0)
+                castlingP.col += 3;
+            else if (castlingP.col == 7)
+                castlingP.col -= 2;
+
+            castlingP.x = castlingP.getX(castlingP.col);
         }
     }
 
@@ -237,6 +261,6 @@ public class GamePanel extends JPanel implements Runnable {
             g2.drawString("White's turn", 840, 550);
         else
             g2.drawString("Black's turn", 840, 250);
-    
+
     }
 }
