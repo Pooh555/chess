@@ -37,6 +37,10 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Piece> simPieces = new ArrayList<>();
     Piece activeP; // active piece
 
+    // BOOLEAN
+    boolean canMove;
+    boolean validSquare;
+
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(BACKGROUND_COLOR);
@@ -73,7 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new Rook(WHITE, 0, 7));
         pieces.add(new Rook(WHITE, 7, 7));
         pieces.add(new Queen(WHITE, 3, 7));
-        pieces.add(new King(WHITE, 4, 7));
+        pieces.add(new King(WHITE, 4, 3));
 
         // black side
         pieces.add(new Pawn(BLACK, 0, 1));
@@ -141,19 +145,48 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         if (mouse.isPressed == false) {
-            if(activeP != null) {
-                activeP.updatePosition();
-                activeP = null;
+            if (activeP != null) {
+                if (validSquare) {
+
+                    // move confirmed
+
+                    // remove the captured piece from the board during simulation phase
+                    copyPieces(simPieces, pieces);
+                    activeP.updatePosition();
+                }
+                else {
+                    // invalid move, reset all states
+                    copyPieces(pieces, simPieces);
+                    activeP.resetPosition();
+                    activeP = null;
+                }
             }
         }
     }
 
     private void simulate() {
+        canMove = false;
+        validSquare = false;
+
+        // reset pieces list every loop to restore the removed piece
+        copyPieces(pieces, simPieces);
+
         // update the piece's position when being held
         activeP.x = mouse.x - Board.HALF_SQUARE_SIZE;
         activeP.y = mouse.y - Board.HALF_SQUARE_SIZE;
         activeP.col = activeP.getCol(activeP.x);
         activeP.row = activeP.getRow(activeP.y);
+
+        // check if the hovering square is valid or not
+        if (activeP.canMove(activeP.col, activeP.row)) {
+            canMove = true;
+
+            // if a piece is captured, it is removed from the list
+            if (activeP.hitP != null)
+                simPieces.remove(activeP.hitP.getIndex());
+
+            validSquare = true;
+        }
     }
 
     @Override
@@ -171,13 +204,13 @@ public class GamePanel extends JPanel implements Runnable {
             p.draw(g2);
         }
 
-        if (activeP != null) {
-            g2.setColor(Color.white);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
-            g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE, Board.SQUARE_SIZE,
-                    Board.SQUARE_SIZE);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-
-        }
+        if (activeP != null)
+            if (canMove) {
+                g2.setColor(Color.white);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+                g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE, Board.SQUARE_SIZE,
+                        Board.SQUARE_SIZE);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            }
     }
 }
