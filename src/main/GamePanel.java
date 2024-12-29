@@ -3,8 +3,11 @@ package main;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
 import javax.swing.JPanel;
 
 import pieces.Bishop;
@@ -28,6 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // COLOR
     public static final Color BACKGROUND_COLOR = new Color(0, 0, 0);
+    public static final Color FOREGROUND_TEXT_COLOR = new Color(255, 201, 201);
     public static final int WHITE = 0;
     public static final int BLACK = 1;
     int currentColor = WHITE;
@@ -153,8 +157,8 @@ public class GamePanel extends JPanel implements Runnable {
                     // remove the captured piece from the board during simulation phase
                     copyPieces(simPieces, pieces);
                     activeP.updatePosition();
-                }
-                else {
+                    changeTurn();
+                } else {
                     // invalid move, reset all states
                     copyPieces(pieces, simPieces);
                     activeP.resetPosition();
@@ -189,6 +193,14 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    private void changeTurn() {
+        if (currentColor == WHITE)
+            currentColor = BLACK;
+        else
+            currentColor = WHITE;
+        activeP = null;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -204,7 +216,7 @@ public class GamePanel extends JPanel implements Runnable {
             p.draw(g2);
         }
 
-        if (activeP != null)
+        if (activeP != null) {
             if (canMove) {
                 g2.setColor(Color.white);
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
@@ -212,5 +224,19 @@ public class GamePanel extends JPanel implements Runnable {
                         Board.SQUARE_SIZE);
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
             }
+
+            activeP.draw(g2);
+        }
+
+        // status messages
+        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2.setFont(new Font("Fira code", Font.PLAIN, 30));
+        g2.setColor(FOREGROUND_TEXT_COLOR);
+
+        if (currentColor == WHITE)
+            g2.drawString("White's turn", 840, 550);
+        else
+            g2.drawString("Black's turn", 840, 250);
+    
     }
 }
