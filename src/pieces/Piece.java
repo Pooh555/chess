@@ -140,7 +140,7 @@ public class Piece {
         // to the top
         for (int i = preRow-1; i > targetRow; i--) {
             for (Piece piece : GamePanel.simPieces) {
-                if (piece.col == i && piece.row == targetRow) {
+                if (piece.col == targetCol && piece.row == i) {
                     hitP = piece;
                     return true;
                 }
@@ -150,7 +150,7 @@ public class Piece {
         // to the bottom
         for (int i = preRow+1; i < targetRow; i++) {
             for (Piece piece : GamePanel.simPieces) {
-                if (piece.col == i && piece.row == targetRow) {
+                if (piece.col == targetCol && piece.row == i) {
                     hitP = piece;
                     return true;
                 }

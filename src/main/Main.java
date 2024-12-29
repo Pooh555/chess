@@ -13,7 +13,7 @@ public class Main {
         window.pack(); // adjust the window size to the panel
 
         window.setLocationRelativeTo(null); // window will appear in the center of the monitor
-        window.setVisible(true); // window is visible on the screen
+        window.setVisible(true); // wi66ndow is visible on the screen
 
         System.out.println("game panel initializezd");
 
