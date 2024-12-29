@@ -1,1 +1,1 @@
-# chess
+This is my first game of chess.
