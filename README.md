@@ -1,1 +1,1 @@
-This is my first game of chess.
+Playing chess in 360 FPS.
