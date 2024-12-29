@@ -10,13 +10,13 @@ public class Mouse extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         isPressed = true;
-        System.out.println("mouse clicked");
+        // System.out.println("mouse clicked");
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         isPressed = false;
-        System.out.println("mouse released");
+        // System.out.println("mouse released");
     }
 
     @Override

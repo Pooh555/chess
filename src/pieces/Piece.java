@@ -39,24 +39,31 @@ public class Piece {
         return image;
     }
 
-    // get coordinate x
     public int getX(int col) {
         return col * Board.SQUARE_SIZE;
     }
 
-    // get coordinate y
     public int getY(int row) {
         return row * Board.SQUARE_SIZE;
     }
 
-    // get column
     public int getCol(int x) {
         return (x + Board.HALF_SQUARE_SIZE) / Board.SQUARE_SIZE;
     }
 
-    // get row
     public int getRow(int y) {
         return (y + Board.HALF_SQUARE_SIZE) / Board.SQUARE_SIZE;
+    }
+
+    public void updatePosition() {
+        x = getX(col);
+        y = getY(row);
+        preCol = getCol(x);
+        preRow = getRow(y);
+    }
+
+    public boolean canMove(int targetCol, int targetRow) {
+        return false;
     }
 
     // draw the pieces
