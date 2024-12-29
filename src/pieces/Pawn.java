@@ -1,10 +1,13 @@
 package pieces;
 
 import main.GamePanel;
+import main.Type;
 
 public class Pawn extends Piece {
     public Pawn(int color, int col, int row) {
         super(color, col, row);
+
+        type = Type.PAWN;
 
         if (color == GamePanel.WHITE)
             image = getImage("/pieces/w-pawn");
@@ -15,7 +18,7 @@ public class Pawn extends Piece {
     public boolean canMove(int targetCol, int targetRow) {
         if (isWithinBoard(targetCol, targetRow) && isSameSquare(targetCol, targetRow) == false) {
             // define the move value based on its color
-            int moveValue = -1;
+            int moveValue;
 
             if (color == GamePanel.WHITE)
                 moveValue = -1; // move upward
@@ -38,6 +41,14 @@ public class Pawn extends Piece {
             if (Math.abs(targetCol - preCol) == 1 && targetRow == preRow + moveValue && hitP != null
                     && hitP.color != color)
                 return true;
+
+            // en passent
+            if (Math.abs(targetCol - preCol) == 1 && targetRow == preRow + moveValue)
+                for (Piece piece : GamePanel.simPieces)
+                    if (piece.col == targetCol && piece.row == preRow && piece.twoSteps == true) {
+                        hitP = piece;
+                        return true;
+                    }
         }
 
         return false;
