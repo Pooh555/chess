@@ -11,4 +11,14 @@ public class Pawn extends Piece {
         else
             image = getImage("/pieces/b-pawn");
     }
+
+    public boolean canMove(int targetCol, int targetRow) {
+        if (isWithinBoard(targetCol, targetRow) && isSameSquare(targetCol, targetRow) == false)
+            if (Math.abs(targetCol - preCol) + Math.abs(targetRow - preRow) == 1
+                    || Math.abs(targetCol - preCol) * Math.abs(targetRow - preRow) == 1)
+                if (isValidSquare(targetCol, targetRow))
+                    return true;
+                    
+        return false;
+    }
 }
