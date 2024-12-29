@@ -32,13 +32,13 @@ public class Piece {
         try {
             System.out.println("/res" + imagePath + ".png");
             image = ImageIO.read(getClass().getResourceAsStream("/res" + imagePath + ".png"));
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return image;
     }
-    
+
     // get coordinate x
     public int getX(int col) {
         return col * Board.SQUARE_SIZE;
@@ -47,6 +47,16 @@ public class Piece {
     // get coordinate y
     public int getY(int row) {
         return row * Board.SQUARE_SIZE;
+    }
+
+    // get column
+    public int getCol(int x) {
+        return (x + Board.HALF_SQUARE_SIZE) / Board.SQUARE_SIZE;
+    }
+
+    // get row
+    public int getRow(int y) {
+        return (y + Board.HALF_SQUARE_SIZE) / Board.SQUARE_SIZE;
     }
 
     // draw the pieces

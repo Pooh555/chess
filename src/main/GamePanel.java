@@ -34,11 +34,15 @@ public class GamePanel extends JPanel implements Runnable {
     // PIECES
     public static ArrayList<Piece> pieces = new ArrayList<>();
     public static ArrayList<Piece> simPieces = new ArrayList<>();
+    Piece activeP; // active piece
 
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(BACKGROUND_COLOR);
         System.out.println("board initialized");
+        addMouseMotionListener(mouse);
+        addMouseListener(mouse);
+        System.out.println("mouse initialized");
         setPieces();
         copyPieces(pieces, simPieces);
         System.out.println("pieces initialized");
@@ -92,7 +96,7 @@ public class GamePanel extends JPanel implements Runnable {
     private void copyPieces(ArrayList<Piece> source, ArrayList<Piece> target) {
         target.clear();
 
-        for(int i = 0; i < source.size(); i++) {
+        for (int i = 0; i < source.size(); i++) {
             target.add(source.get(i));
         }
     }
@@ -122,7 +126,25 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void update() {
+        if (mouse.isPressed) {
+            if (activeP == null) {
+                for (Piece piece : simPieces) {
+                    if (piece.color == currentColor
+                            && piece.col == mouse.x / Board.SQUARE_SIZE
+                            && piece.row == mouse.y / Board.SQUARE_SIZE)
+                        activeP = piece;
+                }
+            } else {
+                // when the player is holding a piece, simulate piece movement
+                simulate();
+            }
+        }
+    }
 
+    private void simulate() {
+        // update the piece's position when being held
+        activeP.x = mouse.x - Board.HALF_SQUARE_SIZE;
+        activeP.y = mouse.y - Board.HALF_SQUARE_SIZE;
     }
 
     @Override
@@ -136,7 +158,7 @@ public class GamePanel extends JPanel implements Runnable {
         board.draw(g2);
 
         // pieces
-        for(Piece p: simPieces) {
+        for (Piece p : simPieces) {
             p.draw(g2);
         }
     }
