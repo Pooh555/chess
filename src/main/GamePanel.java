@@ -41,13 +41,14 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Piece> pieces = new ArrayList<>();
     public static ArrayList<Piece> simPieces = new ArrayList<>();
     ArrayList<Piece> promotionPieces = new ArrayList<>();
-    Piece activeP; // active piece
+    Piece activeP, checkingP; // active piece
     public static Piece castlingP; // castling piece
 
     // booelan
     boolean canMove;
     boolean validSquare;
     boolean promotion;
+    boolean gameover;
 
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -169,6 +170,15 @@ public class GamePanel extends JPanel implements Runnable {
                         if (castlingP != null)
                             castlingP.updatePosition();
 
+                        if (checkKingInCheck()) {
+                            // TODO: possible checkmate
+                        }
+                        // else {
+                        // if (canPromote())
+                        // promotion = true;
+                        // else
+                        // changeTurn();
+                        // }
                         if (canPromote())
                             promotion = true;
                         else
@@ -212,15 +222,76 @@ public class GamePanel extends JPanel implements Runnable {
             if (activeP.hitP != null)
                 simPieces.remove(activeP.hitP.getIndex());
 
-            validSquare = true;
+            if (checkIllegal(activeP) == false && opponentCanCaptureKing() == false)
+                validSquare = true;
         }
     }
 
+    private boolean checkIllegal(Piece king) {
+        if (king.type == Type.KING)
+            for (Piece piece : simPieces)
+                if (piece != king && piece.color != king.color && piece.canMove(king.col, king.row))
+                    return true;
+
+        return false;
+    }
+
+    private boolean opponentCanCaptureKing() {
+        Piece king = getKing(false);
+
+        for (Piece piece : simPieces)
+            if (piece.color != king.color && piece.canMove(king.col, king.row))
+                return true;
+
+        return false;
+    }
+
+    private boolean checkKingInCheck() {
+        Piece king = getKing(true);
+
+        if (activeP.canMove(king.col, king.row)) {
+            checkingP = activeP;
+            return true;
+        } else
+            checkingP = null;
+
+        return false;
+    }
+
+    private Piece getKing(boolean opponent) {
+        Piece king = null;
+
+        for (Piece piece : simPieces)
+            if (opponent) {
+                if (piece.type == Type.KING && piece.color != currentColor)
+                    king = piece;
+            } else {
+                if (piece.type == Type.KING && piece.color == currentColor)
+                    king = piece;
+            }
+
+        return king;
+
+    }
+
+    private boolean checkCheckmate() {
+        return false;
+    }
+
+    private boolean kingCanMove(Piece king) {
+        return false;
+    }
+
+    private boolean isValidMove(Piece king, int colPlus, int rowPlus) {
+        return false;
+    }
+
+
     private void checkCastling() {
         if (castlingP != null) {
-            if (castlingP.col == 0)
+            if (castlingP.col == 0) // change the position of  the rook in long castling
                 castlingP.col += 3;
-            else if (castlingP.col == 7)
+            else if (castlingP.col == 7) // change the position of  the rook in short castling
                 castlingP.col -= 2;
 
             castlingP.x = castlingP.getX(castlingP.col);
@@ -275,9 +346,11 @@ public class GamePanel extends JPanel implements Runnable {
                         }
                     }
 
+                    // remove the promoted pawn from the board
                     simPieces.remove(activeP.getIndex());
                     copyPieces(simPieces, pieces);
 
+                    // reset states
                     activeP = null;
                     promotion = false;
 
@@ -303,17 +376,29 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (activeP != null) {
             if (canMove) {
-                g2.setColor(Color.white);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
-                g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE, Board.SQUARE_SIZE,
-                        Board.SQUARE_SIZE);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                if (checkIllegal(activeP) || opponentCanCaptureKing() == true) {
+                    // highlights the square red if it's illegal to move to
+                    g2.setColor(Color.red);
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+                    g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE, Board.SQUARE_SIZE,
+                            Board.SQUARE_SIZE);
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                } else {
+                    // highlights the square white if it's legal to move to
+                    g2.setColor(Color.white);
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+                    g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE, Board.SQUARE_SIZE,
+                            Board.SQUARE_SIZE);
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                }
             }
 
             activeP.draw(g2);
         }
 
         // status messages
+
+        // text attributes
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setFont(new Font("Fira code", Font.PLAIN, 30));
         g2.setColor(FOREGROUND_TEXT_COLOR);
