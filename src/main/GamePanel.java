@@ -19,7 +19,6 @@ import pieces.Queen;
 import pieces.Rook;
 
 import java.util.ArrayList;
-import javax.print.attribute.standard.CopiesSupported;
 
 public class GamePanel extends JPanel implements Runnable {
     // GAME INFO
@@ -142,7 +141,7 @@ public class GamePanel extends JPanel implements Runnable {
     private void update() {
         if (promotion) {
             promoting();
-        } else {
+        } else if (gameover == false) {
             if (mouse.isPressed) {
                 if (activeP == null) {
                     for (Piece piece : simPieces) {
@@ -170,19 +169,14 @@ public class GamePanel extends JPanel implements Runnable {
                         if (castlingP != null)
                             castlingP.updatePosition();
 
-                        if (checkKingInCheck()) {
-                            // TODO: possible checkmate
+                        if (checkKingInCheck() && checkCheckmate()) {
+                            gameover = true; // checkmated
+                        } else {
+                            if (canPromote())
+                                promotion = true; // promoted
+                            else
+                                changeTurn(); // change player's turn
                         }
-                        // else {
-                        // if (canPromote())
-                        // promotion = true;
-                        // else
-                        // changeTurn();
-                        // }
-                        if (canPromote())
-                            promotion = true;
-                        else
-                            changeTurn();
                     } else {
                         // invalid move, reset all states
                         copyPieces(pieces, simPieces);
@@ -275,23 +269,121 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private boolean checkCheckmate() {
-        return false;
+        Piece king = getKing(true);
+
+        if (kingCanMove(king))
+            return false;
+        else {
+            // check if the king can be blocked with a piece or a pawn
+            int colDiff = Math.abs(checkingP.col - king.col);
+            int rowDiff = Math.abs(checkingP.row = king.row);
+
+            // check the relative position of the king and the checking piece
+            if (colDiff == 0) {
+                // the checking piece is attacking vertically
+                if (checkingP.row < king.row) // the checking piece is above the king
+                    for (int row = checkingP.row; row < king.row; row++)
+                        for (Piece piece : simPieces)
+                            if (piece != king && piece.color != currentColor && piece.canMove(checkingP.col, row))
+                                return false;
+                if (checkingP.row > king.row) // the checking piece is below the king
+                    for (int row = checkingP.row; row > king.row; row--)
+                        for (Piece piece : simPieces)
+                            if (piece != king && piece.color != currentColor && piece.canMove(checkingP.col, row))
+                                return false;
+            } else if (rowDiff == 0) {
+                // the checking piece is attacking horizontally
+                if (checkingP.col < king.col) // the checking piece is to the left of the king
+                    for (int col = checkingP.col; col < king.row; col++)
+                        for (Piece piece : simPieces)
+                            if (piece != king && piece.color != currentColor && piece.canMove(col, checkingP.row))
+                                return false;
+                if (checkingP.col > king.col) // the checking piece is to the right of the king
+                    for (int col = checkingP.col; col > king.row; col--)
+                        for (Piece piece : simPieces)
+                            if (piece != king && piece.color != currentColor && piece.canMove(col, checkingP.row))
+                                return false;
+            } else if (colDiff - rowDiff == 0) {
+                // the checking piece is attacking diagonally
+                if (checkingP.row < king.row) {
+                    if (checkingP.col < king.col) // checking piece is in the upper left
+                        for (int col = checkingP.col, row = checkingP.row; col < king.col; col++, row++)
+                            for (Piece piece : simPieces)
+                                if (piece != king && piece.color != currentColor && piece.canMove(col, row))
+                                    return false;
+                    if (checkingP.col > king.col) // checking piece is in the upper right
+                        for (int col = checkingP.col, row = checkingP.row; col > king.col; col--, row++)
+                            for (Piece piece : simPieces)
+                                if (piece != king && piece.color != currentColor && piece.canMove(col, row))
+                                    return false;
+                }
+                if (checkingP.row > king.row) {
+                    if (checkingP.col < king.col) // checking piece is in the lower left
+                        for (int col = checkingP.col, row = checkingP.row; col < king.col; col++, row--)
+                            for (Piece piece : simPieces)
+                                if (piece != king && piece.color != currentColor && piece.canMove(col, row))
+                                    return false;
+                    if (checkingP.col > king.col) // checking piece is in the lower right
+                        for (int col = checkingP.col, row = checkingP.row; col > king.col; col--, row--)
+                            for (Piece piece : simPieces)
+                                if (piece != king && piece.color != currentColor && piece.canMove(col, row))
+                                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private boolean kingCanMove(Piece king) {
-        return false;
+        // check if there is atleast 1 legal square the king can move to
+        if (isValidMove(king, -1, -1))
+            return true;
+        if (isValidMove(king, -1, 0))
+            return true;
+        if (isValidMove(king, -1, 1))
+            return true;
+        if (isValidMove(king, 0, -1))
+            return true;
+        if (isValidMove(king, -0, 1))
+            return true;
+        if (isValidMove(king, 1, -1))
+            return true;
+        if (isValidMove(king, 1, 0))
+            return true;
+
+        return isValidMove(king, 1, 1);
     }
 
     private boolean isValidMove(Piece king, int colPlus, int rowPlus) {
-        return false;
-    }
+        boolean isValidMove = false;
 
+        // temporary update the king's position
+        king.col += colPlus;
+        king.row += rowPlus;
+
+        if (king.canMove(king.col, king.row)) {
+            if (king.hitP != null)
+                simPieces.remove(king.hitP.getIndex());
+            if (checkIllegal(king) == false) {
+                isValidMove = true;
+            }
+        }
+
+        // reset the king's position
+        king.resetPosition();
+
+        // reset the pieces
+        copyPieces(pieces, simPieces);
+
+        return isValidMove;
+    }
 
     private void checkCastling() {
         if (castlingP != null) {
-            if (castlingP.col == 0) // change the position of  the rook in long castling
+            if (castlingP.col == 0) // change the position of the rook in long castling
                 castlingP.col += 3;
-            else if (castlingP.col == 7) // change the position of  the rook in short castling
+            else if (castlingP.col == 7) // change the position of the rook in short castling
                 castlingP.col -= 2;
 
             castlingP.x = castlingP.getX(castlingP.col);
@@ -414,6 +506,19 @@ public class GamePanel extends JPanel implements Runnable {
                 g2.drawString("White's turn", 840, 550);
             else
                 g2.drawString("Black's turn", 840, 250);
+        }
+
+        if (gameover) {
+            String checkmateStr = "";
+
+            if (currentColor == WHITE)
+                checkmateStr = "White wins";
+            if (currentColor == BLACK)
+                checkmateStr = "Black wins";
+
+            g2.setFont(new Font("Fira code", Font.PLAIN, 30));
+            g2.setColor(FOREGROUND_TEXT_COLOR);
+            g2.drawString(checkmateStr, 200, 420);
         }
     }
 }
