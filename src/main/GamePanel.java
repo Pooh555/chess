@@ -7,9 +7,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-
+import java.util.ArrayList;
 import javax.swing.JPanel;
-
 import pieces.Bishop;
 import pieces.King;
 import pieces.Knight;
@@ -17,8 +16,6 @@ import pieces.Pawn;
 import pieces.Piece;
 import pieces.Queen;
 import pieces.Rook;
-
-import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
     // GAME INFO
