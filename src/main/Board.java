@@ -37,6 +37,6 @@ public class Board {
             count = !count;
         }
 
-        System.out.println("The board is drawn sucessfully.");
+        // System.out.println("The board is drawn sucessfully.");
     }
 }
