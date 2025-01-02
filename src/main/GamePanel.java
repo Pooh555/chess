@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
     public static int WIDTH = 1100; // window's width
-    public static int HEIGHT = 1100; // window's height
+    public static int HEIGHT = 800; // window's height
     public static Dimension windowSize = new Dimension(WIDTH, HEIGHT); // window size
     static final int FPS = 360; // game FPS and tick rate
     Thread gameThread; // main game thread

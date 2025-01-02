@@ -12,24 +12,29 @@ public class Board {
     static final Color DARK_SQUARE_COLOR = new Color(175, 115, 70);
 
     public void draw(Graphics2D g2) {
-        int count = 0;
+        // user boolean for performance
+        boolean count = false; // false: light square, true: dark square
 
+        // set UI
         if (GamePanel.HEIGHT <= GamePanel.WIDTH)
-            SQUARE_SIZE = GamePanel.HEIGHT / 10;
+            SQUARE_SIZE = GamePanel.HEIGHT / 8;
         else
             SQUARE_SIZE = GamePanel.WIDTH / 10;
 
-        for (int row = 0; row < MAX_ROW; row++)
+        // set board color for each square
+        for (int row = 0; row < MAX_ROW; row++) {
             for (int col = 0; col < MAX_COL; col++) {
-                if (count == 0) {
+                if (count == false) 
                     g2.setColor(LIGHT_SQUARE_COLOR);
-                    count++;
-                } else {
+                else
                     g2.setColor(DARK_SQUARE_COLOR);
-                    count--;
-                }
+
+                count = !count;
 
                 g2.fillRect(col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
             }
+            
+            count = !count;
+        }
     }
 }
