@@ -19,5 +19,7 @@ public class Main {
         System.out.println("GamePanel initializezd.");
 
         gp.launchGame(); // lauch Chess
+
+        System.out.println("Chess lauched.");
     }
 }
