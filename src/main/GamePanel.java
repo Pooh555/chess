@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static Dimension windowSize = new Dimension(WIDTH, HEIGHT); // window size
     static final int FPS = 360; // game FPS and tick rate
     Thread gameThread; // main game thread
-    Board board = new Board();
+    Board board = new Board(); // visual chessboard
 
     // devices
     Mouse mouse = new Mouse();

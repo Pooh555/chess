@@ -16,7 +16,7 @@ public class Board {
         boolean count = false; // false: light square, true: dark square
 
         // set UI
-        if (GamePanel.HEIGHT <= GamePanel.WIDTH)
+        if (GamePanel.WIDTH - GamePanel.HEIGHT > GamePanel.WIDTH / 4)
             SQUARE_SIZE = GamePanel.HEIGHT / 8;
         else
             SQUARE_SIZE = GamePanel.WIDTH / 10;
