@@ -8,7 +8,11 @@ import java.lang.Thread;
 import java.util.ArrayList;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import pieces.Bishop;
@@ -33,6 +37,8 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Piece> simPieces = new ArrayList<>();
 
     // color
+    private BufferedImage backgroundImage;
+    static String backgroundImagePath = "/res/wallpaper/wallpaper.jpg";    
     public static final boolean WHITE = false;
     public static final boolean BLACK = true;
     boolean currentColor = WHITE; // the game starts with white
@@ -40,6 +46,18 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
         setPreferredSize(windowSize); // set initial window size
         setBackground(Color.BLACK); // set initial window background
+
+        // load the background image
+        try (InputStream input = getClass().getResourceAsStream(backgroundImagePath)) {
+            if (input == null) 
+                throw new IllegalArgumentException("Background image not found at " + backgroundImagePath);
+            
+            backgroundImage = ImageIO.read(input);
+            
+            System.out.println("Wallpaper is loaded successfully");
+        } catch (Exception e) {
+            System.err.println("Failed to load background image: " + e.getMessage());
+        }
 
         // update the window's size
         addComponentListener(new ComponentAdapter() {
@@ -137,6 +155,9 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D)g;
+
+        if (backgroundImage != null)
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this); // ccale image to fit pane
 
         // draw the board
         board.draw(g2);
