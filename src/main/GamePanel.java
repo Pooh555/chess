@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // color
     private BufferedImage backgroundImage;
-    static String backgroundImagePath = "/res/wallpaper/wallpaper.jpg";    
+    static String backgroundImagePath = "/res/wallpaper/wallpaper.jpg";
     public static final boolean WHITE = false;
     public static final boolean BLACK = true;
     boolean currentColor = WHITE; // the game starts with white
@@ -48,11 +48,11 @@ public class GamePanel extends JPanel implements Runnable {
 
         // load the background image
         try (InputStream input = getClass().getResourceAsStream(backgroundImagePath)) {
-            if (input == null) 
+            if (input == null)
                 throw new IllegalArgumentException("Background image not found at " + backgroundImagePath);
-            
+
             backgroundImage = ImageIO.read(input);
-            
+
             System.out.println("Wallpaper is loaded successfully");
         } catch (Exception e) {
             System.err.println("Failed to load background image: " + e.getMessage());
@@ -123,7 +123,7 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new Queen(WHITE, 3, 7));
         pieces.add(new King(WHITE, 4, 7));
 
-        // black 
+        // black
         pieces.add(new Pawn(BLACK, 0, 1));
         pieces.add(new Pawn(BLACK, 1, 1));
         pieces.add(new Pawn(BLACK, 2, 1));
@@ -135,7 +135,7 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new Knight(BLACK, 1, 0));
         pieces.add(new Knight(BLACK, 6, 0));
         pieces.add(new Bishop(BLACK, 2, 0));
-        pieces.add(new Bishop(BLACK, 5, 0 ));
+        pieces.add(new Bishop(BLACK, 5, 0));
         pieces.add(new Rook(BLACK, 0, 0));
         pieces.add(new Rook(BLACK, 7, 0));
         pieces.add(new Queen(BLACK, 3, 0));
@@ -146,23 +146,54 @@ public class GamePanel extends JPanel implements Runnable {
         target.clear(); // clear target ArrayList
 
         // copy source to target
-        for(int i = 0; i < source.size(); i++)
+        for (int i = 0; i < source.size(); i++)
             target.add(source.get(i));
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g;
 
         if (backgroundImage != null)
-            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this); // ccale image to fit pane
-
+            drawCroppedImage(g, backgroundImage);
+        
         // draw the board
         board.draw(g2);
 
         // draw the pieces
-        for(Piece piece : simPieces) 
+        for (Piece piece : simPieces)
             piece.draw(g2);
+    }
+
+    private void drawCroppedImage(Graphics g, BufferedImage image) {
+        // image size
+        int imageWidth = image.getWidth();
+        int imageHeight = image.getHeight();
+
+        // calculate the cropping region
+        int cropX = 0, cropY = 0;
+        int cropWidth = imageWidth, cropHeight = imageHeight;
+
+        // calculate the scaling factors for the image to fit the panel
+        double panelAspect = (double) WIDTH / HEIGHT;
+        double imageAspect = (double) imageWidth / imageHeight;
+
+        if (panelAspect > imageAspect) {
+            // panel is wider than the image
+            cropHeight = (int) (imageWidth / panelAspect);
+            cropY = (imageHeight - cropHeight) / 2;
+        } else {
+            // panel is taller than the image
+            cropWidth = (int) (imageHeight * panelAspect);
+            cropX = (imageWidth - cropWidth) / 2;
+        }
+
+        // Draw the cropped image to fill the panel
+        g.drawImage(
+                image,
+                0, 0, WIDTH, HEIGHT, // destination rectangle (panel dimensions)
+                cropX, cropY, cropX + cropWidth, cropY + cropHeight, // source rectangle (cropped region)
+                this);
     }
 }
