@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
