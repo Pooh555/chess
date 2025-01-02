@@ -158,19 +158,25 @@ public class GamePanel extends JPanel implements Runnable {
 
                         // move confirmed
 
+                        printPiecesPositions(); // for debugging
+
                         // remove the captured piece from the board during simulation phase
                         copyPieces(simPieces, pieces);
                         activeP.updatePosition();
                         checkCastling();
 
-                        if (castlingP != null)
+                        if (castlingP != null) {
                             castlingP.updatePosition();
+                            System.out.println("Castled sucesfully.");
+                        }
 
                         if (checkKingInCheck() && checkCheckmate()) {
                             gameover = true; // checkmated
                         } else {
-                            if (canPromote())
+                            if (canPromote()) {
                                 promotion = true; // promoted
+                                System.out.println("The pawn is promoted sucesfully.");
+                            }
                             else
                                 changeTurn(); // change player's turn
                         }
@@ -374,6 +380,17 @@ public class GamePanel extends JPanel implements Runnable {
         copyPieces(pieces, simPieces);
 
         return isValidMove;
+    }
+
+    private void printPiecesPositions() {
+        String color;
+
+        for (Piece piece : simPieces) {
+            if (piece.color == 0) color = "white";
+            else color = "black";
+
+            System.out.println(piece.type + ", " + color +", col: " + piece.col + " row: " + piece.row);
+        }
     }
 
     private void checkCastling() {
