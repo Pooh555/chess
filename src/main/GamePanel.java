@@ -72,5 +72,6 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D)g;
 
         board.draw(g2);
+        System.out.println("The board is displayed sucessfully.");
     }
 }
