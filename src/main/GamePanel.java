@@ -31,6 +31,9 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread; // main game thread
     Board board = new Board();
 
+    // devices
+    Mouse mouse = new Mouse();
+
     // pieces
     public static ArrayList<Piece> pieces = new ArrayList<>();
     public static ArrayList<Piece> simPieces = new ArrayList<>();
@@ -45,6 +48,10 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
         setPreferredSize(windowSize); // set initial window size
         setBackground(Color.BLACK); // set initial window background
+        addMouseMotionListener(mouse);
+        addMouseListener(mouse);
+
+        System.out.println("Mouse listenser is activated.");
 
         // load the background image
         try (InputStream input = getClass().getResourceAsStream(backgroundImagePath)) {
