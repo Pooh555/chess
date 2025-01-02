@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import main.Board;
 import main.GamePanel;
 import main.Type;
+import main.Main;
 
 public class Piece {
     public Type type;
@@ -72,8 +73,8 @@ public class Piece {
 
     public void updatePosition() {
         // check for en passent
-        if (type == Type.PAWN) 
-            if (Math.abs(row - preRow) == 2) 
+        if (type == Type.PAWN)
+            if (Math.abs(row - preRow) == 2)
                 twoSteps = true;
 
         x = getX(col);
@@ -104,10 +105,13 @@ public class Piece {
 
     public Piece getHitP(int targetCol, int targetRow) {
         for (Piece piece : GamePanel.simPieces) {
-            if (piece.col == targetCol && piece.row == targetRow && piece != this) {
+            if (piece.preCol == this.col && piece.preRow == this.row && piece != this) {
+                System.out.println(piece.type + " " + piece.color + " " + this.col + " " + this.row);
                 return piece;
             }
         }
+
+        System.out.println("null");
 
         return null;
     }
@@ -115,12 +119,16 @@ public class Piece {
     public boolean isValidSquare(int targetCol, int targetRow) {
         hitP = getHitP(targetCol, targetRow);
 
-        if (hitP == null)
-            return true; // this square is empty
-        else if (hitP.color != this.color)
+        if (hitP == null) {
+            System.out.println("This square is empty.");
+            return true; // this square is emptya
+        } else if (hitP.color != this.color) {
+            System.out.println("This square might be capturable.");
             return true; // can be captured if the color is different
-        else
+        } else
             hitP = null;
+
+        System.out.println("This square is invalid.");
 
         return false;
     }

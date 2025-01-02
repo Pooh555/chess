@@ -21,7 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
     // GAME INFO
     public static final int WIDTH = 1100; // panel's width
     public static final int HEIGHT = 800; // panel's height
-    public int FPS = 360; // FPS
+    public int FPS = 60; // FPS
     Thread gameThread;
     Board board = new Board(); // initialize board
     Mouse mouse = new Mouse(); // initialize mouse

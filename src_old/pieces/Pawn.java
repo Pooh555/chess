@@ -32,7 +32,7 @@ public class Pawn extends Piece {
             if (targetCol == preCol && targetRow == preRow + moveValue && hitP == null)
                 return true;
 
-            // 2 square move
+            // 2 square move    
             if (targetCol == preCol && targetRow == preRow + (2 * moveValue) && hitP == null && hasMoved == false
                     && pieceIsOnStraightLine(targetCol, targetRow) == false)
                 return true;
