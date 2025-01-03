@@ -158,7 +158,8 @@ public class GamePanel extends JPanel implements Runnable {
 
                         // set active piece state
                         activePiece.hasMoved = true;
-
+                        activePiece.updatePosition();
+                    
                         // removed the captured piece
                         if (Board.boardPieces[activePiece.row][activePiece.col] != null) {
                             for (Piece piece : simPieces)
@@ -213,11 +214,13 @@ public class GamePanel extends JPanel implements Runnable {
                                         System.out.println("O-O by black.");
                                     }
                         }
+
+                        board.updateOccupiedTerratory();
+                        board.printOccupiedBoard();
+
                         // check for checkmate
                         if (isCheckmate()) {
                             System.out.println(currentColor + " wins.");
-
-                            activePiece.updatePosition();
 
                             gameStatus = false;
                         }
@@ -265,17 +268,17 @@ public class GamePanel extends JPanel implements Runnable {
         // pieces.add(new Pawn(BLACK, 1, 1));
         // pieces.add(new Pawn(BLACK, 2, 1));
         // pieces.add(new Pawn(BLACK, 3, 1));
-        // pieces.add(new Pawn(BLACK, 4, 1));
+        // pieces.add(new Pawn(BLACK, 4, 1));s
         // pieces.add(new Pawn(BLACK, 5, 1));
         // pieces.add(new Pawn(BLACK, 6, 1));
         // pieces.add(new Pawn(BLACK, 7, 1));
-        // pieces.add(new Knight(BLACK, 1, 0));
-        // pieces.add(new Knight(BLACK, 6, 0));
-        // pieces.add(new Bishop(BLACK, 2, 0));
-        // pieces.add(new Bishop(BLACK, 5, 0));
-        // pieces.add(new Rook(BLACK, 0, 0));
-        // pieces.add(new Rook(BLACK, 7, 0));
-        // pieces.add(new Queen(BLACK, 3, 0));
+        pieces.add(new Knight(BLACK, 1, 0));
+        pieces.add(new Knight(BLACK, 6, 0));
+        pieces.add(new Bishop(BLACK, 2, 0));
+        pieces.add(new Bishop(BLACK, 5, 0));
+        pieces.add(new Rook(BLACK, 0, 0));
+        pieces.add(new Rook(BLACK, 7, 0));
+        pieces.add(new Queen(BLACK, 3, 0));
         pieces.add(new King(BLACK, 4, 0));
     }
 

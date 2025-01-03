@@ -37,15 +37,14 @@ public class Bishop extends Piece {
     @Override
     public boolean canMoveExtended(int targetCol, int targetRow) {
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
-            if (isEmptySquare(targetCol, targetRow) && !isObstacleOnDiagonalLine(targetCol, targetRow)) {
+            if (isEmptySquare(targetCol, targetRow)) {
                 // basic bishop movement
-                if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
-                    return true;
-            } else {
-                // capture
                 if (!isObstacleOnDiagonalLine(targetCol, targetRow))
                     if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
-                        if (isCapturable(targetCol, targetRow))
+                        return true;
+            } else {
+                if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
+                    if (!isObstacleOnDiagonalLine(targetCol, targetRow))
                             return true;
             }
         }

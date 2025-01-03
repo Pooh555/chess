@@ -112,6 +112,7 @@ public class King extends Piece {
         }
         if (GamePanel.currentColor == GamePanel.BLACK) {
             System.out.println("Looking for checkmate for black.");
+            System.out.println((int) (this.row - 1) + " " + (int) (this.col + 1));
 
             if ((this.row - 1 >= 0 && this.row - 1 < 7) && (this.col - 1 >= 0 && this.col - 1 < 7))
                 if (Board.boardOccupiedByBlack[this.row - 1][this.col - 1] == 0)
