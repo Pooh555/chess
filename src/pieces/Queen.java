@@ -21,10 +21,14 @@ public class Queen extends Piece {
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
             if (isEmptySquare(targetCol, targetRow)) {
                 // basic queen (rook + bishop) movement
-                if (targetCol == preCol || targetRow == preRow)
+                if (targetCol == preCol || targetRow == preRow
+                        || Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
                     return true;
-                if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
-                    return true;
+            } else {
+                if (targetCol == preCol || targetRow == preRow
+                        || Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
+                    if (isCapturable(targetCol, targetRow))
+                        return true;
             }
         }
 

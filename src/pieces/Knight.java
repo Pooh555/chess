@@ -20,10 +20,15 @@ public class Knight extends Piece {
 
     public boolean canMove(int targetCol, int targetRow) {
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
-            if (Board.boardPieces[targetRow][targetCol] == null)
+            if (Board.boardPieces[targetRow][targetCol] == null) {
                 // basic knight movement
                 if (Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 2)
                     return true;
+            } else {
+                if (Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 2)
+                    if (isCapturable(targetCol, targetRow))
+                        return true;
+            }
         }
 
         return false;

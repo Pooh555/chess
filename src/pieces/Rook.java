@@ -19,10 +19,15 @@ public class Rook extends Piece {
     @Override
     public boolean canMove(int targetCol, int targetRow) {
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
-            if (isEmptySquare(targetCol, targetRow))
+            if (isEmptySquare(targetCol, targetRow)) {
                 // basic rook movement
                 if (targetCol == preCol || targetRow == preRow) 
                         return true;
+            } else {
+                if (targetCol == preCol || targetRow == preRow)
+                    if (isCapturable(targetCol, targetRow))
+                        return true;
+            }
         }
 
         return false;
