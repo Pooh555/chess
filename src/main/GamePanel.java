@@ -361,20 +361,20 @@ public class GamePanel extends JPanel implements Runnable {
 
         // text attributes
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        g2.setFont(new Font("Fira code", Font.PLAIN, 30));
+        g2.setFont(new Font("Fira code", Font.PLAIN, (int) (0.03 * WIDTH)));
         g2.setColor(FOREGROUND_TEXT_COLOR);
 
         if (promotionState) {
-            g2.drawString("Promote to:", 840, 150);
+            g2.drawString("Promote to:", (int) (0.75 * WIDTH), (int) (0.25 * HEIGHT));
 
             for (Piece piece : promotionPieces)
                 g2.drawImage(piece.image, piece.getX(piece.col), piece.getY(piece.row), Board.SQUARE_SIZE,
                         Board.SQUARE_SIZE, null);
         } else {
             if (currentColor == WHITE)
-                g2.drawString("White's turn", 840, 550);
+                g2.drawString("White's turn", (int) (0.75 * WIDTH), (int) (0.75 * HEIGHT));
             else
-                g2.drawString("Black's turn", 840, 250);
+                g2.drawString("Black's turn", (int) (0.75 * WIDTH), (int) (0.25 * HEIGHT));
         }
 
         if (gameStatus == false) {
@@ -385,7 +385,7 @@ public class GamePanel extends JPanel implements Runnable {
             if (currentColor == BLACK)
                 checkmateStr = "Black wins";
 
-            g2.setFont(new Font("Fira code", Font.PLAIN, 30));
+            g2.setFont(new Font("Fira code", Font.PLAIN, (int) (0.05 * WIDTH)));
             g2.setColor(FOREGROUND_TEXT_COLOR);
             g2.drawString(checkmateStr, 200, 420);
         }
