@@ -80,6 +80,22 @@ public class Piece {
      * }
      */
 
+    public boolean canMove(int targetCol, int targetRow) {
+        return false;
+    }
+
+    public boolean canMoveExtended(int targetCol, int targetRow) {
+        return false;
+    }
+
+    public boolean canMoveSim() {
+        return true;
+    }
+
+    public boolean canCastle(int targetCol, int targetRow) {
+        return false;
+    }
+
     public boolean isWithinBoard(int targetCol, int targetRow) {
         if (targetCol >= 0 && targetCol <= 7 && targetRow >= 0 && targetRow <= 7)
             return true;
@@ -107,27 +123,14 @@ public class Piece {
         return false;
     }
 
-    public boolean canMove(int targetCol, int targetRow) {
-        return false;
-    }
-
-    public boolean canMoveExtended(int targetCol, int targetRow) {
-        return false;
-    }
-
-    public boolean canCastle(int targetCol, int targetRow) {
-        return false;
-    }
-
-
     public boolean isObstacleOnDiagonalLine(int targetCol, int targetRow) {
         if (targetRow < preRow) {
             // to the top left
             for (int i = preCol - 1; i > targetCol; i--) {
                 int diff = Math.abs(i - preCol);
 
-                for (Piece piece : GamePanel.simPieces) 
-                    if (piece.col == i && piece.row == preRow - diff) 
+                for (Piece piece : GamePanel.simPieces)
+                    if (piece.col == i && piece.row == preRow - diff)
                         return true;
             }
 
@@ -135,8 +138,8 @@ public class Piece {
             for (int i = preCol + 1; i < targetCol; i++) {
                 int diff = Math.abs(i - preCol);
 
-                for (Piece piece : GamePanel.simPieces) 
-                    if (piece.col == i && piece.row == preRow - diff) 
+                for (Piece piece : GamePanel.simPieces)
+                    if (piece.col == i && piece.row == preRow - diff)
                         return true;
             }
         }
@@ -146,18 +149,18 @@ public class Piece {
             for (int i = preCol - 1; i > targetCol; i--) {
                 int diff = Math.abs(i - preCol);
 
-                for (Piece piece : GamePanel.simPieces) 
-                    if (piece.col == i && piece.row == preRow + diff) 
+                for (Piece piece : GamePanel.simPieces)
+                    if (piece.col == i && piece.row == preRow + diff)
                         return true;
-                    
+
             }
 
             // to the bottom right
             for (int i = preCol + 1; i < targetCol; i++) {
                 int diff = Math.abs(i - preCol);
 
-                for (Piece piece : GamePanel.simPieces) 
-                    if (piece.col == i && piece.row == preRow + diff) 
+                for (Piece piece : GamePanel.simPieces)
+                    if (piece.col == i && piece.row == preRow + diff)
                         return true;
             }
 
