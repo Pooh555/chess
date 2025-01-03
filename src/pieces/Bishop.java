@@ -21,13 +21,8 @@ public class Bishop extends Piece {
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
             if (Board.boardPieces[targetRow][targetCol] == null)
                 // basic bishop movement
-                if ((targetRow - this.preRow) == 0) {
-                    if (Math.abs((targetRow - this.preRow) / (targetCol - this.preCol)) == 1)
+                if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0) 
                         return true;
-                } else {
-                    if (Math.abs((targetCol - this.preCol) / (targetRow - this.preRow)) == 1)
-                        return true;
-                }
         }
 
         return false;

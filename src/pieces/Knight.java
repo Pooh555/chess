@@ -22,7 +22,7 @@ public class Knight extends Piece {
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
             if (Board.boardPieces[targetRow][targetCol] == null)
                 // basic king movement
-                if (Math.abs(targetCol - this.preCol) * Math.abs(targetRow - this.preRow) == 2)
+                if (Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 2)
                     return true;
         }
 
