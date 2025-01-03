@@ -184,6 +184,20 @@ public class GamePanel extends JPanel implements Runnable {
 
                         // castle
                         if (isCastle) {
+                            // white long castle
+                            if (activePiece.col == 2 && activePiece.row == 7)
+                                for (Piece piece : simPieces)
+                                    if (piece.type == Type.ROOK && piece.col == 0 && piece.row == 7) {
+                                        piece.col = 3;
+                                        System.out.println("O-O-O by white.");
+                                    }
+                            // white short castle
+                            if (activePiece.col == 6 && activePiece.row == 7)
+                                for (Piece piece : simPieces)
+                                    if (piece.type == Type.ROOK && piece.col == 7 && piece.row == 7) {
+                                        piece.col = 5;
+                                        System.out.println("O-O by white.");
+                                    }
                             // black long castle
                             if (activePiece.col == 2 && activePiece.row == 0)
                                 for (Piece piece : simPieces)
@@ -196,7 +210,7 @@ public class GamePanel extends JPanel implements Runnable {
                                 for (Piece piece : simPieces)
                                     if (piece.type == Type.ROOK && piece.col == 7 && piece.row == 0) {
                                         piece.col = 5;
-                                        System.out.println("O-O-O by black.");
+                                        System.out.println("O-O by black.");
                                     }
                         }
 

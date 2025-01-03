@@ -58,7 +58,7 @@ public class King extends Piece {
 
     @Override
     public boolean canCastle(int targetCol, int targetRow) {
-        
+
         /*
          * I'm done. I'm just gonna hard code. :P
          */
@@ -68,13 +68,13 @@ public class King extends Piece {
             // white
             if (this.hasMoved == false && this.color == false) {
                 // short castle
-                if (targetCol + 1 >= 0 && targetCol + 1 < 8 && Board.boardPieces[targetCol + 1][targetRow] != null)
-                    if (targetCol == 6 && targetRow == 7 && Board.boardPieces[targetCol + 1][targetRow].hasMoved != true)
+                if (targetCol + 1 >= 0 && targetCol + 1 < 8 && Board.boardPieces[7][7] != null)
+                    if (targetCol == 6 && targetRow == 7 && Board.boardPieces[7][7].hasMoved != true)
                         if (Board.boardOccupiedByBlack[7][5] == 0 && Board.boardOccupiedByBlack[7][6] == 0)
                             return true;
                 // long castle
-                if (targetCol - 2 >= 0 && targetCol - 2 < 8 && Board.boardPieces[targetCol - 2][targetRow] != null)
-                    if (targetCol == 2 && targetRow == 7 && Board.boardPieces[targetCol - 2][targetRow].hasMoved != true)
+                if (targetCol - 2 >= 0 && targetCol - 2 < 8 && Board.boardPieces[7][0] != null)
+                    if (targetCol == 2 && targetRow == 7 && Board.boardPieces[7][0].hasMoved != true)
                         if (Board.boardOccupiedByBlack[7][2] == 0 && Board.boardOccupiedByBlack[7][3] == 0)
                             return true;
             }
@@ -88,7 +88,6 @@ public class King extends Piece {
                 // long castle
                 if (targetCol - 2 >= 0 && targetCol - 2 < 8 && Board.boardPieces[0][0] != null)
                     if (targetCol == 2 && targetRow == 0 && Board.boardPieces[0][0].hasMoved != true) {
-                        System.out.println("NIGGA");
                         if (Board.boardOccupiedByWhite[0][2] == 0 && Board.boardOccupiedByWhite[0][3] == 0)
                             return true;
                     }
