@@ -112,21 +112,20 @@ public class GamePanel extends JPanel implements Runnable {
         if (mouse.isPressed) {
             // check if the player is holding a piece
             if (activePiece == null) {
-                // if the player is not holding a piece, pick the piece on the current square with the same color up
-                for (Piece piece : simPieces) {
+                // if the player is not holding a piece, pick the piece on the current square
+                // with the same color up
+                for (Piece piece : simPieces)
                     if (piece.color == currentColor
                             && piece.col == mouse.x / Board.SQUARE_SIZE
                             && piece.row == mouse.y / Board.SQUARE_SIZE) {
                         activePiece = piece;
-                            
-                        System.out.println("piece col: " + piece.col + ", piece row: " + piece.row + ", square size: " + Board.SQUARE_SIZE);
+
+                        System.out.println("piece col: " + piece.col + ", piece row: " + piece.row + ", square size: "
+                                + Board.SQUARE_SIZE);
                     }
-                
-                    System.out.println("Piece: " + piece.type);
-                }
             } else {
                 // if the player is holding a piece, simulate a calculating (thinking) phase
-                simulate(); 
+                simulate();
             }
         }
     }
@@ -179,12 +178,19 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void simulate() {
         // update the position of the piece being held
-        activePiece.x = mouse.x;
-        activePiece.y = mouse.y;
 
-        System.out.println("Piece type: " + activePiece.type + ", piece col: " + activePiece.x / Board.SQUARE_SIZE + ", piece row: " + activePiece.y / Board.SQUARE_SIZE);
-        System.out.println("piece x: " + activePiece.x + ", piece y: " + activePiece.y);
-        System.out.println("mouse x: " + mouse.x + ", mouse y: " + mouse.y);
+        if (activePiece != null) {
+            activePiece.isActive = true; // Set dragging flag
+            activePiece.x = mouse.x - Board.SQUARE_SIZE / 2; // Center the piece on the mouse
+            activePiece.y = mouse.y - Board.SQUARE_SIZE / 2;
+        }
+
+        // System.out.println("Piece color: " + activePiece.color + ", piece col: " +
+        // activePiece.x / Board.SQUARE_SIZE + ", piece row: " + activePiece.y /
+        // Board.SQUARE_SIZE);
+        // System.out.println("piece x: " + activePiece.x + ", piece y: " +
+        // activePiece.y);
+        // System.out.println("mouse x: " + mouse.x + ", mouse y: " + mouse.y);
     }
 
     public void paintComponent(Graphics g) {
@@ -192,7 +198,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        // draw the wallpaper
         if (backgroundImage != null)
             drawCroppedImage(g, backgroundImage);
 
