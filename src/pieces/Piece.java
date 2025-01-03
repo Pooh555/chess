@@ -59,6 +59,16 @@ public class Piece {
         return (y + Board.HALF_SQUARE_SIZE) / Board.SQUARE_SIZE;
     }
 
+    public int getIndex() {
+        for (int index = 0; index < GamePanel.simPieces.size(); index++) {
+            if (GamePanel.simPieces.get(index) == this) {
+                return index;
+            }
+        }
+
+        return 0;
+    }
+
     /*
      * public Piece getHitPiece(int targetCol, int targetRow, ArrayList<Piece>
      * simPieces) {
