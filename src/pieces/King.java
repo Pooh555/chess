@@ -19,19 +19,41 @@ public class King extends Piece {
     @Override
     public boolean canMove(int targetCol, int targetRow) {
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
-            if (isEmptySquare(targetCol, targetRow)) {
-                // basic king movement
-                if (Math.abs(targetCol - this.preCol) + Math.abs(targetRow - this.preRow) == 1
-                        || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
-                    return true;
-                if (canCastle(targetCol, targetRow))
-                    return true;
-            } else {
-                // capture
-                if (Math.abs(targetCol - this.preCol) + Math.abs(targetRow - this.preRow) == 1
-                        || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
-                    if (isCapturable(targetCol, targetRow))
-                        return true;
+            if (GamePanel.currentColor == GamePanel.WHITE) {
+                if (Board.boardOccupiedByBlack[targetRow][targetCol] == 0) {
+                    if (isEmptySquare(targetCol, targetRow)) {
+                        // basic king movement
+                        if (Math.abs(targetCol - this.preCol) + Math.abs(targetRow - this.preRow) == 1
+                                || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
+                            return true;
+                        if (canCastle(targetCol, targetRow))
+                            return true;
+                    } else {
+                        // capture
+                        if (Math.abs(targetCol - this.preCol) + Math.abs(targetRow - this.preRow) == 1
+                                || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
+                            if (isCapturable(targetCol, targetRow))
+                                return true;
+                    }
+                }
+            }
+            if (GamePanel.currentColor == GamePanel.BLACK) {
+                if (Board.boardOccupiedByWhite[targetRow][targetCol] == 0) {
+                    if (isEmptySquare(targetCol, targetRow)) {
+                        // basic king movement
+                        if (Math.abs(targetCol - this.preCol) + Math.abs(targetRow - this.preRow) == 1
+                                || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
+                            return true;
+                        if (canCastle(targetCol, targetRow))
+                            return true;
+                    } else {
+                        // capture
+                        if (Math.abs(targetCol - this.preCol) + Math.abs(targetRow - this.preRow) == 1
+                                || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
+                            if (isCapturable(targetCol, targetRow))
+                                return true;
+                    }
+                }
             }
         }
 
