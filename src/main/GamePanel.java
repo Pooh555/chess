@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.lang.Thread;
 import java.util.ArrayList;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
@@ -14,6 +15,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import pieces.Bishop;
 import pieces.King;
@@ -70,18 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         // update the window's size
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                WIDTH = getWidth(); // update WIDTH
-                HEIGHT = getHeight(); // update HEIGHT
-
-                for (Piece piece : pieces)
-                    piece.updatePosition();
-
-                System.out.println("New WIDTH: " + WIDTH + ", New HEIGHT: " + HEIGHT);
-            }
-        });
+        resizeDisplayComponents();
 
         board.clearBoard(); // clear the chessboard
         setPieces(); // set up the pieces on the board
@@ -144,7 +135,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if (isLegalMove) {
 
                     // -------------------- //
-                    //    move confirmed    //
+                    // move confirmed //
                     // -------------------- //
 
                     // valid move, update all states
@@ -156,7 +147,8 @@ public class GamePanel extends JPanel implements Runnable {
                     // removed the captured piece
                     if (Board.boardPieces[activePiece.row][activePiece.col] != null) {
                         for (Piece piece : simPieces)
-                            if (piece.col == activePiece.col && piece.row == activePiece.row && piece.color != activePiece.color)
+                            if (piece.col == activePiece.col && piece.row == activePiece.row
+                                    && piece.color != activePiece.color)
                                 hitPiece = piece;
 
                         System.out.println(hitPiece.color);
@@ -307,5 +299,35 @@ public class GamePanel extends JPanel implements Runnable {
                 0, 0, WIDTH, HEIGHT, // destination rectangle (panel dimensions)
                 cropX, cropY, cropX + cropWidth, cropY + cropHeight, // source rectangle (cropped region)
                 this);
+    }
+
+    public void resizeDisplayComponents() {
+        addComponentListener(new ComponentAdapter() {
+            private Timer resizeTimer;
+
+            @Override
+            public void componentResized(ComponentEvent e) {
+                if (resizeTimer != null) {
+                    resizeTimer.stop(); // Stop the previous timer if it's still running
+                }
+
+                resizeTimer = new Timer(100, _ -> {
+                    WIDTH = getWidth();
+                    HEIGHT = getHeight();
+                    Board.SQUARE_SIZE = Math.min(WIDTH, HEIGHT) / 8;
+
+                    for (Piece piece : pieces) {
+                        piece.x = piece.getX(piece.col);
+                        piece.y = piece.getY(piece.row);
+                    }
+
+                    repaint();
+                    System.out.println("New WIDTH: " + WIDTH + ", New HEIGHT: " + HEIGHT);
+                });
+
+                resizeTimer.setRepeats(false); // Execute only once
+                resizeTimer.start();
+            }
+        });
     }
 }
