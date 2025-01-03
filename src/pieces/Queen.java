@@ -27,14 +27,38 @@ public class Queen extends Piece {
                     if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
                         return true;
             } else {
+                if (targetCol == preCol || targetRow == preRow)
+                    if (!isObstacleOnStraightLine(targetCol, targetRow))
+                        if (isCapturable(targetCol, targetRow))
+                            return true;
+                if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
+                    if (!isObstacleOnDiagonalLine(targetCol, targetRow))
+                        if (isCapturable(targetCol, targetRow))
+                            return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean canMoveExtended(int targetCol, int targetRow) {
+        if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
+            if (isEmptySquare(targetCol, targetRow)) {
+                // basic queen (rook + bishop) movement
                 if (!isObstacleOnStraightLine(targetCol, targetRow))
-                    if (isCapturable(targetCol, targetRow) && (targetCol == preCol
-                            || targetRow == preRow)) 
+                    if (targetCol == preCol || targetRow == preRow)
                         return true;
                 if (!isObstacleOnDiagonalLine(targetCol, targetRow))
-                    if (isCapturable(targetCol, targetRow)
-                            && Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
+                    if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
                         return true;
+            } else {
+                if (targetCol == preCol || targetRow == preRow)
+                    if (!isObstacleOnStraightLine(targetCol, targetRow))
+                            return true;
+                if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
+                    if (!isObstacleOnDiagonalLine(targetCol, targetRow))
+                            return true;
             }
         }
 

@@ -24,9 +24,30 @@ public class Rook extends Piece {
                     return true;
 
             } else {
+                // capture
                 if (!isObstacleOnStraightLine(targetCol, targetRow))
                     if (targetCol == preCol || targetRow == preRow)
                         if (isCapturable(targetCol, targetRow))
+                            return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean canMoveExtended(int targetCol, int targetRow) {
+        // can capture your own piece
+        if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
+            if (isEmptySquare(targetCol, targetRow) && !isObstacleOnStraightLine(targetCol, targetRow)) {
+                // basic rook movement
+                if (targetCol == preCol || targetRow == preRow)
+                    return true;
+
+            } else {
+                // capture
+                if (!isObstacleOnStraightLine(targetCol, targetRow))
+                    if (targetCol == preCol || targetRow == preRow)
                             return true;
             }
         }

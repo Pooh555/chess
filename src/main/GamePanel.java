@@ -84,8 +84,11 @@ public class GamePanel extends JPanel implements Runnable {
         resizeDisplayComponents();
 
         board.clearBoard(); // clear the chessboard
+        board.clearOccupiedBoard(); // clear terratory simulation board
         setPieces(); // set up the pieces on the board
         copyPieces(pieces, simPieces); // copy the static pieces' positions to dynamic pieces' positions
+        board.updatePiecePositions(pieces);
+        board.updateOccupiedTerratory();
     }
 
     public void launchGame() {
@@ -124,7 +127,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if (activePiece == null) {
                     board.clearBoard(); // clear the chessboard
                     board.updatePiecePositions(pieces); // update pieces' positions on the board
-
+                    
                     // if the player is not holding a piece, pick the piece on the current square
                     // with the same color up
                     for (Piece piece : simPieces)
@@ -139,6 +142,7 @@ public class GamePanel extends JPanel implements Runnable {
                 } else {
                     // if the player is holding a piece, simulate a calculating (thinking) phase
                     // board.printBoard();
+                    board.printOccupiedBoard();
                     simulate();
                 }
             }
@@ -149,8 +153,7 @@ public class GamePanel extends JPanel implements Runnable {
                         // -------------------- //
                         // move confirmed //
                         // -------------------- //
-
-                        // valid move, update all states
+                        
                         System.out.println("Legal move.");
 
                         // set active piece state
@@ -199,14 +202,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setPieces() {
         // white pieces
-        pieces.add(new Pawn(WHITE, 0, 6));
-        pieces.add(new Pawn(WHITE, 1, 6));
-        pieces.add(new Pawn(WHITE, 2, 6));
-        pieces.add(new Pawn(WHITE, 3, 6));
-        // pieces.add(new Pawn(WHITE, 4, 6));
-        // pieces.add(new Pawn(WHITE, 5, 6));
-        // pieces.add(new Pawn(WHITE, 6, 6));
-        // pieces.add(new Pawn(WHITE, 7, 6));
+        // pieces.add(new Pawn(WHITE, 0, 6));
+        // pieces.add(new Pawn(WHITE, 1, 6));
+        // pieces.add(new Pawn(WHITE, 2, 6));
+        // pieces.add(new Pawn(WHITE, 3, 6));
+        // // pieces.add(new Pawn(WHITE, 4, 6));
+        // // pieces.add(new Pawn(WHITE, 5, 6));
+        // // pieces.add(new Pawn(WHITE, 6, 6));
+        // // pieces.add(new Pawn(WHITE, 7, 6));
         pieces.add(new Knight(WHITE, 1, 7));
         pieces.add(new Knight(WHITE, 6, 7));
         pieces.add(new Bishop(WHITE, 2, 7));
@@ -217,14 +220,14 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new King(WHITE, 4, 7));
 
         // black
-        pieces.add(new Pawn(BLACK, 0, 1));
-        pieces.add(new Pawn(BLACK, 1, 1));
-        pieces.add(new Pawn(BLACK, 2, 1));
-        pieces.add(new Pawn(BLACK, 3, 1));
-        pieces.add(new Pawn(BLACK, 4, 1));
-        pieces.add(new Pawn(BLACK, 5, 1));
-        pieces.add(new Pawn(BLACK, 6, 1));
-        pieces.add(new Pawn(BLACK, 7, 1));
+        // pieces.add(new Pawn(BLACK, 0, 1));
+        // pieces.add(new Pawn(BLACK, 1, 1));
+        // pieces.add(new Pawn(BLACK, 2, 1));
+        // pieces.add(new Pawn(BLACK, 3, 1));
+        // pieces.add(new Pawn(BLACK, 4, 1));
+        // pieces.add(new Pawn(BLACK, 5, 1));
+        // pieces.add(new Pawn(BLACK, 6, 1));
+        // pieces.add(new Pawn(BLACK, 7, 1));
         pieces.add(new Knight(BLACK, 1, 0));
         pieces.add(new Knight(BLACK, 6, 0));
         pieces.add(new Bishop(BLACK, 2, 0));
@@ -314,6 +317,11 @@ public class GamePanel extends JPanel implements Runnable {
         moveDirection = currentColor ? 1 : -1; // change pawn's move direction based on the active color
         activePiece = null;
         promotionState = false;
+
+        board.clearBoard(); 
+        board.updatePiecePositions(pieces);
+        board.clearOccupiedBoard();
+        board.updateOccupiedTerratory();
 
         System.out.println("Legal move, the side has changed.");
         System.out.println("current player: " + currentColor + ", pawn's direction: " + moveDirection);

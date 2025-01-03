@@ -11,7 +11,8 @@ public class Board {
     final static int MAX_ROW = 8; // a chessboard consists of 8 rows
     public static Piece[][] boardPieces = new Piece[MAX_ROW][MAX_COL]; // an array to store pieces positions on the
                                                                        // board
-    public static int[][] boardOccupied = new int[MAX_ROW][MAX_COL]; // a simulation board
+    public static int[][] boardOccupiedByWhite = new int[MAX_ROW][MAX_COL]; // a simulation board for white
+    public static int[][] boardOccupiedByBlack = new int[MAX_ROW][MAX_COL]; // a simulation board for black
     public static int SQUARE_SIZE = GamePanel.HEIGHT / 10;
     public static int HALF_SQUARE_SIZE = SQUARE_SIZE / 2;
     static final Color LIGHT_SQUARE_COLOR = new Color(210, 165, 125);
@@ -19,9 +20,15 @@ public class Board {
 
     public void clearBoard() {
         for (int row = 0; row < MAX_ROW; row++)
-            for (int col = 0; col < MAX_COL; col++) {
+            for (int col = 0; col < MAX_COL; col++)
                 boardPieces[row][col] = null;
-                boardOccupied[row][col] = 0;                
+    }
+
+    public void clearOccupiedBoard() {
+        for (int row = 0; row < MAX_ROW; row++)
+            for (int col = 0; col < MAX_COL; col++) {
+                boardOccupiedByWhite[row][col] = 0;
+                boardOccupiedByBlack[row][col] = 0;
             }
     }
 
@@ -58,6 +65,28 @@ public class Board {
         }
     }
 
+    public void updateOccupiedTerratory() {
+        /*
+         * imaginary color for pieces's terratory for each color
+         * used for detecting check, checkmate, and illegal move
+         * 0: unoccupied
+         * 1: occupied by white
+         * 2: occupied by black
+         */
+
+        for (Piece piece : GamePanel.simPieces) {
+            for (int row = 0; row < MAX_ROW; row++)
+                for (int col = 0; col < MAX_COL; col++) {
+                    // check for white's occupied squares
+                    if (piece.canMoveExtended(col, row) && piece.color == false)
+                        boardOccupiedByWhite[row][col] = 1;
+                    // check for black's occupied squares
+                    if (piece.canMoveExtended(col, row) && piece.color == true)
+                        boardOccupiedByBlack[row][col] = 2;
+                }
+        }
+    }
+
     // debug
     public void printBoard() {
         for (int row = 0; row < MAX_ROW; row++) {
@@ -74,25 +103,24 @@ public class Board {
         System.out.println("-----------------------------------------------------");
     }
 
-    public void occupiedTerratory() {
-        /*
-         * imaginary color for pieces's terratory for each color
-         * used for detecting check, checkmate, and illegal move
-         * 0: unoccupied
-         * 1: occupied by white
-         * 2: occupied by black
-         */
+    public void printOccupiedBoard() {
+        for (int row = 0; row < MAX_ROW; row++) {
+            for (int col = 0; col < MAX_COL; col++)
+                System.out.print(boardOccupiedByWhite[row][col] + " ");
 
-        for (Piece piece : GamePanel.simPieces) {
-            for (int row = 0; row < MAX_ROW; row++)
-                for (int col = 0; col < MAX_COL; col++) {
-                    // check for white's occupied squares
-                    if (piece.canMove(col, row) && piece.color == false)
-                        boardOccupied[row][col] = 1;
-                    // check for black's occupied squares
-                    if (piece.canMove(col, row) && piece.color == true)
-                        boardOccupied[row][col] = 2;
-                }
+            System.out.println();
         }
+
+        System.out.println("-----------------------------------------------------");
+
+        for (int row = 0; row < MAX_ROW; row++) {
+            for (int col = 0; col < MAX_COL; col++)
+                System.out.print(boardOccupiedByBlack[row][col] + " ");
+
+            System.out.println();
+        }
+
+        System.out.println("-----------------------------------------------------");
+        System.out.println("-----------------------------------------------------");
     }
 }

@@ -16,7 +16,6 @@ public class Knight extends Piece {
     }
 
     @Override
-
     public boolean canMove(int targetCol, int targetRow) {
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
             if (isEmptySquare(targetCol, targetRow)) {
@@ -24,8 +23,26 @@ public class Knight extends Piece {
                 if (Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 2)
                     return true;
             } else {
+                // capture
                 if (Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 2)
                     if (isCapturable(targetCol, targetRow))
+                        return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean canMoveExtended(int targetCol, int targetRow) {
+        if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
+            if (isEmptySquare(targetCol, targetRow)) {
+                // basic knight movement
+                if (Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 2)
+                    return true;
+            } else {
+                // capture
+                if (Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 2)
                         return true;
             }
         }

@@ -24,9 +24,28 @@ public class King extends Piece {
                         || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
                     return true;
             } else {
+                // capture
                 if (Math.abs(targetCol - this.preCol) + Math.abs(targetRow - this.preRow) == 1
                         || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
                     if (isCapturable(targetCol, targetRow))
+                        return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean canMoveExtended(int targetCol, int targetRow) {
+        if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
+            if (isEmptySquare(targetCol, targetRow)) {
+                // basic king movement
+                if (Math.abs(targetCol - this.preCol) + Math.abs(targetRow - this.preRow) == 1
+                        || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
+                    return true;
+            } else {
+                if (Math.abs(targetCol - this.preCol) + Math.abs(targetRow - this.preRow) == 1
+                        || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
                         return true;
             }
         }
