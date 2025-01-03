@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Piece> pieces = new ArrayList<>();
     public static ArrayList<Piece> simPieces = new ArrayList<>();
     public static boolean isLegalMove;
-    Piece activePiece; // piece that is being held
+    Piece activePiece, hitPiece; // piece that is being held, piece that is about to be captured
 
     // color
     private BufferedImage backgroundImage;
@@ -47,7 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static final Color ACTIVE_SQUARE_COLOR = new Color(255, 255, 255);
     public static final boolean WHITE = false;
     public static final boolean BLACK = true;
-    boolean currentColor = WHITE; // the game starts with white
+    public static boolean currentColor = WHITE; // the game starts with white
 
     public GamePanel() {
         setPreferredSize(windowSize); // set initial window size
@@ -116,10 +116,6 @@ public class GamePanel extends JPanel implements Runnable {
         if (mouse.isPressed) {
             // check if the player is holding a piece
             if (activePiece == null) {
-                if (isLegalMove) {
-
-                }
-
                 board.clearBoard(); // clear the chessboard
                 board.updatePiecePositions(pieces); // update pieces' positions on the board
 
@@ -143,8 +139,23 @@ public class GamePanel extends JPanel implements Runnable {
         if (mouse.isPressed == false) {
             if (activePiece != null) {
                 if (isLegalMove) {
+
+                    // -------------------- //
+                    // move confirmed //
+                    // -------------------- //
+
                     // valid move, update all states
                     System.out.println("Legal move.");
+
+                    // removed the captured piece
+                    if (Board.boardPieces[activePiece.row][activePiece.col] != null) {
+                        for (Piece piece : simPieces)
+                            if (piece.col == activePiece.col && piece.row == activePiece.row)
+                                hitPiece = piece;
+
+                        if (hitPiece != null)
+                            simPieces.remove(hitPiece);
+                    }
 
                     copyPieces(simPieces, pieces);
                     activePiece.updatePosition();
@@ -170,10 +181,10 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new Pawn(WHITE, 1, 6));
         pieces.add(new Pawn(WHITE, 2, 6));
         pieces.add(new Pawn(WHITE, 3, 6));
-        pieces.add(new Pawn(WHITE, 4, 6));
-       // pieces.add(new Pawn(WHITE, 5, 6));
-        pieces.add(new Pawn(WHITE, 6, 6));
-        pieces.add(new Pawn(WHITE, 7, 6));
+        // pieces.add(new Pawn(WHITE, 4, 6));
+        // pieces.add(new Pawn(WHITE, 5, 6));
+        // pieces.add(new Pawn(WHITE, 6, 6));
+        // pieces.add(new Pawn(WHITE, 7, 6));
         pieces.add(new Knight(WHITE, 1, 7));
         pieces.add(new Knight(WHITE, 6, 7));
         pieces.add(new Bishop(WHITE, 2, 7));
@@ -217,8 +228,9 @@ public class GamePanel extends JPanel implements Runnable {
             activePiece.x = mouse.x - Board.HALF_SQUARE_SIZE;
             activePiece.y = mouse.y - Board.HALF_SQUARE_SIZE;
             activePiece.col = activePiece.getCol(activePiece.x);
-            activePiece.row = activePiece.getCol(activePiece.y);
+            activePiece.row = activePiece.getRow(activePiece.y);
             isLegalMove = activePiece.canMove(activePiece.col, activePiece.row);
+
         }
 
         // debug

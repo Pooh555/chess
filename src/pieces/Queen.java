@@ -19,7 +19,7 @@ public class Queen extends Piece {
     @Override
     public boolean canMove(int targetCol, int targetRow) {
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
-            if (Board.boardPieces[targetRow][targetCol] == null) {
+            if (isEmptySquare(targetCol, targetRow)) {
                 // basic queen (rook + bishop) movement
                 if (targetCol == preCol || targetRow == preRow)
                     return true;

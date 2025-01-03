@@ -2,10 +2,12 @@ package pieces;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 import main.Board;
+import main.GamePanel;
 import main.Type;
 
 public class Piece {
@@ -58,6 +60,17 @@ public class Piece {
         return (y + Board.HALF_SQUARE_SIZE) / Board.SQUARE_SIZE;
     }
 
+    /*
+     * public Piece getHitPiece(int targetCol, int targetRow, ArrayList<Piece>
+     * simPieces) {
+     * for (Piece piece : simPieces)
+     * if (piece == Board.boardPieces[targetRow][targetCol])
+     * return piece;
+     * 
+     * return null;
+     * }
+     */
+
     public boolean isWithinBoard(int targetCol, int targetRow) {
         if (targetCol >= 0 && targetCol <= 7 && targetRow >= 0 && targetRow <= 7)
             return true;
@@ -69,6 +82,20 @@ public class Piece {
 
     public boolean isInitialSquare(int targetCol, int targetRow) {
         return targetCol == preCol && targetRow == preRow;
+    }
+
+    public boolean isEmptySquare(int targetCol, int targetRow) {
+        return Board.boardPieces[targetRow][targetCol] == null;
+    }
+
+    public boolean isCapturable(int targetCol, int targetRow) {
+        Piece targetPiece = Board.boardPieces[targetRow][targetCol];
+
+        if (targetPiece != null && targetPiece.color != GamePanel.currentColor
+                && targetPiece.type != Type.KING)
+            return true;
+
+        return false;
     }
 
     public boolean canMove(int targetCol, int targetRow) {
