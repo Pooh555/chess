@@ -115,6 +115,11 @@ public class Piece {
         return false;
     }
 
+    public boolean canCastle(int targetCol, int targetRow) {
+        return false;
+    }
+
+
     public boolean isObstacleOnDiagonalLine(int targetCol, int targetRow) {
         if (targetRow < preRow) {
             // to the top left

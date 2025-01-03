@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Piece> pieces = new ArrayList<>();
     public static ArrayList<Piece> simPieces = new ArrayList<>();
     public static ArrayList<Piece> promotionPieces = new ArrayList<>();
-    public static boolean isLegalMove;
+    public static boolean isLegalMove, isCastle;
     Piece activePiece, hitPiece; // piece that is being held, piece that is about to be captured
     int moveDirection = currentColor ? 1 : -1; // pawn's moving direction
 
@@ -151,7 +151,7 @@ public class GamePanel extends JPanel implements Runnable {
                     if (isLegalMove) {
 
                         // -------------------- //
-                        // move confirmed //
+                        //    move confirmed    //
                         // -------------------- //
                         
                         System.out.println("Legal move.");
@@ -220,14 +220,14 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new King(WHITE, 4, 7));
 
         // black
-        // pieces.add(new Pawn(BLACK, 0, 1));
-        // pieces.add(new Pawn(BLACK, 1, 1));
-        // pieces.add(new Pawn(BLACK, 2, 1));
-        // pieces.add(new Pawn(BLACK, 3, 1));
-        // pieces.add(new Pawn(BLACK, 4, 1));
-        // pieces.add(new Pawn(BLACK, 5, 1));
-        // pieces.add(new Pawn(BLACK, 6, 1));
-        // pieces.add(new Pawn(BLACK, 7, 1));
+        pieces.add(new Pawn(BLACK, 0, 1));
+        pieces.add(new Pawn(BLACK, 1, 1));
+        pieces.add(new Pawn(BLACK, 2, 1));
+        pieces.add(new Pawn(BLACK, 3, 1));
+        pieces.add(new Pawn(BLACK, 4, 1));
+        pieces.add(new Pawn(BLACK, 5, 1));
+        pieces.add(new Pawn(BLACK, 6, 1));
+        pieces.add(new Pawn(BLACK, 7, 1));
         pieces.add(new Knight(BLACK, 1, 0));
         pieces.add(new Knight(BLACK, 6, 0));
         pieces.add(new Bishop(BLACK, 2, 0));
@@ -293,7 +293,7 @@ public class GamePanel extends JPanel implements Runnable {
             activePiece.col = activePiece.getCol(activePiece.x);
             activePiece.row = activePiece.getRow(activePiece.y);
             isLegalMove = activePiece.canMove(activePiece.col, activePiece.row);
-
+            isCastle = activePiece.canCastle(activePiece.col, activePiece.row);
         }
 
         // debug

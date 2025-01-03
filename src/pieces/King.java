@@ -1,5 +1,6 @@
 package pieces;
 
+import main.Board;
 import main.GamePanel;
 import main.Type;
 
@@ -22,6 +23,8 @@ public class King extends Piece {
                 // basic king movement
                 if (Math.abs(targetCol - this.preCol) + Math.abs(targetRow - this.preRow) == 1
                         || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
+                    return true;
+                if (canCastle(targetCol, targetRow));
                     return true;
             } else {
                 // capture
@@ -46,7 +49,33 @@ public class King extends Piece {
             } else {
                 if (Math.abs(targetCol - this.preCol) + Math.abs(targetRow - this.preRow) == 1
                         || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
-                        return true;
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean canCastle(int targetCol, int targetRow) {
+        if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
+            // white
+            if (this.hasMoved == false && this.color == false && Board.boardPieces[targetCol + 1][targetRow] != null) {
+                // short castle
+                if (targetCol == 6 && targetRow == 7 && Board.boardPieces[targetCol + 1][targetRow].hasMoved != true && Board.boardPieces[targetCol + 1][targetRow].color == false)
+                    return true;
+                // long castle
+                if (targetCol == 2 && targetRow == 7 && Board.boardPieces[targetCol - 2][targetRow].hasMoved != true && Board.boardPieces[targetCol + 1][targetRow].color == false)
+                    return true;
+            }
+            // black
+            if (this.hasMoved == false && this.color == true) {
+                // short castle
+                if (targetCol == 6 && targetRow == 0 && Board.boardPieces[targetCol + 1][targetRow].hasMoved != true && Board.boardPieces[targetCol + 1][targetRow].color == true)
+                    return true;
+                // long castle
+                if (targetCol == 2 && targetRow == 0 && Board.boardPieces[targetCol - 2][targetRow].hasMoved != true && Board.boardPieces[targetCol + 1][targetRow].color == true)
+                    return true;
             }
         }
 
