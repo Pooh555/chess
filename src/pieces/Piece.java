@@ -98,7 +98,7 @@ public class Piece {
 
     public boolean canBeCaptured() {
         for (Piece piece : GamePanel.pieces)
-            if (piece != this)
+            if (piece != this && piece.color != this.color)
                 if (piece.canMove(this.col, this.row))
                     return true;
         
