@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -178,13 +179,15 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void simulate() {
         // update the position of the piece being held
-
         if (activePiece != null) {
-            activePiece.isActive = true; // Set dragging flag
-            activePiece.x = mouse.x - Board.SQUARE_SIZE / 2; // Center the piece on the mouse
-            activePiece.y = mouse.y - Board.SQUARE_SIZE / 2;
+            activePiece.isActive = true;
+            activePiece.x = mouse.x - Board.HALF_SQUARE_SIZE;
+            activePiece.y = mouse.y - Board.HALF_SQUARE_SIZE;
+            activePiece.col = activePiece.getCol(activePiece.x);
+            activePiece.row = activePiece.getCol(activePiece.y);
         }
 
+        // debug
         // System.out.println("Piece color: " + activePiece.color + ", piece col: " +
         // activePiece.x / Board.SQUARE_SIZE + ", piece row: " + activePiece.y /
         // Board.SQUARE_SIZE);
@@ -207,6 +210,14 @@ public class GamePanel extends JPanel implements Runnable {
         // draw the pieces
         for (Piece piece : simPieces)
             piece.draw(g2);
+
+        if (activePiece != null) {
+            g2.setColor(Color.WHITE);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+            g2.fillRect(activePiece.col * Board.SQUARE_SIZE, activePiece.row * Board.SQUARE_SIZE, Board.SQUARE_SIZE,
+                    Board.SQUARE_SIZE);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        }
     }
 
     private void drawCroppedImage(Graphics g, BufferedImage image) {

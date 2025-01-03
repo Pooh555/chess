@@ -20,11 +20,12 @@ public class Board {
             SQUARE_SIZE = GamePanel.HEIGHT / 8;
         else
             SQUARE_SIZE = GamePanel.WIDTH / 10;
+        HALF_SQUARE_SIZE = SQUARE_SIZE / 2;
 
         // set board color for each square
         for (int row = 0; row < MAX_ROW; row++) {
             for (int col = 0; col < MAX_COL; col++) {
-                if (count == false) 
+                if (count == false)
                     g2.setColor(LIGHT_SQUARE_COLOR);
                 else
                     g2.setColor(DARK_SQUARE_COLOR);
@@ -33,7 +34,7 @@ public class Board {
 
                 g2.fillRect(col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
             }
-            
+
             count = !count;
         }
 
