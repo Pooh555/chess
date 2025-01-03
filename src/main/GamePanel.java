@@ -157,10 +157,10 @@ public class GamePanel extends JPanel implements Runnable {
 
                     // removed the en passent piece
                     if (activePiece.type == Type.PAWN)
-                        if (Board.boardPieces[activePiece.row][activePiece.col] != null) {
+                        if (Board.boardPieces[activePiece.row - moveDirection][activePiece.col] != null) {
                             for (Piece piece : simPieces)
-                                if (piece.col == activePiece.col && piece.row == activePiece.row
-                                        && piece.color != activePiece.color)
+                                if (piece.col == activePiece.col && piece.row == activePiece.row -moveDirection
+                                        && piece.color != activePiece.color && piece.type == Type.PAWN)
                                     hitPiece = piece;
 
                             if (hitPiece != null)
@@ -248,7 +248,6 @@ public class GamePanel extends JPanel implements Runnable {
         for (Piece piece : simPieces) 
             if (piece.color == currentColor && piece.type == Type.PAWN)
                 piece.resetEnPassentState();
-        
 
         copyPieces(simPieces, pieces);
         activePiece.updatePosition();
