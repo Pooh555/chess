@@ -76,6 +76,9 @@ public class GamePanel extends JPanel implements Runnable {
                 WIDTH = getWidth(); // update WIDTH
                 HEIGHT = getHeight(); // update HEIGHT
 
+                for (Piece piece : pieces)
+                    piece.updatePosition();
+
                 System.out.println("New WIDTH: " + WIDTH + ", New HEIGHT: " + HEIGHT);
             }
         });
@@ -141,7 +144,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if (isLegalMove) {
 
                     // -------------------- //
-                    // move confirmed //
+                    //    move confirmed    //
                     // -------------------- //
 
                     // valid move, update all states
