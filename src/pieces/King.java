@@ -76,17 +76,17 @@ public class King extends Piece {
             // black
             if (this.hasMoved == false && this.color == true) {
                 // short castle
-                if (targetCol + 1 >= 0 && targetCol + 1 < 8 && Board.boardPieces[7][0] != null)
-                    if (targetCol == 6 && targetRow == 0 && Board.boardPieces[7][0].hasMoved != true) {
+                if (targetCol + 1 >= 0 && targetCol + 1 < 8 && Board.boardPieces[0][7] != null)
+                    if (targetCol == 6 && targetRow == 0 && Board.boardPieces[0][7].hasMoved != true) 
+                        if (Board.boardOccupiedByWhite[0][5] == 0 && Board.boardOccupiedByWhite[0][6] == 0)
+                            return true;
+                // long castle
+                if (targetCol - 2 >= 0 && targetCol - 2 < 8 && Board.boardPieces[0][0] != null)
+                    if (targetCol == 2 && targetRow == 0 && Board.boardPieces[0][0].hasMoved != true) {
                         System.out.println("NIGGA");
-                        if (Board.boardOccupiedByWhite[0][5] == 0 && Board.boardOccupiedByBlack[7][0] == 0)
+                        if (Board.boardOccupiedByWhite[0][2] == 0 && Board.boardOccupiedByWhite[0][3] == 0)
                             return true;
                     }
-                // long castle
-                if (targetCol - 2 >= 0 && targetCol - 2 < 8 && Board.boardPieces[targetCol - 2][targetRow] != null)
-                    if (targetCol == 2 && targetRow == 0 && Board.boardPieces[targetCol - 2][targetRow].hasMoved != true)
-                        if (Board.boardOccupiedByWhite[0][2] == 0 && Board.boardOccupiedByBlack[0][3] == 0)
-                            return true;
             }
         }
 
