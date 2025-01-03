@@ -25,7 +25,7 @@ public class King extends Piece {
                         || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
                     return true;
                 if (canCastle(targetCol, targetRow))
-                return true;
+                    return true;
             } else {
                 // capture
                 if (Math.abs(targetCol - this.preCol) + Math.abs(targetRow - this.preRow) == 1
@@ -58,35 +58,34 @@ public class King extends Piece {
 
     @Override
     public boolean canCastle(int targetCol, int targetRow) {
-        if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow) && isObstacleOnStraightLine(targetCol, targetRow) == false) {
+        if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)
+                && isObstacleOnStraightLine(targetCol, targetRow) == false) {
             // white
             if (this.hasMoved == false && this.color == false) {
                 // short castle
                 if (targetCol + 1 >= 0 && targetCol + 1 < 8 && Board.boardPieces[targetCol + 1][targetRow] != null)
-                    if (targetCol == 6 && targetRow == 7 && Board.boardPieces[targetCol + 1][targetRow].hasMoved != true
-                            && Board.boardPieces[targetCol + 1][targetRow].color == false)
+                    if (targetCol == 6 && targetRow == 7 && Board.boardPieces[targetCol + 1][targetRow].hasMoved != true)
                         if (Board.boardOccupiedByBlack[7][5] == 0 && Board.boardOccupiedByBlack[7][6] == 0)
                             return true;
                 // long castle
                 if (targetCol - 2 >= 0 && targetCol - 2 < 8 && Board.boardPieces[targetCol - 2][targetRow] != null)
-                    if (targetCol == 2 && targetRow == 7 && Board.boardPieces[targetCol - 2][targetRow].hasMoved != true
-                            && Board.boardPieces[targetCol - 2][targetRow].color == false)
+                    if (targetCol == 2 && targetRow == 7 && Board.boardPieces[targetCol - 2][targetRow].hasMoved != true)
                         if (Board.boardOccupiedByBlack[7][2] == 0 && Board.boardOccupiedByBlack[7][3] == 0)
                             return true;
             }
             // black
             if (this.hasMoved == false && this.color == true) {
                 // short castle
-                if (targetCol + 1 >= 0 && targetCol + 1 < 8 && Board.boardPieces[targetCol + 1][targetRow] != null)
-                    if (targetCol == 6 && targetRow == 0 && Board.boardPieces[targetCol + 1][targetRow].hasMoved != true
-                            && Board.boardPieces[targetCol + 1][targetRow].color == true)
-                        if (Board.boardOccupiedByBlack[0][5] == 0 && Board.boardOccupiedByBlack[7][0] == 0)
+                if (targetCol + 1 >= 0 && targetCol + 1 < 8 && Board.boardPieces[7][0] != null)
+                    if (targetCol == 6 && targetRow == 0 && Board.boardPieces[7][0].hasMoved != true) {
+                        System.out.println("NIGGA");
+                        if (Board.boardOccupiedByWhite[0][5] == 0 && Board.boardOccupiedByBlack[7][0] == 0)
                             return true;
+                    }
                 // long castle
                 if (targetCol - 2 >= 0 && targetCol - 2 < 8 && Board.boardPieces[targetCol - 2][targetRow] != null)
-                    if (targetCol == 2 && targetRow == 0 && Board.boardPieces[targetCol - 2][targetRow].hasMoved != true
-                            && Board.boardPieces[targetCol - 2][targetRow].color == true)
-                        if (Board.boardOccupiedByBlack[0][2] == 0 && Board.boardOccupiedByBlack[0][3] == 0)
+                    if (targetCol == 2 && targetRow == 0 && Board.boardPieces[targetCol - 2][targetRow].hasMoved != true)
+                        if (Board.boardOccupiedByWhite[0][2] == 0 && Board.boardOccupiedByBlack[0][3] == 0)
                             return true;
             }
         }

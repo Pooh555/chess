@@ -187,13 +187,17 @@ public class GamePanel extends JPanel implements Runnable {
                             // black long castle
                             if (activePiece.col == 2 && activePiece.row == 0)
                                 for (Piece piece : simPieces)
-                                    if (piece.type == Type.ROOK && piece.col == 0 && piece.row == 0)
+                                    if (piece.type == Type.ROOK && piece.col == 0 && piece.row == 0) {
                                         piece.col = 3;
+                                        System.out.println("O-O-O by black.");
+                                    }
                             // black short castle
                             if (activePiece.col == 6 && activePiece.row == 0)
                                 for (Piece piece : simPieces)
-                                    if (piece.type == Type.ROOK && piece.col == 7 && piece.row == 0)
+                                    if (piece.type == Type.ROOK && piece.col == 7 && piece.row == 0) {
                                         piece.col = 5;
+                                        System.out.println("O-O-O by black.");
+                                    }
                         }
 
                         // Promotion
