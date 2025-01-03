@@ -28,14 +28,20 @@ public class Pawn extends Piece {
             if (isEmptySquare(targetCol, targetRow)) {
                 // basic queen (rook + bishop) movement
                 if (!isObstacleOnStraightLine(targetCol, targetRow)) {
+                    // 1 square move
                     if (targetCol == preCol && targetRow - preRow == moveDirection)
                         return true;
+                    // 2 square move
                     if (targetCol == preCol && targetRow - preRow == 2 * moveDirection && hasMoved == false) 
                         return true;
                 }
             } else {
+                // capture
                 if (targetRow == preRow + moveDirection && (targetCol == preCol + 1 || targetCol == preCol - 1) && isCapturable(targetCol, targetRow))
                     return true;
+                // en passent
+                if (targetRow == preRow + moveDirection && (targetCol == preCol + 1 || targetCol == preCol - 1) && isCapturable(targetCol, targetRow - 1));
+                 // TODO: sth
             }
         }
 

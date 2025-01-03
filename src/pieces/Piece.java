@@ -14,7 +14,7 @@ public class Piece {
     public BufferedImage image; // piece icon
     public int x, y; // piece's position in pixels
     public int col, row, preCol, preRow; // piece's position in row and column
-    public boolean color, isActive, hasMoved = false; // piece's , active?, has moved?
+    public boolean color, isActive, hasMoved, canBeEnPassent; // piece's , active?, has moved?
 
     public Piece(boolean color, int col, int row) {
         this.color = color;
@@ -184,6 +184,11 @@ public class Piece {
     }
 
     public void updatePosition() {
+        // used to check for en passent in the next tempo
+        if (type == Type.PAWN)
+            if (Math.abs(row - preRow) == 2)
+                canBeEnPassent = true;
+
         x = getX(col);
         y = getY(row);
         preCol = getCol(x);

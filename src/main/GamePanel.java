@@ -153,9 +153,10 @@ public class GamePanel extends JPanel implements Runnable {
                     // removed the captured piece
                     if (Board.boardPieces[activePiece.row][activePiece.col] != null) {
                         for (Piece piece : simPieces)
-                            if (piece.col == activePiece.col && piece.row == activePiece.row)
+                            if (piece.col == activePiece.col && piece.row == activePiece.row && piece.color != activePiece.color)
                                 hitPiece = piece;
 
+                        System.out.println(hitPiece.color);
                         if (hitPiece != null)
                             simPieces.remove(hitPiece);
                     }
@@ -164,6 +165,8 @@ public class GamePanel extends JPanel implements Runnable {
                     activePiece.updatePosition();
 
                     activePiece = null;
+
+                    currentColor = !currentColor;
                 } else {
                     // invalid move, reset all states
                     System.out.println("Illegal move.");
