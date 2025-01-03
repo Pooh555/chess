@@ -159,7 +159,7 @@ public class GamePanel extends JPanel implements Runnable {
                         // set active piece state
                         activePiece.hasMoved = true;
                         activePiece.updatePosition();
-                    
+
                         // removed the captured piece
                         if (Board.boardPieces[activePiece.row][activePiece.col] != null) {
                             for (Piece piece : simPieces)
@@ -215,16 +215,19 @@ public class GamePanel extends JPanel implements Runnable {
                                     }
                         }
 
+                        board.clearBoard();
+                        board.updatePiecePositions(pieces);
                         board.updateOccupiedTerratory();
                         board.printOccupiedBoard();
+
+                        System.out.println("WHAT THE");
 
                         // check for checkmate
                         if (isCheckmate()) {
                             System.out.println(currentColor + " wins.");
 
                             gameStatus = false;
-                        }
-                        else {
+                        } else {
                             // Promotion
                             if (promote()) {
                                 activePiece.updatePosition();
@@ -388,10 +391,16 @@ public class GamePanel extends JPanel implements Runnable {
 
         System.out.println("King's color is " + king.color);
 
-        if (king.canMoveSim()) 
+        if (king.isPieceUnderAttack()) {
+            if (king.canMoveSim())
+                return false;
+
+            return true;
+        } else {
             return false;
-    
-        return true;
+        }
+
+        // return false;
     }
 
     private Piece getKing() {

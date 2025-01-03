@@ -73,8 +73,9 @@ public class Board {
          * 1: occupied by white
          * 2: occupied by black
          */
+        clearOccupiedBoard();
 
-        for (Piece piece : GamePanel.simPieces) {
+        for (Piece piece : GamePanel.pieces) {
             for (int row = 0; row < MAX_ROW; row++)
                 for (int col = 0; col < MAX_COL; col++) {
                     // check for white's occupied squares

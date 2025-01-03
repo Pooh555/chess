@@ -207,4 +207,16 @@ public class King extends Piece {
 
         return false;
     }
+
+    public boolean isPieceUnderAttack() {
+        // is the king in check
+        if (GamePanel.currentColor == GamePanel.WHITE)
+            if (Board.boardOccupiedByBlack[this.row][this.col] == 1)
+                return true;
+        if (GamePanel.currentColor == GamePanel.BLACK)
+            if (Board.boardOccupiedByWhite[this.row][this.col] == 1)
+                return true;
+
+        return false;
+    }
 }
