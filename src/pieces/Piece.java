@@ -21,7 +21,7 @@ public class Piece {
         this.row = row;
 
         x = getX(col);
-        y = gety(row);
+        y = getY(row);
 
         preCol = col;
         preRow = row;
@@ -46,7 +46,7 @@ public class Piece {
         return col * Board.SQUARE_SIZE;
     }
 
-    public int gety(int row) {
+    public int getY(int row) {
         return row * Board.SQUARE_SIZE;
     }
 
@@ -58,12 +58,31 @@ public class Piece {
         return (y + Board.HALF_SQUARE_SIZE) / Board.SQUARE_SIZE;
     }
 
+    public boolean isWithinBoard(int targetCol, int targetRow) {
+        if (targetCol >= 0 && targetCol <= 7 && targetRow >= 0 && targetRow <= 7)
+            return true;
+        else
+            System.out.println("Exception: Piece is out of bound.");
+
+        return false;
+    }
+
+    public boolean canMove(int targetCol, int targetRow) {
+        return false;
+    }
+
     public void updatePosition() {
         x = getX(col);
-        y = gety(row);
+        y = getY(row);
         preCol = getCol(x);
         preRow = getRow(y);
+    }
 
+    public void resetPosition() {
+        col = preCol;
+        row = preRow;
+        x = getX(col);
+        y = getY(row);
     }
 
     public void draw(Graphics2D g2) {
@@ -71,7 +90,7 @@ public class Piece {
             g2.drawImage(image, x, y, Board.SQUARE_SIZE, Board.SQUARE_SIZE, null);
         else {
             x = getX(col);
-            y = gety(row);
+            y = getY(row);
 
             g2.drawImage(image, x, y, Board.SQUARE_SIZE, Board.SQUARE_SIZE, null);
         }

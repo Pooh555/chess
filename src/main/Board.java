@@ -9,7 +9,7 @@ import pieces.Piece;
 public class Board {
     final static int MAX_COL = 8; // a chessboard consists of 8 columns
     final static int MAX_ROW = 8; // a chessboard consists of 8 rows
-    public static Piece[][] piecePositions = new Piece[MAX_ROW][MAX_COL]; // an array to store pieces positions on the
+    public static Piece[][] boardPieces = new Piece[MAX_ROW][MAX_COL]; // an array to store pieces positions on the
                                                                           // board
     public static int SQUARE_SIZE = GamePanel.HEIGHT / 10;
     public static int HALF_SQUARE_SIZE = SQUARE_SIZE / 2;
@@ -19,12 +19,12 @@ public class Board {
     public void clearBoard() {
         for (int row = 0; row < MAX_ROW; row++)
             for (int col = 0; col < MAX_COL; col++)
-                piecePositions[row][col] = null;
+                boardPieces[row][col] = null;
     }
 
     public void updatePiecePositions(ArrayList<Piece> pieces) {
         for (Piece piece : pieces)
-            piecePositions[piece.row][piece.col] = piece;
+            boardPieces[piece.row][piece.col] = piece;
     }
 
     public void draw(Graphics2D g2) {
@@ -59,8 +59,8 @@ public class Board {
     public void printBoard() {
         for (int row = 0; row < MAX_ROW; row++) {
             for (int col = 0; col < MAX_COL; col++) {
-                if (piecePositions[row][col] != null)
-                    System.out.print(piecePositions[row][col].type + " ");
+                if (boardPieces[row][col] != null)
+                    System.out.print(boardPieces[row][col].type + " ");
                 else
                 System.out.print("    ");
             }

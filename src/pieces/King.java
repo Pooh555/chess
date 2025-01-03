@@ -1,5 +1,6 @@
 package pieces;
 
+import main.Board;
 import main.GamePanel;
 import main.Type;
 
@@ -13,5 +14,15 @@ public class King extends Piece {
             image = getImage("w-king");
         else
             image = getImage("b-king");
+    } 
+
+    @Override
+    public boolean canMove(int targetCol, int targetRow) {
+        if (isWithinBoard(targetCol, targetRow)) {
+            if (Board.boardPieces[targetRow][targetCol] == null)
+                return true;
+        }
+
+        return false;
     }
 }
