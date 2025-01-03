@@ -14,7 +14,7 @@ public class Piece {
     public BufferedImage image; // piece icon
     public int x, y; // piece's position in pixels
     public int col, row, preCol, preRow; // piece's position in row and column
-    public boolean color, isActive; // piece's color
+    public boolean color, isActive, hasMoved = false; // piece's , active?, has moved?
 
     public Piece(boolean color, int col, int row) {
         this.color = color;

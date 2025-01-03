@@ -147,6 +147,9 @@ public class GamePanel extends JPanel implements Runnable {
                     // valid move, update all states
                     System.out.println("Legal move.");
 
+                    // set active piece state
+                    activePiece.hasMoved = true;
+
                     // removed the captured piece
                     if (Board.boardPieces[activePiece.row][activePiece.col] != null) {
                         for (Piece piece : simPieces)
