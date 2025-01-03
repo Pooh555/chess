@@ -38,11 +38,12 @@ public class GamePanel extends JPanel implements Runnable {
     // pieces
     public static ArrayList<Piece> pieces = new ArrayList<>();
     public static ArrayList<Piece> simPieces = new ArrayList<>();
-    Piece activePiece; // piece that is being held or selected
+    Piece activePiece; // piece that is being held
 
     // color
     private BufferedImage backgroundImage;
     static String backgroundImagePath = "/res/wallpaper/wallpaper.jpg";
+    public static final Color ACTIVE_SQUARE_COLOR = new Color(255, 255, 255);
     public static final boolean WHITE = false;
     public static final boolean BLACK = true;
     boolean currentColor = WHITE; // the game starts with white
@@ -121,12 +122,18 @@ public class GamePanel extends JPanel implements Runnable {
                             && piece.row == mouse.y / Board.SQUARE_SIZE) {
                         activePiece = piece;
 
-                        System.out.println("piece col: " + piece.col + ", piece row: " + piece.row + ", square size: "
-                                + Board.SQUARE_SIZE);
+                        // System.out.println("piece col: " + piece.col + ", piece row: " + piece.row +
+                        // ", square size: " + Board.SQUARE_SIZE);
                     }
             } else {
                 // if the player is holding a piece, simulate a calculating (thinking) phase
                 simulate();
+            }
+        }
+        if(mouse.isPressed == false) {
+            if (activePiece != null) {
+                activePiece.updatePosition();
+                activePiece = null;
             }
         }
     }
@@ -212,11 +219,14 @@ public class GamePanel extends JPanel implements Runnable {
             piece.draw(g2);
 
         if (activePiece != null) {
-            g2.setColor(Color.WHITE);
+            // Display active square color
+            g2.setColor(ACTIVE_SQUARE_COLOR);
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
             g2.fillRect(activePiece.col * Board.SQUARE_SIZE, activePiece.row * Board.SQUARE_SIZE, Board.SQUARE_SIZE,
                     Board.SQUARE_SIZE);
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+
+            activePiece.draw(g2);
         }
     }
 
