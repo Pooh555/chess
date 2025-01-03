@@ -58,6 +58,11 @@ public class King extends Piece {
 
     @Override
     public boolean canCastle(int targetCol, int targetRow) {
+        
+        /*
+         * I'm done. I'm just gonna hard code. :P
+         */
+
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)
                 && isObstacleOnStraightLine(targetCol, targetRow) == false) {
             // white
