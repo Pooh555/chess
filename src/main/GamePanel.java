@@ -215,6 +215,7 @@ public class GamePanel extends JPanel implements Runnable {
                                     }
                         }
 
+                        board.updateOccupiedTerratory();
                         board.printOccupiedBoard();
                         
                         // check for checkmate
@@ -262,14 +263,14 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new King(WHITE, 4, 7));
 
         // black
-        // pieces.add(new Pawn(BLACK, 0, 1));
-        // pieces.add(new Pawn(BLACK, 1, 1));
-        // pieces.add(new Pawn(BLACK, 2, 1));
-        // pieces.add(new Pawn(BLACK, 3, 1));
-        // pieces.add(new Pawn(BLACK, 4, 1));s
-        // pieces.add(new Pawn(BLACK, 5, 1));
-        // pieces.add(new Pawn(BLACK, 6, 1));
-        // pieces.add(new Pawn(BLACK, 7, 1));
+        pieces.add(new Pawn(BLACK, 0, 1));
+        pieces.add(new Pawn(BLACK, 1, 1));
+        pieces.add(new Pawn(BLACK, 2, 1));
+        pieces.add(new Pawn(BLACK, 3, 1));
+        pieces.add(new Pawn(BLACK, 4, 1));
+        pieces.add(new Pawn(BLACK, 5, 1));
+        pieces.add(new Pawn(BLACK, 6, 1));
+        pieces.add(new Pawn(BLACK, 7, 1));
         pieces.add(new Knight(BLACK, 1, 0));
         pieces.add(new Knight(BLACK, 6, 0));
         pieces.add(new Bishop(BLACK, 2, 0));
@@ -387,18 +388,22 @@ public class GamePanel extends JPanel implements Runnable {
         System.out.println("King's color is " + king.color);
 
         if (king.isPieceUnderAttack()) {
-            if (king.canMoveSim())
+            System.out.println("The king is in check.");
+
+            if (king.canMoveSim()) {
+                System.out.println("The king can escape check.");
                 return false;
+            }
             
-            if (activePiece.canBeCaptured())
+            if (activePiece.canBeCaptured()) {
+                System.out.println("The attacking piece can be captured.");
                 return false;
+            }
 
             return true;
-        } else {
-            return false;
         }
-
-        // return false;
+        
+        return false;
     }
 
     private Piece getKing() {
