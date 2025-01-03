@@ -58,58 +58,6 @@ public class King extends Piece {
 
     @Override
     public boolean canMoveSim() {
-        if (GamePanel.currentColor == GamePanel.BLACK) {
-            System.out.println("Looking for checkmate for black.");
-
-            if ((this.row - 1 >= 0 && this.row - 1 < 7) && (this.col - 1 >= 0 && this.col - 1 < 7))
-                if (Board.boardOccupiedByBlack[this.row - 1][this.col - 1] == 0)
-                    if (Board.boardPieces[this.row - 1][this.col - 1] == null)
-                        return true;
-                    else if (Board.boardPieces[this.row - 1][this.col - 1].color != this.color)
-                        return true;
-            if ((this.row - 1 >= 0 && this.row - 1 < 7) && (this.col >= 0 && this.col < 7))
-                if (Board.boardOccupiedByBlack[this.row - 1][this.col] == 0)
-                    if (Board.boardPieces[this.row - 1][this.col] == null)
-                        return true;
-                    else if (Board.boardPieces[this.row - 1][this.col].color != this.color)
-                        return true;
-            if ((this.row - 1 >= 0 && this.row - 1 < 7) && (this.col + 1 >= 0 && this.col + 1 < 7))
-                if (Board.boardOccupiedByBlack[this.row - 1][this.col + 1] == 0)
-                    if (Board.boardPieces[this.row - 1][this.col + 1] == null)
-                        return true;
-                    else if (Board.boardPieces[this.row - 1][this.col + 1].color != this.color)
-                        return true;
-            if ((this.row >= 0 && this.row < 7) && (this.col - 1 >= 0 && this.col - 1 < 7))
-                if (Board.boardOccupiedByBlack[this.row][this.col - 1] == 0)
-                    if (Board.boardPieces[this.row][this.col - 1] == null)
-                        return true;
-                    else if (Board.boardPieces[this.row][this.col - 1].color != this.color)
-                        return true;
-            if ((this.row >= 0 && this.row < 7) && (this.col + 1 >= 0 && this.col + 1 < 7))
-                if (Board.boardOccupiedByBlack[this.row][this.col + 1] == 0)
-                    if (Board.boardPieces[this.row][this.col + 1] == null)
-                        return true;
-                    else if (Board.boardPieces[this.row][this.col + 1].color != this.color)
-                        return true;
-            if ((this.row + 1 >= 0 && this.row + 1 < 7) && (this.col - 1 >= 0 && this.col - 1 < 7))
-                if (Board.boardOccupiedByBlack[this.row + 1][this.col - 1] == 0)
-                    if (Board.boardPieces[this.row + 1][this.col - 1] == null)
-                        return true;
-                    else if (Board.boardPieces[this.row + 1][this.col - 1].color != this.color)
-                        return true;
-            if ((this.row + 1 >= 0 && this.row + 1 < 7) && (this.col >= 0 && this.col < 7))
-                if (Board.boardOccupiedByBlack[this.row + 1][this.col] == 0)
-                    if (Board.boardPieces[this.row + 1][this.col] == null)
-                        return true;
-                    else if (Board.boardPieces[this.row + 1][this.col].color != this.color)
-                        return true;
-            if ((this.row + 1 >= 0 && this.row + 1 < 7) && (this.col + 1 >= 0 && this.col + 1 < 7))
-                if (Board.boardOccupiedByBlack[this.row + 1][this.col + 1] == 0)
-                    if (Board.boardPieces[this.row + 1][this.col + 1] == null)
-                        return true;
-                    else if (Board.boardPieces[this.row + 1][this.col + 1].color != this.color)
-                        return true;
-        }
         if (GamePanel.currentColor == GamePanel.WHITE) {
             System.out.println("Looking for checkmate for white.");
 
@@ -157,6 +105,58 @@ public class King extends Piece {
                         return true;
             if ((this.row + 1 >= 0 && this.row + 1 < 7) && (this.col + 1 >= 0 && this.col + 1 < 7))
                 if (Board.boardOccupiedByWhite[this.row + 1][this.col + 1] == 0)
+                    if (Board.boardPieces[this.row + 1][this.col + 1] == null)
+                        return true;
+                    else if (Board.boardPieces[this.row + 1][this.col + 1].color != this.color)
+                        return true;
+        }
+        if (GamePanel.currentColor == GamePanel.BLACK) {
+            System.out.println("Looking for checkmate for black.");
+
+            if ((this.row - 1 >= 0 && this.row - 1 < 7) && (this.col - 1 >= 0 && this.col - 1 < 7))
+                if (Board.boardOccupiedByBlack[this.row - 1][this.col - 1] == 0)
+                    if (Board.boardPieces[this.row - 1][this.col - 1] == null)
+                        return true;
+                    else if (Board.boardPieces[this.row - 1][this.col - 1].color != this.color)
+                        return true;
+            if ((this.row - 1 >= 0 && this.row - 1 < 7) && (this.col >= 0 && this.col < 7))
+                if (Board.boardOccupiedByBlack[this.row - 1][this.col] == 0)
+                    if (Board.boardPieces[this.row - 1][this.col] == null)
+                        return true;
+                    else if (Board.boardPieces[this.row - 1][this.col].color != this.color)
+                        return true;
+            if ((this.row - 1 >= 0 && this.row - 1 < 7) && (this.col + 1 >= 0 && this.col + 1 < 7))
+                if (Board.boardOccupiedByBlack[this.row - 1][this.col + 1] == 0)
+                    if (Board.boardPieces[this.row - 1][this.col + 1] == null)
+                        return true;
+                    else if (Board.boardPieces[this.row - 1][this.col + 1].color != this.color)
+                        return true;
+            if ((this.row >= 0 && this.row < 7) && (this.col - 1 >= 0 && this.col - 1 < 7))
+                if (Board.boardOccupiedByBlack[this.row][this.col - 1] == 0)
+                    if (Board.boardPieces[this.row][this.col - 1] == null)
+                        return true;
+                    else if (Board.boardPieces[this.row][this.col - 1].color != this.color)
+                        return true;
+            if ((this.row >= 0 && this.row < 7) && (this.col + 1 >= 0 && this.col + 1 < 7))
+                if (Board.boardOccupiedByBlack[this.row][this.col + 1] == 0)
+                    if (Board.boardPieces[this.row][this.col + 1] == null)
+                        return true;
+                    else if (Board.boardPieces[this.row][this.col + 1].color != this.color)
+                        return true;
+            if ((this.row + 1 >= 0 && this.row + 1 < 7) && (this.col - 1 >= 0 && this.col - 1 < 7))
+                if (Board.boardOccupiedByBlack[this.row + 1][this.col - 1] == 0)
+                    if (Board.boardPieces[this.row + 1][this.col - 1] == null)
+                        return true;
+                    else if (Board.boardPieces[this.row + 1][this.col - 1].color != this.color)
+                        return true;
+            if ((this.row + 1 >= 0 && this.row + 1 < 7) && (this.col >= 0 && this.col < 7))
+                if (Board.boardOccupiedByBlack[this.row + 1][this.col] == 0)
+                    if (Board.boardPieces[this.row + 1][this.col] == null)
+                        return true;
+                    else if (Board.boardPieces[this.row + 1][this.col].color != this.color)
+                        return true;
+            if ((this.row + 1 >= 0 && this.row + 1 < 7) && (this.col + 1 >= 0 && this.col + 1 < 7))
+                if (Board.boardOccupiedByBlack[this.row + 1][this.col + 1] == 0)
                     if (Board.boardPieces[this.row + 1][this.col + 1] == null)
                         return true;
                     else if (Board.boardPieces[this.row + 1][this.col + 1].color != this.color)
