@@ -41,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Piece> simPieces = new ArrayList<>();
     public static boolean isLegalMove;
     Piece activePiece, hitPiece; // piece that is being held, piece that is about to be captured
+    int moveDirection = currentColor ? 1 : -1; // pawn's moving direction
 
     // color
     private BufferedImage backgroundImage;
@@ -154,20 +155,21 @@ public class GamePanel extends JPanel implements Runnable {
                             simPieces.remove(hitPiece);
                     }
 
-                    copyPieces(simPieces, pieces);
-                    activePiece.updatePosition();
+                    // removed the en passent piece
+                    if (activePiece.type == Type.PAWN)
+                        if (Board.boardPieces[activePiece.row][activePiece.col] != null) {
+                            for (Piece piece : simPieces)
+                                if (piece.col == activePiece.col && piece.row == activePiece.row
+                                        && piece.color != activePiece.color)
+                                    hitPiece = piece;
 
-                    activePiece = null;
+                            if (hitPiece != null)
+                                simPieces.remove(hitPiece);
+                        }
 
-                    currentColor = !currentColor;
+                    changeTurn();
                 } else {
-                    // invalid move, reset all states
-                    System.out.println("Illegal move.");
-
-                    copyPieces(pieces, simPieces);
-                    activePiece.resetPosition();
-
-                    activePiece = null;
+                    resetPositionState();
                 }
 
             }
@@ -239,6 +241,35 @@ public class GamePanel extends JPanel implements Runnable {
         // System.out.println("piece x: " + activePiece.x + ", piece y: " +
         // activePiece.y);
         // System.out.println("mouse x: " + mouse.x + ", mouse y: " + mouse.y);
+    }
+
+    private void changeTurn() {
+        // reset en passent state
+        for (Piece piece : simPieces) 
+            if (piece.color == currentColor && piece.type == Type.PAWN)
+                piece.resetEnPassentState();
+        
+
+        copyPieces(simPieces, pieces);
+        activePiece.updatePosition();
+        currentColor = !currentColor; // change color
+        moveDirection = currentColor ? 1 : -1; // change pawn's move direction based on the active color
+        activePiece = null;
+
+        
+
+        System.out.println("Legal move, the side has changed.");
+        System.out.print("current player: " + currentColor + ", pawn's direction: " + moveDirection);
+    }
+
+    private void resetPositionState() {
+        // invalid move, reset all states
+        System.out.println("Illegal move, position's states are reset.");
+
+        copyPieces(pieces, simPieces);
+        activePiece.resetPosition();
+
+        activePiece = null;
     }
 
     public void paintComponent(Graphics g) {

@@ -30,10 +30,8 @@ public class Pawn extends Piece {
                 // basic queen (rook + bishop) movement
                 if (!isObstacleOnStraightLine(targetCol, targetRow)) {
                     // 1 square move
-                    if (targetCol == preCol && targetRow - preRow == moveDirection) {
-                        canBeEnPassent = false;
+                    if (targetCol == preCol && targetRow - preRow == moveDirection)
                         return true;
-                    }
                     // 2 square move
                     if (targetCol == preCol && targetRow - preRow == 2 * moveDirection && hasMoved == false) {
                         canBeEnPassent = true;
@@ -43,17 +41,13 @@ public class Pawn extends Piece {
                 // en passent
                 if ((targetCol == preCol + 1 || targetCol == preCol - 1) && targetRow - preRow == moveDirection)
                     if (isCapturable(targetCol, targetRow - moveDirection)
-                            && Board.boardPieces[targetRow - moveDirection][targetCol].canBeEnPassent) {
-                        canBeEnPassent = false;
+                            && Board.boardPieces[targetRow - moveDirection][targetCol].canBeEnPassent) 
                         return true;
-                    }
             } else {
                 // capture
                 if (targetRow - preRow == moveDirection && (targetCol == preCol + 1 || targetCol == preCol - 1)
-                        && isCapturable(targetCol, targetRow)) {
-                    canBeEnPassent = false;
+                        && isCapturable(targetCol, targetRow)) 
                     return true;
-                }
             }
         }
 

@@ -183,6 +183,10 @@ public class Piece {
         return false;
     }
 
+    public void resetEnPassentState() {
+        canBeEnPassent = false;
+    }
+
     public void updatePosition() {
         // used to check for en passent in the next tempo
         if (type == Type.PAWN)
