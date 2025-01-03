@@ -1,6 +1,5 @@
 package pieces;
 
-import main.Board;
 import main.GamePanel;
 import main.Type;
 
@@ -20,7 +19,7 @@ public class Knight extends Piece {
 
     public boolean canMove(int targetCol, int targetRow) {
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
-            if (Board.boardPieces[targetRow][targetCol] == null) {
+            if (isEmptySquare(targetCol, targetRow)) {
                 // basic knight movement
                 if (Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 2)
                     return true;

@@ -1,6 +1,5 @@
 package pieces;
 
-import main.Board;
 import main.GamePanel;
 import main.Type;
 

@@ -1,6 +1,5 @@
 package pieces;
 
-import main.Board;
 import main.GamePanel;
 import main.Type;
 
@@ -21,13 +20,20 @@ public class Queen extends Piece {
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
             if (isEmptySquare(targetCol, targetRow)) {
                 // basic queen (rook + bishop) movement
-                if (targetCol == preCol || targetRow == preRow
-                        || Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
-                    return true;
+                if (!isObstacleOnStraightLine(targetCol, targetRow))
+                    if (targetCol == preCol || targetRow == preRow)
+                        return true;
+                if (!isObstacleOnDiagonalLine(targetCol, targetRow))
+                    if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
+                        return true;
             } else {
-                if (targetCol == preCol || targetRow == preRow
-                        || Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
-                    if (isCapturable(targetCol, targetRow))
+                if (!isObstacleOnStraightLine(targetCol, targetRow))
+                    if (isCapturable(targetCol, targetRow) && targetCol == preCol
+                            || targetRow == preRow)
+                        return true;
+                if (!isObstacleOnDiagonalLine(targetCol, targetRow))
+                    if (isCapturable(targetCol, targetRow)
+                            && Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
                         return true;
             }
         }

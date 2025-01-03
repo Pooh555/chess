@@ -1,6 +1,5 @@
 package pieces;
 
-import main.Board;
 import main.GamePanel;
 import main.Type;
 
@@ -19,14 +18,15 @@ public class Bishop extends Piece {
     @Override
     public boolean canMove(int targetCol, int targetRow) {
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
-            if (isEmptySquare(targetCol, targetRow)) {
+            if (isEmptySquare(targetCol, targetRow) && !isObstacleOnDiagonalLine(targetCol, targetRow)) {
                 // basic bishop movement
                 if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
                     return true;
             } else {
-                if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
-                    if (isCapturable(targetCol, targetRow))
-                        return true;
+                if (!isObstacleOnDiagonalLine(targetCol, targetRow))
+                    if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
+                        if (isCapturable(targetCol, targetRow))
+                            return true;
             }
         }
 
