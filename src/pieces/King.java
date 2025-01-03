@@ -18,10 +18,9 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(int targetCol, int targetRow) {
-        if (isWithinBoard(targetCol, targetRow)) {
-            // System.out.println("precol: " + this.preCol + ", prerow: " + this.preRow);
-            
+        if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {           
             if (Board.boardPieces[targetRow][targetCol] == null)
+            // basic king movement
                 if (Math.abs(targetCol - this.preCol) + Math.abs(targetRow - this.preRow) == 1
                         || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
                     return true;

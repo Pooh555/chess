@@ -136,7 +136,7 @@ public class GamePanel extends JPanel implements Runnable {
                     }
             } else {
                 // if the player is holding a piece, simulate a calculating (thinking) phase
-                /// board.printBoard();
+                board.printBoard();
                 simulate();
             }
         }

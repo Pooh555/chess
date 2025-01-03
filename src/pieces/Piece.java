@@ -67,6 +67,10 @@ public class Piece {
         return false;
     }
 
+    public boolean isInitialSquare(int targetCol, int targetRow) {
+        return targetCol == preCol && targetRow == preRow;
+    }
+
     public boolean canMove(int targetCol, int targetRow) {
         return false;
     }
