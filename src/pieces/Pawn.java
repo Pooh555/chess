@@ -1,5 +1,6 @@
 package pieces;
 
+import main.Board;
 import main.GamePanel;
 import main.Type;
 
@@ -29,19 +30,30 @@ public class Pawn extends Piece {
                 // basic queen (rook + bishop) movement
                 if (!isObstacleOnStraightLine(targetCol, targetRow)) {
                     // 1 square move
-                    if (targetCol == preCol && targetRow - preRow == moveDirection)
+                    if (targetCol == preCol && targetRow - preRow == moveDirection) {
+                        canBeEnPassent = false;
                         return true;
+                    }
                     // 2 square move
-                    if (targetCol == preCol && targetRow - preRow == 2 * moveDirection && hasMoved == false) 
+                    if (targetCol == preCol && targetRow - preRow == 2 * moveDirection && hasMoved == false) {
+                        canBeEnPassent = true;
                         return true;
+                    }
                 }
+                // en passent
+                if ((targetCol == preCol + 1 || targetCol == preCol - 1) && targetRow - preRow == moveDirection)
+                    if (isCapturable(targetCol, targetRow - moveDirection)
+                            && Board.boardPieces[targetRow - moveDirection][targetCol].canBeEnPassent) {
+                        canBeEnPassent = false;
+                        return true;
+                    }
             } else {
                 // capture
-                if (targetRow == preRow + moveDirection && (targetCol == preCol + 1 || targetCol == preCol - 1) && isCapturable(targetCol, targetRow))
+                if (targetRow - preRow == moveDirection && (targetCol == preCol + 1 || targetCol == preCol - 1)
+                        && isCapturable(targetCol, targetRow)) {
+                    canBeEnPassent = false;
                     return true;
-                // en passent
-                if (targetRow == preRow + moveDirection && (targetCol == preCol + 1 || targetCol == preCol - 1) && isCapturable(targetCol, targetRow - 1));
-                 // TODO: sth
+                }
             }
         }
 

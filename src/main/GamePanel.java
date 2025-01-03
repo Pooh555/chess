@@ -7,7 +7,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.lang.Thread;
 import java.util.ArrayList;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
@@ -151,7 +150,6 @@ public class GamePanel extends JPanel implements Runnable {
                                     && piece.color != activePiece.color)
                                 hitPiece = piece;
 
-                        System.out.println(hitPiece.color);
                         if (hitPiece != null)
                             simPieces.remove(hitPiece);
                     }
