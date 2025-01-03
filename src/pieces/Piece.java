@@ -69,17 +69,6 @@ public class Piece {
         return 0;
     }
 
-    /*
-     * public Piece getHitPiece(int targetCol, int targetRow, ArrayList<Piece>
-     * simPieces) {
-     * for (Piece piece : simPieces)
-     * if (piece == Board.boardPieces[targetRow][targetCol])
-     * return piece;
-     * 
-     * return null;
-     * }
-     */
-
     public boolean canMove(int targetCol, int targetRow) {
         return false;
     }
