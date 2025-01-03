@@ -79,8 +79,9 @@ public class GamePanel extends JPanel implements Runnable {
             }
         });
 
+        board.clearBoard(); // clear the chessboard
         setPieces(); // set up the pieces on the board
-        copyPieces(pieces, simPieces); // copi'es the static pieces' positions to dynamic pieces' positions
+        copyPieces(pieces, simPieces); // copy the static pieces' positions to dynamic pieces' positions
     }
 
     public void launchGame() {
@@ -114,6 +115,9 @@ public class GamePanel extends JPanel implements Runnable {
         if (mouse.isPressed) {
             // check if the player is holding a piece
             if (activePiece == null) {
+                board.clearBoard(); // clear the chessboard
+                board.updatePiecePositions(pieces); // update pieces' positions on the board 
+                
                 // if the player is not holding a piece, pick the piece on the current square
                 // with the same color up
                 for (Piece piece : simPieces)
@@ -193,6 +197,8 @@ public class GamePanel extends JPanel implements Runnable {
             activePiece.col = activePiece.getCol(activePiece.x);
             activePiece.row = activePiece.getCol(activePiece.y);
         }
+
+        board.printBoard();
 
         // debug
         // System.out.println("Piece color: " + activePiece.color + ", piece col: " +
