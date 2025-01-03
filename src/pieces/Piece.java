@@ -96,6 +96,15 @@ public class Piece {
         return false;
     }
 
+    public boolean canBeCaptured() {
+        for (Piece piece : GamePanel.pieces)
+            if (piece != this)
+                if (piece.canMove(this.col, this.row))
+                    return true;
+        
+        return false;
+    }
+
     public boolean isWithinBoard(int targetCol, int targetRow) {
         if (targetCol >= 0 && targetCol <= 7 && targetRow >= 0 && targetRow <= 7)
             return true;

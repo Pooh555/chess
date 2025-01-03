@@ -215,13 +215,8 @@ public class GamePanel extends JPanel implements Runnable {
                                     }
                         }
 
-                        board.clearBoard();
-                        board.updatePiecePositions(pieces);
-                        board.updateOccupiedTerratory();
                         board.printOccupiedBoard();
-
-                        System.out.println("WHAT THE");
-
+                        
                         // check for checkmate
                         if (isCheckmate()) {
                             System.out.println(currentColor + " wins.");
@@ -393,6 +388,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (king.isPieceUnderAttack()) {
             if (king.canMoveSim())
+                return false;
+            
+            if (activePiece.canBeCaptured())
                 return false;
 
             return true;
