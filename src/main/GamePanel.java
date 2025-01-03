@@ -138,7 +138,7 @@ public class GamePanel extends JPanel implements Runnable {
                         }
                 } else {
                     // if the player is holding a piece, simulate a calculating (thinking) phase
-                    board.printBoard();
+                    // board.printBoard();
                     simulate();
                 }
             }
@@ -316,7 +316,7 @@ public class GamePanel extends JPanel implements Runnable {
         promotionState = false;
 
         System.out.println("Legal move, the side has changed.");
-        System.out.print("current player: " + currentColor + ", pawn's direction: " + moveDirection);
+        System.out.println("current player: " + currentColor + ", pawn's direction: " + moveDirection);
     }
 
     private void resetPositionState() {

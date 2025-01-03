@@ -28,8 +28,8 @@ public class Queen extends Piece {
                         return true;
             } else {
                 if (!isObstacleOnStraightLine(targetCol, targetRow))
-                    if (isCapturable(targetCol, targetRow) && targetCol == preCol
-                            || targetRow == preRow)
+                    if (isCapturable(targetCol, targetRow) && (targetCol == preCol
+                            || targetRow == preRow)) 
                         return true;
                 if (!isObstacleOnDiagonalLine(targetCol, targetRow))
                     if (isCapturable(targetCol, targetRow)
