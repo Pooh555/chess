@@ -24,8 +24,9 @@ public class Bishop extends Piece {
                 if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
                     return true;
             } else {
-                if (isCapturable(targetCol, targetRow))
-                    return true;
+                if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
+                    if (isCapturable(targetCol, targetRow))
+                        return true;
             }
         }
 
