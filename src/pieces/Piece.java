@@ -6,8 +6,10 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import main.Board;
+import main.Type;
 
 public class Piece {
+    public Type type; // piece type
     public BufferedImage image; // piece icon
     public int x, y; // piece's position in pixels
     public int col, row, preCol, preRow; // piece's position in row and column
