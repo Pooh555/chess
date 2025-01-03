@@ -41,12 +41,12 @@ public class Pawn extends Piece {
                 // en passent
                 if ((targetCol == preCol + 1 || targetCol == preCol - 1) && targetRow - preRow == moveDirection)
                     if (isCapturable(targetCol, targetRow - moveDirection)
-                            && Board.boardPieces[targetRow - moveDirection][targetCol].canBeEnPassent) 
+                            && Board.boardPieces[targetRow - moveDirection][targetCol].canBeEnPassent)
                         return true;
             } else {
                 // capture
                 if (targetRow - preRow == moveDirection && (targetCol == preCol + 1 || targetCol == preCol - 1)
-                        && isCapturable(targetCol, targetRow)) 
+                        && isCapturable(targetCol, targetRow))
                     return true;
             }
         }
@@ -61,15 +61,21 @@ public class Pawn extends Piece {
         else
             moveDirection = -1; // white
 
+        /* 
+         * Yes, I know it's ugly. I might fix it later. :^
+         */
+
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
             if (isEmptySquare(targetCol, targetRow)) {
                 // en passent
-                if ((targetCol == preCol + 1 || targetCol == preCol - 1) && targetRow - preRow == moveDirection)
-                    if (Board.boardPieces[targetRow - moveDirection][targetCol].canBeEnPassent) 
-                        return true;
+                if (targetRow - moveDirection >= 0 && targetRow - moveDirection < 8)
+                    if (Board.boardPieces[targetRow - moveDirection][targetCol] != null)
+                        if ((targetCol == preCol + 1 || targetCol == preCol - 1) && targetRow - preRow == moveDirection)
+                            if (Board.boardPieces[targetRow - moveDirection][targetCol].canBeEnPassent)
+                                return true;
             } else {
                 // capture
-                if (targetRow - preRow == moveDirection && (targetCol == preCol + 1 || targetCol == preCol - 1)) 
+                if (targetRow - preRow == moveDirection && (targetCol == preCol + 1 || targetCol == preCol - 1))
                     return true;
             }
         }

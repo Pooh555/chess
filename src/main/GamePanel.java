@@ -127,7 +127,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if (activePiece == null) {
                     board.clearBoard(); // clear the chessboard
                     board.updatePiecePositions(pieces); // update pieces' positions on the board
-                    
+
                     // if the player is not holding a piece, pick the piece on the current square
                     // with the same color up
                     for (Piece piece : simPieces)
@@ -151,9 +151,9 @@ public class GamePanel extends JPanel implements Runnable {
                     if (isLegalMove) {
 
                         // -------------------- //
-                        //    move confirmed    //
+                        // move confirmed //
                         // -------------------- //
-                        
+
                         System.out.println("Legal move.");
 
                         // set active piece state
@@ -182,6 +182,20 @@ public class GamePanel extends JPanel implements Runnable {
                                     simPieces.remove(hitPiece);
                             }
 
+                        // castle
+                        if (isCastle) {
+                            // black long castle
+                            if (activePiece.col == 2 && activePiece.row == 0)
+                                for (Piece piece : simPieces)
+                                    if (piece.type == Type.ROOK && piece.col == 0 && piece.row == 0)
+                                        piece.col = 3;
+                            // black short castle
+                            if (activePiece.col == 6 && activePiece.row == 0)
+                                for (Piece piece : simPieces)
+                                    if (piece.type == Type.ROOK && piece.col == 7 && piece.row == 0)
+                                        piece.col = 5;
+                        }
+
                         // Promotion
                         if (promote()) {
                             activePiece.updatePosition();
@@ -206,14 +220,14 @@ public class GamePanel extends JPanel implements Runnable {
         // pieces.add(new Pawn(WHITE, 1, 6));
         // pieces.add(new Pawn(WHITE, 2, 6));
         // pieces.add(new Pawn(WHITE, 3, 6));
-        // // pieces.add(new Pawn(WHITE, 4, 6));
-        // // pieces.add(new Pawn(WHITE, 5, 6));
-        // // pieces.add(new Pawn(WHITE, 6, 6));
-        // // pieces.add(new Pawn(WHITE, 7, 6));
-        pieces.add(new Knight(WHITE, 1, 7));
-        pieces.add(new Knight(WHITE, 6, 7));
-        pieces.add(new Bishop(WHITE, 2, 7));
-        pieces.add(new Bishop(WHITE, 5, 7));
+        // pieces.add(new Pawn(WHITE, 4, 6));
+        // pieces.add(new Pawn(WHITE, 5, 6));
+        // pieces.add(new Pawn(WHITE, 6, 6));
+        // pieces.add(new Pawn(WHITE, 7, 6));
+        // pieces.add(new Knight(WHITE, 1, 7));
+        // pieces.add(new Knight(WHITE, 6, 7));
+        // pieces.add(new Bishop(WHITE, 2, 7));
+        // pieces.add(new Bishop(WHITE, 5, 7));
         pieces.add(new Rook(WHITE, 0, 7));
         pieces.add(new Rook(WHITE, 7, 7));
         pieces.add(new Queen(WHITE, 3, 7));
@@ -228,10 +242,10 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new Pawn(BLACK, 5, 1));
         pieces.add(new Pawn(BLACK, 6, 1));
         pieces.add(new Pawn(BLACK, 7, 1));
-        pieces.add(new Knight(BLACK, 1, 0));
-        pieces.add(new Knight(BLACK, 6, 0));
-        pieces.add(new Bishop(BLACK, 2, 0));
-        pieces.add(new Bishop(BLACK, 5, 0));
+        // pieces.add(new Knight(BLACK, 1, 0));
+        // pieces.add(new Knight(BLACK, 6, 0));
+        // pieces.add(new Bishop(BLACK, 2, 0));
+        // pieces.add(new Bishop(BLACK, 5, 0));
         pieces.add(new Rook(BLACK, 0, 0));
         pieces.add(new Rook(BLACK, 7, 0));
         pieces.add(new Queen(BLACK, 3, 0));
@@ -318,7 +332,7 @@ public class GamePanel extends JPanel implements Runnable {
         activePiece = null;
         promotionState = false;
 
-        board.clearBoard(); 
+        board.clearBoard();
         board.updatePiecePositions(pieces);
         board.clearOccupiedBoard();
         board.updateOccupiedTerratory();
