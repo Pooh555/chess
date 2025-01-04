@@ -41,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
     // pieces
     public static ArrayList<Piece> pieces = new ArrayList<>();
     public static ArrayList<Piece> simPieces = new ArrayList<>();
+    public static ArrayList<Piece> checkPieces = new ArrayList<>();
     public static ArrayList<Piece> promotionPieces = new ArrayList<>();
     public static boolean isLegalMove, isCastle;
     Piece activePiece, hitPiece; // piece that is being held, piece that is about to be captured
@@ -400,6 +401,12 @@ public class GamePanel extends JPanel implements Runnable {
                     System.out.println("The attacking piece can be captured.");
                     return false;
                 }
+                
+                if (king.canBeBlocked()) {
+                    System.out.println("The king can be shielded.");
+                    return false;
+                }
+
             } else {
                 System.out.println("The king is under double attack.");
 
