@@ -13,7 +13,7 @@ public class Piece {
     public Type type; // piece type
     public BufferedImage image; // piece icon
     public int x, y; // piece's position in pixels
-    public int col, row, preCol, preRow; // piece's position in row and column
+    public int col, row, preCol, preRow, count; // piece's position in row and column
     public boolean color, isActive, hasMoved, canBeEnPassent; // piece's , active?, has moved?
 
     public Piece(boolean color, int col, int row) {
@@ -90,7 +90,7 @@ public class Piece {
             if (piece != this && piece.color != this.color)
                 if (piece.canMove(this.col, this.row))
                     return true;
-        
+
         return false;
     }
 
@@ -122,6 +122,36 @@ public class Piece {
     }
 
     public boolean isPieceUnderAttack() {
+        // System.out.println(this.color);
+        // System.out.println("col: " + this.col + ", row: " + this.row);
+
+        if (this.color == GamePanel.WHITE)
+            if (Board.boardOccupiedByBlack[this.row][this.col] == 2) {
+                // System.out.println(Board.boardOccupiedByBlack[this.row][this.col]);
+                return true;
+            }
+        if (this.color == GamePanel.BLACK) {
+            if (Board.boardOccupiedByWhite[this.row][this.col] == 1) {
+                // System.out.println(Board.boardOccupiedByWhite[this.row][this.col]);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isPieceUnderDoubleAttack() {
+        count = 0;
+
+        if (isPieceUnderAttack()) {
+            for (Piece piece : GamePanel.pieces) {
+                if (piece.color != this.color && piece.canMoveExtended(this.col, this.row))
+                    count++;
+                if (count == 2) 
+                    return true;
+            }
+        }
+
         return false;
     }
 

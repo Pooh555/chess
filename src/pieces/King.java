@@ -228,24 +228,4 @@ public class King extends Piece {
 
         return false;
     }
-
-    public boolean isPieceUnderAttack() {
-        // is the king in check
-        // System.out.println(this.color);
-        // System.out.println("col: " + this.col + ", row: " + this.row);
-
-        if (this.color == GamePanel.WHITE)
-            if (Board.boardOccupiedByBlack[this.row][this.col] == 2) {
-                // System.out.println(Board.boardOccupiedByBlack[this.row][this.col]);
-                return true;
-            }
-        if (this.color == GamePanel.BLACK) {
-            if (Board.boardOccupiedByWhite[this.row][this.col] == 1) {
-                // System.out.println(Board.boardOccupiedByWhite[this.row][this.col]);
-                return true;
-            }
-        }
-
-        return false;
-    }
 }

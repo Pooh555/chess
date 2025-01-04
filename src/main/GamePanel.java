@@ -217,7 +217,7 @@ public class GamePanel extends JPanel implements Runnable {
 
                         board.updateOccupiedTerratory();
                         board.printOccupiedBoard();
-                        
+
                         // check for checkmate
                         if (isCheckmate()) {
                             System.out.println(currentColor + " wins.");
@@ -245,14 +245,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setPieces() {
         // white pieces
-        pieces.add(new Pawn(WHITE, 0, 6));
-        pieces.add(new Pawn(WHITE, 1, 6));
-        pieces.add(new Pawn(WHITE, 2, 6));
-        pieces.add(new Pawn(WHITE, 3, 6));
-        pieces.add(new Pawn(WHITE, 4, 6));
-        pieces.add(new Pawn(WHITE, 5, 6));
-        pieces.add(new Pawn(WHITE, 6, 6));
-        pieces.add(new Pawn(WHITE, 7, 6));
+        // pieces.add(new Pawn(WHITE, 0, 6));
+        // pieces.add(new Pawn(WHITE, 1, 6));
+        // pieces.add(new Pawn(WHITE, 2, 6));
+        // pieces.add(new Pawn(WHITE, 3, 6));
+        // pieces.add(new Pawn(WHITE, 4, 6));
+        // pieces.add(new Pawn(WHITE, 5, 6));
+        // pieces.add(new Pawn(WHITE, 6, 6));
+        // pieces.add(new Pawn(WHITE, 7, 6));
         pieces.add(new Knight(WHITE, 1, 7));
         pieces.add(new Knight(WHITE, 6, 7));
         pieces.add(new Bishop(WHITE, 2, 7));
@@ -263,14 +263,14 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new King(WHITE, 4, 7));
 
         // black
-        pieces.add(new Pawn(BLACK, 0, 1));
-        pieces.add(new Pawn(BLACK, 1, 1));
-        pieces.add(new Pawn(BLACK, 2, 1));
-        pieces.add(new Pawn(BLACK, 3, 1));
-        pieces.add(new Pawn(BLACK, 4, 1));
-        pieces.add(new Pawn(BLACK, 5, 1));
-        pieces.add(new Pawn(BLACK, 6, 1));
-        pieces.add(new Pawn(BLACK, 7, 1));
+        // pieces.add(new Pawn(BLACK, 0, 1));
+        // pieces.add(new Pawn(BLACK, 1, 1));
+        // pieces.add(new Pawn(BLACK, 2, 1));
+        // pieces.add(new Pawn(BLACK, 3, 1));
+        // pieces.add(new Pawn(BLACK, 4, 1));
+        // pieces.add(new Pawn(BLACK, 5, 1));
+        // pieces.add(new Pawn(BLACK, 6, 1));
+        // pieces.add(new Pawn(BLACK, 7, 1));
         pieces.add(new Knight(BLACK, 1, 0));
         pieces.add(new Knight(BLACK, 6, 0));
         pieces.add(new Bishop(BLACK, 2, 0));
@@ -390,19 +390,28 @@ public class GamePanel extends JPanel implements Runnable {
         if (king.isPieceUnderAttack()) {
             System.out.println("The king is in check.");
 
-            if (king.canMoveSim()) {
-                System.out.println("The king can escape check.");
-                return false;
-            }
-            
-            if (activePiece.canBeCaptured()) {
-                System.out.println("The attacking piece can be captured.");
-                return false;
+            if (king.isPieceUnderDoubleAttack() == false) {
+                if (king.canMoveSim()) {
+                    System.out.println("The king can escape check.");
+                    return false;
+                }
+
+                if (activePiece.canBeCaptured()) {
+                    System.out.println("The attacking piece can be captured.");
+                    return false;
+                }
+            } else {
+                System.out.println("The king is under double attack.");
+
+                if (king.canMoveSim()) {
+                    System.out.println("The king can escape check.");
+                    return false;
+                }
             }
 
             return true;
         }
-        
+
         return false;
     }
 
