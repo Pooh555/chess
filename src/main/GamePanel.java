@@ -34,6 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
     static final int FPS = 360; // game FPS and tick rate
     Thread gameThread; // main game thread
     Board board = new Board(); // visual chessboard
+    public static Board calculateBoard = new Board(); // board for game logic calculation
 
     // devices
     Mouse mouse = new Mouse();
@@ -91,6 +92,8 @@ public class GamePanel extends JPanel implements Runnable {
         copyPieces(pieces, checkPieces);
         board.updatePiecePositions(pieces);
         board.updateOccupiedTerratory();
+
+        calculateBoard = board;
     }
 
     public void launchGame() {
@@ -129,6 +132,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if (activePiece == null) {
                     board.clearBoard(); // clear the chessboard
                     board.updatePiecePositions(pieces); // update pieces' positions on the board
+                    calculateBoard = board;
 
                     // if the player is not holding a piece, pick the piece on the current square
                     // with the same color up
@@ -144,7 +148,9 @@ public class GamePanel extends JPanel implements Runnable {
                 } else {
                     // if the player is holding a piece, simulate a calculating (thinking) phase
                     // board.printBoard();
-                    board.printOccupiedBoard();
+                    // board.printOccupiedBoard();
+                    calculateBoard.printOccupiedBoard();
+
                     simulate();
                 }
             }
@@ -218,7 +224,8 @@ public class GamePanel extends JPanel implements Runnable {
                         }
 
                         board.updateOccupiedTerratory();
-                        board.printOccupiedBoard();
+                        calculateBoard = board;
+                        // board.printOccupiedBoard();
 
                         // check for checkmate
                         if (isCheckmate()) {
@@ -268,9 +275,9 @@ public class GamePanel extends JPanel implements Runnable {
         // pieces.add(new Pawn(BLACK, 0, 1));
         // pieces.add(new Pawn(BLACK, 1, 1));
         // pieces.add(new Pawn(BLACK, 2, 1));
-        // pieces.add(new Pawn(BLACK, 3, 1));
+        pieces.add(new Pawn(BLACK, 3, 1));
         // pieces.add(new Pawn(BLACK, 4, 1));
-        // pieces.add(new Pawn(BLACK, 5, 1));
+        pieces.add(new Pawn(BLACK, 5, 1));
         // pieces.add(new Pawn(BLACK, 6, 1));
         // pieces.add(new Pawn(BLACK, 7, 1));
         pieces.add(new Knight(BLACK, 1, 0));
@@ -322,7 +329,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
     }
 
-    private void copyPieces(ArrayList<Piece> source, ArrayList<Piece> target) {
+    public static void copyPieces(ArrayList<Piece> source, ArrayList<Piece> target) {
         target.clear(); // clear target ArrayList
 
         // copy source to target
@@ -369,6 +376,7 @@ public class GamePanel extends JPanel implements Runnable {
         board.updatePiecePositions(pieces);
         board.clearOccupiedBoard();
         board.updateOccupiedTerratory();
+        calculateBoard = board;
 
         System.out.println("Legal move, the side has changed.");
         System.out.println("current player: " + currentColor + ", pawn's direction: " + moveDirection);
@@ -406,10 +414,10 @@ public class GamePanel extends JPanel implements Runnable {
                     return false;
                 }
                 
-                if (king.canBeBlocked()) {
-                    System.out.println("The king can be shielded.");
-                    return false;
-                }
+                // if (king.canBeBlocked()) {
+                //     System.out.println("The king can be shielded.");
+                //     return false;
+                // }
 
             } else {
                 System.out.println("The king is under double attack.");
