@@ -81,7 +81,7 @@ public class King extends Piece {
     @Override
     public boolean canMoveSim() {
         if (GamePanel.currentColor == GamePanel.WHITE) {
-            System.out.println("Looking for checkmate for white.");
+            // System.out.println("Looking for checkmate for white.");
 
             if ((this.row - 1 >= 0 && this.row - 1 < 8) && (this.col - 1 >= 0 && this.col - 1 < 8))
                 if (Board.boardOccupiedByWhite[this.row - 1][this.col - 1] == 0)
@@ -133,7 +133,7 @@ public class King extends Piece {
                         return true;
         }
         if (GamePanel.currentColor == GamePanel.BLACK) {
-            System.out.println("Looking for checkmate for black.");
+            // System.out.println("Looking for checkmate for black.");
 
             if ((this.row - 1 >= 0 && this.row - 1 < 8) && (this.col - 1 >= 0 && this.col - 1 < 8))
                 if (Board.boardOccupiedByBlack[this.row - 1][this.col - 1] == 0)
@@ -231,17 +231,17 @@ public class King extends Piece {
 
     public boolean isPieceUnderAttack() {
         // is the king in check
-        System.out.println(this.color);
-        System.out.println("col: " + this.col + ", row: " + this.row);
+        // System.out.println(this.color);
+        // System.out.println("col: " + this.col + ", row: " + this.row);
 
         if (this.color == GamePanel.WHITE)
             if (Board.boardOccupiedByBlack[this.row][this.col] == 2) {
-                System.out.println(Board.boardOccupiedByBlack[this.row][this.col]);
+                // System.out.println(Board.boardOccupiedByBlack[this.row][this.col]);
                 return true;
             }
         if (this.color == GamePanel.BLACK) {
             if (Board.boardOccupiedByWhite[this.row][this.col] == 1) {
-                System.out.println(Board.boardOccupiedByWhite[this.row][this.col]);
+                // System.out.println(Board.boardOccupiedByWhite[this.row][this.col]);
                 return true;
             }
         }
