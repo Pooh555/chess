@@ -95,8 +95,14 @@ public class Piece {
     }
 
     public boolean canBeBlocked() {
-        
-        
+        for (Piece piece : GamePanel.pieces)
+            if (piece != this && piece.color == this.color)
+                for (int row = 0; row < Board.MAX_ROW; row++)
+                    for (int col = 0; col < Board.MAX_COL; col++)
+                        if (piece.canMove(this.col, this.row)) {
+
+                        }
+
         return false;
     }
 
@@ -153,7 +159,7 @@ public class Piece {
             for (Piece piece : GamePanel.pieces) {
                 if (piece.color != this.color && piece.canMoveExtended(this.col, this.row))
                     count++;
-                if (count == 2) 
+                if (count == 2)
                     return true;
             }
         }

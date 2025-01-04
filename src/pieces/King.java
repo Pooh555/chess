@@ -83,49 +83,49 @@ public class King extends Piece {
         if (GamePanel.currentColor == GamePanel.WHITE) {
             // System.out.println("Looking for checkmate for white.");
 
-            if ((this.row - 1 >= 0 && this.row - 1 < 8) && (this.col - 1 >= 0 && this.col - 1 < 8))
+            if ((this.row - 1 >= 0 && this.row - 1 < Board.MAX_ROW) && (this.col - 1 >= 0 && this.col - 1 < Board.MAX_COL))
                 if (Board.boardOccupiedByWhite[this.row - 1][this.col - 1] == 0)
                     if (Board.boardPieces[this.row - 1][this.col - 1] == null)
                         return true;
                     else if (Board.boardPieces[this.row - 1][this.col - 1].color != this.color)
                         return true;
-            if ((this.row - 1 >= 0 && this.row - 1 < 8) && (this.col >= 0 && this.col < 8))
+            if ((this.row - 1 >= 0 && this.row - 1 < Board.MAX_ROW) && (this.col >= 0 && this.col < Board.MAX_COL))
                 if (Board.boardOccupiedByWhite[this.row - 1][this.col] == 0)
                     if (Board.boardPieces[this.row - 1][this.col] == null)
                         return true;
                     else if (Board.boardPieces[this.row - 1][this.col].color != this.color)
                         return true;
-            if ((this.row - 1 >= 0 && this.row - 1 < 8) && (this.col + 1 >= 0 && this.col + 1 < 8))
+            if ((this.row - 1 >= 0 && this.row - 1 < Board.MAX_ROW) && (this.col + 1 >= 0 && this.col + 1 < Board.MAX_COL))
                 if (Board.boardOccupiedByWhite[this.row - 1][this.col + 1] == 0)
                     if (Board.boardPieces[this.row - 1][this.col + 1] == null)
                         return true;
                     else if (Board.boardPieces[this.row - 1][this.col + 1].color != this.color)
                         return true;
-            if ((this.row >= 0 && this.row < 8) && (this.col - 1 >= 0 && this.col - 1 < 8))
+            if ((this.row >= 0 && this.row < Board.MAX_ROW) && (this.col - 1 >= 0 && this.col - 1 < Board.MAX_COL))
                 if (Board.boardOccupiedByWhite[this.row][this.col - 1] == 0)
                     if (Board.boardPieces[this.row][this.col - 1] == null)
                         return true;
                     else if (Board.boardPieces[this.row][this.col - 1].color != this.color)
                         return true;
-            if ((this.row >= 0 && this.row < 8) && (this.col + 1 >= 0 && this.col + 1 < 8))
+            if ((this.row >= 0 && this.row < Board.MAX_ROW) && (this.col + 1 >= 0 && this.col + 1 < Board.MAX_COL))
                 if (Board.boardOccupiedByWhite[this.row][this.col + 1] == 0)
                     if (Board.boardPieces[this.row][this.col + 1] == null)
                         return true;
                     else if (Board.boardPieces[this.row][this.col + 1].color != this.color)
                         return true;
-            if ((this.row + 1 >= 0 && this.row + 1 < 8) && (this.col - 1 >= 0 && this.col - 1 < 8))
+            if ((this.row + 1 >= 0 && this.row + 1 < Board.MAX_ROW) && (this.col - 1 >= 0 && this.col - 1 < Board.MAX_COL))
                 if (Board.boardOccupiedByWhite[this.row + 1][this.col - 1] == 0)
                     if (Board.boardPieces[this.row + 1][this.col - 1] == null)
                         return true;
                     else if (Board.boardPieces[this.row + 1][this.col - 1].color != this.color)
                         return true;
-            if ((this.row + 1 >= 0 && this.row + 1 < 8) && (this.col >= 0 && this.col < 8))
+            if ((this.row + 1 >= 0 && this.row + 1 < Board.MAX_ROW) && (this.col >= 0 && this.col < Board.MAX_COL))
                 if (Board.boardOccupiedByWhite[this.row + 1][this.col] == 0)
                     if (Board.boardPieces[this.row + 1][this.col] == null)
                         return true;
                     else if (Board.boardPieces[this.row + 1][this.col].color != this.color)
                         return true;
-            if ((this.row + 1 >= 0 && this.row + 1 < 8) && (this.col + 1 >= 0 && this.col + 1 < 8))
+            if ((this.row + 1 >= 0 && this.row + 1 < Board.MAX_ROW) && (this.col + 1 >= 0 && this.col + 1 < Board.MAX_COL))
                 if (Board.boardOccupiedByWhite[this.row + 1][this.col + 1] == 0)
                     if (Board.boardPieces[this.row + 1][this.col + 1] == null)
                         return true;
@@ -135,49 +135,49 @@ public class King extends Piece {
         if (GamePanel.currentColor == GamePanel.BLACK) {
             // System.out.println("Looking for checkmate for black.");
 
-            if ((this.row - 1 >= 0 && this.row - 1 < 8) && (this.col - 1 >= 0 && this.col - 1 < 8))
+            if ((this.row - 1 >= 0 && this.row - 1 < Board.MAX_ROW) && (this.col - 1 >= 0 && this.col - 1 < Board.MAX_COL))
                 if (Board.boardOccupiedByBlack[this.row - 1][this.col - 1] == 0)
                     if (Board.boardPieces[this.row - 1][this.col - 1] == null)
                         return true;
                     else if (Board.boardPieces[this.row - 1][this.col - 1].color != this.color)
                         return true;
-            if ((this.row - 1 >= 0 && this.row - 1 < 8) && (this.col >= 0 && this.col < 8))
+            if ((this.row - 1 >= 0 && this.row - 1 < Board.MAX_ROW) && (this.col >= 0 && this.col < Board.MAX_COL))
                 if (Board.boardOccupiedByBlack[this.row - 1][this.col] == 0)
                     if (Board.boardPieces[this.row - 1][this.col] == null)
                         return true;
                     else if (Board.boardPieces[this.row - 1][this.col].color != this.color)
                         return true;
-            if ((this.row - 1 >= 0 && this.row - 1 < 8) && (this.col + 1 >= 0 && this.col + 1 < 8))
+            if ((this.row - 1 >= 0 && this.row - 1 < Board.MAX_ROW) && (this.col + 1 >= 0 && this.col + 1 < Board.MAX_COL))
                 if (Board.boardOccupiedByBlack[this.row - 1][this.col + 1] == 0)
                     if (Board.boardPieces[this.row - 1][this.col + 1] == null)
                         return true;
                     else if (Board.boardPieces[this.row - 1][this.col + 1].color != this.color)
                         return true;
-            if ((this.row >= 0 && this.row < 8) && (this.col - 1 >= 0 && this.col - 1 < 8))
+            if ((this.row >= 0 && this.row < Board.MAX_ROW) && (this.col - 1 >= 0 && this.col - 1 < Board.MAX_COL))
                 if (Board.boardOccupiedByBlack[this.row][this.col - 1] == 0)
                     if (Board.boardPieces[this.row][this.col - 1] == null)
                         return true;
                     else if (Board.boardPieces[this.row][this.col - 1].color != this.color)
                         return true;
-            if ((this.row >= 0 && this.row < 8) && (this.col + 1 >= 0 && this.col + 1 < 8))
+            if ((this.row >= 0 && this.row < Board.MAX_ROW) && (this.col + 1 >= 0 && this.col + 1 < Board.MAX_COL))
                 if (Board.boardOccupiedByBlack[this.row][this.col + 1] == 0)
                     if (Board.boardPieces[this.row][this.col + 1] == null)
                         return true;
                     else if (Board.boardPieces[this.row][this.col + 1].color != this.color)
                         return true;
-            if ((this.row + 1 >= 0 && this.row + 1 < 8) && (this.col - 1 >= 0 && this.col - 1 < 8))
+            if ((this.row + 1 >= 0 && this.row + 1 < Board.MAX_ROW) && (this.col - 1 >= 0 && this.col - 1 < Board.MAX_COL))
                 if (Board.boardOccupiedByBlack[this.row + 1][this.col - 1] == 0)
                     if (Board.boardPieces[this.row + 1][this.col - 1] == null)
                         return true;
                     else if (Board.boardPieces[this.row + 1][this.col - 1].color != this.color)
                         return true;
-            if ((this.row + 1 >= 0 && this.row + 1 < 8) && (this.col >= 0 && this.col < 8))
+            if ((this.row + 1 >= 0 && this.row + 1 < Board.MAX_ROW) && (this.col >= 0 && this.col < Board.MAX_COL))
                 if (Board.boardOccupiedByBlack[this.row + 1][this.col] == 0)
                     if (Board.boardPieces[this.row + 1][this.col] == null)
                         return true;
                     else if (Board.boardPieces[this.row + 1][this.col].color != this.color)
                         return true;
-            if ((this.row + 1 >= 0 && this.row + 1 < 8) && (this.col + 1 >= 0 && this.col + 1 < 8))
+            if ((this.row + 1 >= 0 && this.row + 1 < Board.MAX_ROW) && (this.col + 1 >= 0 && this.col + 1 < Board.MAX_COL))
                 if (Board.boardOccupiedByBlack[this.row + 1][this.col + 1] == 0)
                     if (Board.boardPieces[this.row + 1][this.col + 1] == null)
                         return true;
@@ -200,12 +200,12 @@ public class King extends Piece {
             // white
             if (this.hasMoved == false && this.color == false) {
                 // short castle
-                if (targetCol + 1 >= 0 && targetCol + 1 < 8 && Board.boardPieces[7][7] != null)
+                if (targetCol + 1 >= 0 && targetCol + 1 < Board.MAX_ROW && Board.boardPieces[7][7] != null)
                     if (targetCol == 6 && targetRow == 7 && Board.boardPieces[7][7].hasMoved != true)
                         if (Board.boardOccupiedByBlack[7][5] == 0 && Board.boardOccupiedByBlack[7][6] == 0)
                             return true;
                 // long castle
-                if (targetCol - 2 >= 0 && targetCol - 2 < 8 && Board.boardPieces[7][0] != null)
+                if (targetCol - 2 >= 0 && targetCol - 2 < Board.MAX_ROW && Board.boardPieces[7][0] != null)
                     if (targetCol == 2 && targetRow == 7 && Board.boardPieces[7][0].hasMoved != true)
                         if (Board.boardOccupiedByBlack[7][2] == 0 && Board.boardOccupiedByBlack[7][3] == 0)
                             return true;
@@ -213,12 +213,12 @@ public class King extends Piece {
             // black
             if (this.hasMoved == false && this.color == true) {
                 // short castle
-                if (targetCol + 1 >= 0 && targetCol + 1 < 8 && Board.boardPieces[0][7] != null)
+                if (targetCol + 1 >= 0 && targetCol + 1 < Board.MAX_ROW && Board.boardPieces[0][7] != null)
                     if (targetCol == 6 && targetRow == 0 && Board.boardPieces[0][7].hasMoved != true)
                         if (Board.boardOccupiedByWhite[0][5] == 0 && Board.boardOccupiedByWhite[0][6] == 0)
                             return true;
                 // long castle
-                if (targetCol - 2 >= 0 && targetCol - 2 < 8 && Board.boardPieces[0][0] != null)
+                if (targetCol - 2 >= 0 && targetCol - 2 < Board.MAX_ROW && Board.boardPieces[0][0] != null)
                     if (targetCol == 2 && targetRow == 0 && Board.boardPieces[0][0].hasMoved != true) {
                         if (Board.boardOccupiedByWhite[0][2] == 0 && Board.boardOccupiedByWhite[0][3] == 0)
                             return true;

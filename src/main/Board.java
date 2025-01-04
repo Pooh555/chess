@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import pieces.Piece;
 
 public class Board {
-    final static int MAX_COL = 8; // a chessboard consists of 8 columns
-    final static int MAX_ROW = 8; // a chessboard consists of 8 rows
+    public final static int MAX_COL = 8; // a chessboard consists of 8 columns
+    public final static int MAX_ROW = 8; // a chessboard consists of 8 rows
     public static Piece[][] boardPieces = new Piece[MAX_ROW][MAX_COL]; // an array to store pieces positions on the
                                                                        // board
     public static int[][] boardOccupiedByWhite = new int[MAX_ROW][MAX_COL]; // a simulation board for white

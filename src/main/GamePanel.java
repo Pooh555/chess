@@ -88,6 +88,7 @@ public class GamePanel extends JPanel implements Runnable {
         board.clearOccupiedBoard(); // clear terratory simulation board
         setPieces(); // set up the pieces on the board
         copyPieces(pieces, simPieces); // copy the static pieces' positions to dynamic pieces' positions
+        copyPieces(pieces, checkPieces);
         board.updatePiecePositions(pieces);
         board.updateOccupiedTerratory();
     }
@@ -313,6 +314,7 @@ public class GamePanel extends JPanel implements Runnable {
                     // remove the promoted pawn from the board
                     simPieces.remove(activePiece.getIndex());
                     copyPieces(simPieces, pieces);
+                    copyPieces(simPieces, checkPieces);
 
                     // reset states
                     changeTurn();
@@ -356,6 +358,7 @@ public class GamePanel extends JPanel implements Runnable {
                 piece.resetEnPassentState();
 
         copyPieces(simPieces, pieces);
+        copyPieces(simPieces, checkPieces);
         activePiece.updatePosition();
         currentColor = !currentColor; // change color
         moveDirection = currentColor ? 1 : -1; // change pawn's move direction based on the active color
@@ -378,6 +381,7 @@ public class GamePanel extends JPanel implements Runnable {
         promotionState = false;
 
         copyPieces(pieces, simPieces);
+        copyPieces(pieces, checkPieces);
         activePiece.resetPosition();
 
         activePiece = null;
