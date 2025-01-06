@@ -106,13 +106,10 @@ public class Piece {
     }
 
     public boolean canBeBlocked(Piece attackingPiece) {
-        if (attackingPiece.type == Type.BISHOP)
+        if (canBeBlockedDiagonally(attackingPiece))
             return canBeBlockedDiagonally(attackingPiece);
-            ;
-        if (attackingPiece.type == Type.ROOK)
+        if (canBeBlockedStraight(attackingPiece))
             return canBeBlockedStraight(attackingPiece);
-        if (attackingPiece.type == Type.QUEEN)
-            ;
 
         return false;
     }
