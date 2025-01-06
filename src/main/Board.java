@@ -13,6 +13,8 @@ public class Board {
                                                                        // board
     public static int[][] boardOccupiedByWhite = new int[MAX_ROW][MAX_COL]; // a simulation board for white
     public static int[][] boardOccupiedByBlack = new int[MAX_ROW][MAX_COL]; // a simulation board for black
+    public static int[][] boardCanMoveByWhite = new int [MAX_ROW][MAX_COL]; // a space that can be move to by white
+    public static int[][] boardCanMoveByBlack = new int[MAX_ROW][MAX_COL]; // a space that can be move to by black
     public static int SQUARE_SIZE = GamePanel.HEIGHT / 10;
     public static int HALF_SQUARE_SIZE = SQUARE_SIZE / 2;
     static final Color LIGHT_SQUARE_COLOR = new Color(210, 165, 125);
@@ -117,6 +119,26 @@ public class Board {
         for (int row = 0; row < MAX_ROW; row++) {
             for (int col = 0; col < MAX_COL; col++)
                 System.out.print(boardOccupiedByBlack[row][col] + " ");
+
+            System.out.println();
+        }
+
+        System.out.println("-----------------------------------------------------");
+        System.out.println("-----------------------------------------------------");
+    }
+    public void printCanMoveBoard() {
+        for (int row = 0; row < MAX_ROW; row++) {
+            for (int col = 0; col < MAX_COL; col++)
+                System.out.print(boardCanMoveByWhite[row][col] + " ");
+
+            System.out.println();
+        }
+
+        System.out.println("-----------------------------------------------------");
+
+        for (int row = 0; row < MAX_ROW; row++) {
+            for (int col = 0; col < MAX_COL; col++)
+                System.out.print(boardCanMoveByBlack[row][col] + " ");
 
             System.out.println();
         }

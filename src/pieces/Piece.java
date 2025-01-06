@@ -70,10 +70,10 @@ public class Piece {
     }
 
     public Piece getAttackingPiece() {
-        for (Piece piece : GamePanel.pieces) 
+        for (Piece piece : GamePanel.pieces)
             if (piece.canMoveExtended(this.col, this.row)) {
                 System.out.println(piece.type + " is attacking " + this.type + '.');
-             
+
                 return piece;
             }
 
@@ -101,6 +101,38 @@ public class Piece {
             if (piece != this && piece.color != this.color)
                 if (piece.canMove(this.col, this.row))
                     return true;
+
+        return false;
+    }
+
+    public boolean canBeBlocked(Piece attackingPiece) {
+        if (attackingPiece.type == Type.BISHOP)
+            ;
+        if (attackingPiece.type == Type.ROOK)
+            return canBeBlockedStraight(attackingPiece);
+        if (attackingPiece.type == Type.QUEEN)
+            ;
+
+        return false;
+    }
+
+    public boolean canBeBlockedDiagonally(Piece checkingPiece) {
+        return false;
+    }
+
+    public boolean canBeBlockedStraight(Piece checkingPiece) {
+        if (this.color == GamePanel.BLACK) {
+            // the attacking piece is to the right
+            if (this.col < checkingPiece.col && this.row == checkingPiece.row)
+                for (int i = checkingPiece.col - 1; i > this.col; i--)
+                    if (Board.boardOccupiedByBlack[this.row][i] == 2)
+                        return true;
+            // the attacking piece is to the bottom
+            if (this.col == checkingPiece.col && this.row < checkingPiece.row)
+                for (int i = checkingPiece.row - 1; i > this.row; i--)
+                    if (Board.boardOccupiedByBlack[i][this.col] == 2)
+                        return true;
+        }
 
         return false;
     }

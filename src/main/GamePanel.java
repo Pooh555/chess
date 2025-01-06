@@ -34,8 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
     static final int FPS = 360; // game FPS and tick rate
     Thread gameThread; // main game thread
     Board board = new Board(); // visual chessboard
-    public static Board calculateBoard = new Board(); // board for game logic calculation
-
+    
     // devices
     Mouse mouse = new Mouse();
 
@@ -87,13 +86,12 @@ public class GamePanel extends JPanel implements Runnable {
 
         board.clearBoard(); // clear the chessboard
         board.clearOccupiedBoard(); // clear terratory simulation board
-        setPieces(); // set up the pieces on the board
+        // setPieces(); // set up the pieces on the board
+        setPiecesTest();
         copyPieces(pieces, simPieces); // copy the static pieces' positions to dynamic pieces' positions
         copyPieces(pieces, checkPieces);
         board.updatePiecePositions(pieces);
         board.updateOccupiedTerratory();
-
-        calculateBoard = board;
     }
 
     public void launchGame() {
@@ -132,7 +130,6 @@ public class GamePanel extends JPanel implements Runnable {
                 if (activePiece == null) {
                     board.clearBoard(); // clear the chessboard
                     board.updatePiecePositions(pieces); // update pieces' positions on the board
-                    calculateBoard = board;
 
                     // if the player is not holding a piece, pick the piece on the current square
                     // with the same color up
@@ -149,7 +146,6 @@ public class GamePanel extends JPanel implements Runnable {
                     // if the player is holding a piece, simulate a calculating (thinking) phase
                     // board.printBoard();
                     // board.printOccupiedBoard();
-                    calculateBoard.printOccupiedBoard();
 
                     simulate();
                 }
@@ -159,7 +155,7 @@ public class GamePanel extends JPanel implements Runnable {
                     if (isLegalMove) {
 
                         // -------------------- //
-                        // move confirmed //
+                        //    move confirmed    //
                         // -------------------- //
 
                         System.out.println("Legal move.");
@@ -224,7 +220,6 @@ public class GamePanel extends JPanel implements Runnable {
                         }
 
                         board.updateOccupiedTerratory();
-                        calculateBoard = board;
                         // board.printOccupiedBoard();
 
                         // check for checkmate
@@ -252,7 +247,45 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    public void setPieces() {
+    private void setPieces() {
+        // white pieces
+        pieces.add(new Pawn(WHITE, 0, 6));
+        pieces.add(new Pawn(WHITE, 1, 6));
+        pieces.add(new Pawn(WHITE, 2, 6));
+        pieces.add(new Pawn(WHITE, 3, 6));
+        pieces.add(new Pawn(WHITE, 4, 6));
+        pieces.add(new Pawn(WHITE, 5, 6));
+        pieces.add(new Pawn(WHITE, 6, 6));
+        pieces.add(new Pawn(WHITE, 7, 6));
+        pieces.add(new Knight(WHITE, 1, 7));
+        pieces.add(new Knight(WHITE, 6, 7));
+        pieces.add(new Bishop(WHITE, 2, 7));
+        pieces.add(new Bishop(WHITE, 5, 7));
+        pieces.add(new Rook(WHITE, 0, 7));
+        pieces.add(new Rook(WHITE, 7, 7));
+        pieces.add(new Queen(WHITE, 3, 7));
+        pieces.add(new King(WHITE, 4, 7));
+
+        // black
+        pieces.add(new Pawn(BLACK, 0, 1));
+        pieces.add(new Pawn(BLACK, 1, 1));
+        pieces.add(new Pawn(BLACK, 2, 1));
+        pieces.add(new Pawn(BLACK, 3, 1));
+        pieces.add(new Pawn(BLACK, 4, 1));
+        pieces.add(new Pawn(BLACK, 5, 1));
+        pieces.add(new Pawn(BLACK, 6, 1));
+        pieces.add(new Pawn(BLACK, 7, 1));
+        pieces.add(new Knight(BLACK, 1, 0));
+        pieces.add(new Knight(BLACK, 6, 0));
+        pieces.add(new Bishop(BLACK, 2, 0));
+        pieces.add(new Bishop(BLACK, 5, 0));
+        pieces.add(new Rook(BLACK, 0, 0));
+        pieces.add(new Rook(BLACK, 7, 0));
+        pieces.add(new Queen(BLACK, 3, 0));
+        pieces.add(new King(BLACK, 4, 0));
+    }
+
+    private void setPiecesTest() {
         // white pieces
         // pieces.add(new Pawn(WHITE, 0, 6));
         // pieces.add(new Pawn(WHITE, 1, 6));
@@ -267,26 +300,28 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new Bishop(WHITE, 2, 7));
         pieces.add(new Bishop(WHITE, 5, 7));
         pieces.add(new Rook(WHITE, 0, 7));
-        pieces.add(new Rook(WHITE, 7, 7));
+        pieces.add(new Rook(WHITE, 7, 6));
         pieces.add(new Queen(WHITE, 3, 7));
         pieces.add(new King(WHITE, 4, 7));
 
         // black
-        // pieces.add(new Pawn(BLACK, 0, 1));
-        // pieces.add(new Pawn(BLACK, 1, 1));
-        // pieces.add(new Pawn(BLACK, 2, 1));
+        pieces.add(new Pawn(BLACK, 0, 1));
+        pieces.add(new Pawn(BLACK, 1, 1));
+        pieces.add(new Pawn(BLACK, 2, 1));
         pieces.add(new Pawn(BLACK, 3, 1));
+        pieces.add(new Pawn(BLACK, 3, 0));
         // pieces.add(new Pawn(BLACK, 4, 1));
         pieces.add(new Pawn(BLACK, 5, 1));
-        // pieces.add(new Pawn(BLACK, 6, 1));
-        // pieces.add(new Pawn(BLACK, 7, 1));
+        pieces.add(new Pawn(BLACK, 5, 0));
+        pieces.add(new Pawn(BLACK, 6, 1));
+        pieces.add(new Pawn(BLACK, 7, 1));
         pieces.add(new Knight(BLACK, 1, 0));
-        pieces.add(new Knight(BLACK, 6, 0));
-        pieces.add(new Bishop(BLACK, 2, 0));
-        pieces.add(new Bishop(BLACK, 5, 0));
-        pieces.add(new Rook(BLACK, 0, 0));
-        pieces.add(new Rook(BLACK, 7, 0));
-        pieces.add(new Queen(BLACK, 3, 0));
+        // pieces.add(new Knight(BLACK, 6, 0));
+        // pieces.add(new Bishop(BLACK, 2, 0));
+        // pieces.add(new Bishop(BLACK, 5, 0));
+        // pieces.add(new Rook(BLACK, 0, 0));
+        // pieces.add(new Rook(BLACK, 7, 0));
+        // pieces.add(new Queen(BLACK, 3, 0));
         pieces.add(new King(BLACK, 4, 0));
     }
 
@@ -376,7 +411,6 @@ public class GamePanel extends JPanel implements Runnable {
         board.updatePiecePositions(pieces);
         board.clearOccupiedBoard();
         board.updateOccupiedTerratory();
-        calculateBoard = board;
 
         System.out.println("Legal move, the side has changed.");
         System.out.println("current player: " + currentColor + ", pawn's direction: " + moveDirection);
@@ -416,6 +450,8 @@ public class GamePanel extends JPanel implements Runnable {
                 
                 if (king.getAttackingPiece() != null) {
                     attackingPiece = king.getAttackingPiece(); 
+
+                    System.out.println("This check can be blocked: " + king.canBeBlockedStraight(attackingPiece));
                     
                     System.out.println("The attacking piece is the " + attackingPiece.type + ", col: " + attackingPiece.col + ", row: " + attackingPiece.row);
                 }
