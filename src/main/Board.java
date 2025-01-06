@@ -34,6 +34,14 @@ public class Board {
             }
     }
 
+    public void clearCanMoveBoard() {
+        for (int row = 0; row < MAX_ROW; row++)
+            for (int col = 0; col < MAX_COL; col++) {
+                boardCanMoveByWhite[row][col] = 0;
+                boardCanMoveByBlack[row][col] = 0;
+            }
+    }
+
     public void updatePiecePositions(ArrayList<Piece> pieces) {
         for (Piece piece : pieces)
             boardPieces[piece.row][piece.col] = piece;
@@ -90,6 +98,29 @@ public class Board {
         }
     }
 
+    public void updateCanMoveBoard() {
+        /*
+         * imaginary color for spaces where pieces can move to
+         * used for detecting blockage for checks and attacks
+         * 0: unable to move to
+         * 1: can move to by white
+         * 2: can move to by black
+         */
+        clearCanMoveBoard();
+
+        for (Piece piece : GamePanel.pieces) {
+            for (int row = 0; row < MAX_ROW; row++)
+                for (int col = 0; col < MAX_COL; col++) {
+                    // check for white's can move to squares
+                    if (piece.canMove(col, row) && piece.color == false)
+                        boardCanMoveByWhite[row][col] = 1;
+                    // check for black's can move to squares
+                    if (piece.canMove(col, row) && piece.color == true)
+                        boardCanMoveByBlack[row][col] = 2;
+                }
+        }
+    }
+
     // debug
     public void printBoard() {
         for (int row = 0; row < MAX_ROW; row++) {
@@ -126,6 +157,7 @@ public class Board {
         System.out.println("-----------------------------------------------------");
         System.out.println("-----------------------------------------------------");
     }
+
     public void printCanMoveBoard() {
         for (int row = 0; row < MAX_ROW; row++) {
             for (int col = 0; col < MAX_COL; col++)

@@ -92,6 +92,7 @@ public class GamePanel extends JPanel implements Runnable {
         copyPieces(pieces, checkPieces);
         board.updatePiecePositions(pieces);
         board.updateOccupiedTerratory();
+        board.updateCanMoveBoard();
     }
 
     public void launchGame() {
@@ -220,7 +221,9 @@ public class GamePanel extends JPanel implements Runnable {
                         }
 
                         board.updateOccupiedTerratory();
+                        board.updateCanMoveBoard();
                         // board.printOccupiedBoard();
+                        board.printCanMoveBoard();
 
                         // check for checkmate
                         if (isCheckmate()) {
@@ -411,6 +414,8 @@ public class GamePanel extends JPanel implements Runnable {
         board.updatePiecePositions(pieces);
         board.clearOccupiedBoard();
         board.updateOccupiedTerratory();
+        board.clearCanMoveBoard();
+        board.updateCanMoveBoard();
 
         System.out.println("Legal move, the side has changed.");
         System.out.println("current player: " + currentColor + ", pawn's direction: " + moveDirection);
