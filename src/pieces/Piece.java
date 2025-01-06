@@ -248,6 +248,56 @@ public class Piece {
         return false;
     }
 
+    public boolean isObstacleOnDiagonalLineExtended(int targetCol, int targetRow) {
+        if (targetRow < preRow) {
+            // to the top left
+            for (int i = preCol - 1; i > targetCol; i--) {
+                int diff = Math.abs(i - preCol);
+
+                for (Piece piece : GamePanel.simPieces)
+                    if (piece.col == i && piece.row == preRow - diff
+                            && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
+                        return true;
+            }
+
+            // to the top right
+            for (int i = preCol + 1; i < targetCol; i++) {
+                int diff = Math.abs(i - preCol);
+
+                for (Piece piece : GamePanel.simPieces)
+                    if (piece.col == i && piece.row == preRow - diff
+                            && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
+                        return true;
+            }
+        }
+
+        if (targetRow > preRow) {
+            // to the bottom left
+            for (int i = preCol - 1; i > targetCol; i--) {
+                int diff = Math.abs(i - preCol);
+
+                for (Piece piece : GamePanel.simPieces)
+                    if (piece.col == i && piece.row == preRow + diff
+                            && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
+                        return true;
+
+            }
+
+            // to the bottom right
+            for (int i = preCol + 1; i < targetCol; i++) {
+                int diff = Math.abs(i - preCol);
+
+                for (Piece piece : GamePanel.simPieces)
+                    if (piece.col == i && piece.row == preRow + diff
+                            && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
+                        return true;
+            }
+
+        }
+
+        return false;
+    }
+
     public boolean isObstacleOnStraightLine(int targetCol, int targetRow) {
         // to the left
         for (int i = preCol - 1; i > targetCol; i--) {
@@ -288,7 +338,8 @@ public class Piece {
         // to the left
         for (int i = preCol - 1; i > targetCol; i--) {
             for (Piece piece : GamePanel.simPieces) {
-                if (piece.col == i && piece.row == targetRow && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
+                if (piece.col == i && piece.row == targetRow
+                        && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
                     return true;
             }
         }
@@ -296,7 +347,8 @@ public class Piece {
         // to the right
         for (int i = preCol + 1; i < targetCol; i++) {
             for (Piece piece : GamePanel.simPieces) {
-                if (piece.col == i && piece.row == targetRow && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
+                if (piece.col == i && piece.row == targetRow
+                        && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
                     return true;
             }
         }
@@ -304,7 +356,8 @@ public class Piece {
         // to the top
         for (int i = preRow - 1; i > targetRow; i--) {
             for (Piece piece : GamePanel.simPieces) {
-                if (piece.col == targetCol && piece.row == i && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
+                if (piece.col == targetCol && piece.row == i
+                        && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
                     return true;
             }
         }
@@ -312,7 +365,8 @@ public class Piece {
         // to the bottom
         for (int i = preRow + 1; i < targetRow; i++) {
             for (Piece piece : GamePanel.simPieces) {
-                if (piece.col == targetCol && piece.row == i && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
+                if (piece.col == targetCol && piece.row == i
+                        && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
                     return true;
             }
         }

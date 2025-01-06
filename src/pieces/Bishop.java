@@ -39,12 +39,12 @@ public class Bishop extends Piece {
         if (isWithinBoard(targetCol, targetRow) && !isInitialSquare(targetCol, targetRow)) {
             if (isEmptySquare(targetCol, targetRow)) {
                 // basic bishop movement
-                if (!isObstacleOnDiagonalLine(targetCol, targetRow))
+                if (!isObstacleOnDiagonalLineExtended(targetCol, targetRow))
                     if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
                         return true;
             } else {
                 if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
-                    if (!isObstacleOnDiagonalLine(targetCol, targetRow))
+                    if (!isObstacleOnDiagonalLineExtended(targetCol, targetRow))
                             return true;
             }
         }
