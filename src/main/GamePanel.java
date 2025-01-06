@@ -88,8 +88,8 @@ public class GamePanel extends JPanel implements Runnable {
         // board.clearBoard(); // clear the chessboard
         // board.clearOccupiedBoard(); // clear terratory simulation board
         // board.clearCanMoveBoard(); // clear can move board
-        // setPieces(); // set up the pieces on the board
-        setPiecesTest();
+        setPieces(); // set up the pieces on the board
+        // setPiecesTest();
         copyPieces(pieces, simPieces); // copy the static pieces' positions to dynamic pieces' positions
         copyPieces(pieces, checkPieces);
         board.updatePiecePositions(pieces);
