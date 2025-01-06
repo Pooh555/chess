@@ -102,7 +102,7 @@ public class Piece {
             if (Board.boardCanMoveByWhite[attackingPiece.row][attackingPiece.col] == 1)
                 return true;
         if (attackingPiece.color == GamePanel.WHITE)
-            if (Board.boardCanMoveByBlack[attackingPiece.row][attackingPiece.col] == 1)
+            if (Board.boardCanMoveByBlack[attackingPiece.row][attackingPiece.col] == 2)
                 return true;
 
         return false;
