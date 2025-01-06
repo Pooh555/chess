@@ -97,12 +97,13 @@ public class Piece {
     }
 
     public boolean canBeCaptured(Piece attackingPiece) {
+        System.out.println(attackingPiece.color);
 
         if (attackingPiece.color == GamePanel.BLACK)
             if (Board.boardCanMoveByWhite[attackingPiece.row][attackingPiece.col] == 1)
                 return true;
         if (attackingPiece.color == GamePanel.WHITE)
-            if (Board.boardCanMoveByBlack[attackingPiece.row][attackingPiece.col] == 2)
+            if (Board.boardCanMoveByBlack[attackingPiece.row][attackingPiece.col] == 1)
                 return true;
 
         return false;

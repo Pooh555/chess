@@ -226,7 +226,7 @@ public class GamePanel extends JPanel implements Runnable {
                         board.updateCanMoveBoard();
                         board.updatePiecePositions(simPieces);
                         // board.printOccupiedBoard();
-                        // board.printCanMoveBoard();
+                        board.printCanMoveBoard();
                         
                         System.out.println("col: " + activePiece.col + ", row:" + activePiece.row);
 
@@ -434,6 +434,8 @@ public class GamePanel extends JPanel implements Runnable {
                 }                
                 if (king.getAttackingPiece() != null) {
                     attackingPiece = king.getAttackingPiece();
+
+                    System.out.println(attackingPiece.color + " " + attackingPiece.type);
 
                     if (activePiece.canBeCaptured(attackingPiece)) {
                         System.out.println("The attacking piece can be captured.");
