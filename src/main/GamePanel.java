@@ -197,6 +197,7 @@ public class GamePanel extends JPanel implements Runnable {
                                 for (Piece piece : simPieces)
                                     if (piece.type == Type.ROOK && piece.col == 0 && piece.row == 7) {
                                         piece.col = 3;
+                                        piece.preCol = 3;
                                         System.out.println("O-O-O by white.");
                                     }
                             // white short castle
@@ -204,6 +205,7 @@ public class GamePanel extends JPanel implements Runnable {
                                 for (Piece piece : simPieces)
                                     if (piece.type == Type.ROOK && piece.col == 7 && piece.row == 7) {
                                         piece.col = 5;
+                                        piece.preCol = 5;
                                         System.out.println("O-O by white.");
                                     }
                             // black long castle
@@ -211,6 +213,7 @@ public class GamePanel extends JPanel implements Runnable {
                                 for (Piece piece : simPieces)
                                     if (piece.type == Type.ROOK && piece.col == 0 && piece.row == 0) {
                                         piece.col = 3;
+                                        piece.preCol = 3;
                                         System.out.println("O-O-O by black.");
                                     }
                             // black short castle
@@ -218,6 +221,7 @@ public class GamePanel extends JPanel implements Runnable {
                                 for (Piece piece : simPieces)
                                     if (piece.type == Type.ROOK && piece.col == 7 && piece.row == 0) {
                                         piece.col = 5;
+                                        piece.preCol = 5;
                                         System.out.println("O-O by black.");
                                     }
                         }
@@ -296,6 +300,7 @@ public class GamePanel extends JPanel implements Runnable {
         pieces.add(new King(BLACK, 4, 0));
     }
 
+    @SuppressWarnings("unused")
     private void setPiecesTest() {
         // white pieces
         pieces.add(new King(WHITE, 0, 0));

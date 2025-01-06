@@ -121,7 +121,7 @@ public class Piece {
     }
 
     public boolean canBeBlocked(Piece attackingPiece) {
-        if (canBeBlockedDiagonally(attackingPiece))
+        if (canBeBlockedDiagonally(attackingPiece)) 
             return canBeBlockedDiagonally(attackingPiece);
         if (canBeBlockedStraight(attackingPiece))
             return canBeBlockedStraight(attackingPiece);
