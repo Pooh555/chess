@@ -125,7 +125,7 @@ public class Piece {
             // the attacking piece is to the right
             if (this.col < checkingPiece.col && this.row == checkingPiece.row)
                 for (int i = checkingPiece.col - 1; i > this.col; i--)
-                    if (Board.boardOccupiedByBlack[this.row][i] == 2)
+                    if (Board.boardCanMoveByBlack[this.row][i] == 2)
                         return true;
             // the attacking piece is to the bottom
             if (this.col == checkingPiece.col && this.row < checkingPiece.row)
@@ -277,6 +277,42 @@ public class Piece {
         for (int i = preRow + 1; i < targetRow; i++) {
             for (Piece piece : GamePanel.simPieces) {
                 if (piece.col == targetCol && piece.row == i)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isObstacleOnStraightLineExtended(int targetCol, int targetRow) {
+        // to the left
+        for (int i = preCol - 1; i > targetCol; i--) {
+            for (Piece piece : GamePanel.simPieces) {
+                if (piece.col == i && piece.row == targetRow && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
+                    return true;
+            }
+        }
+
+        // to the right
+        for (int i = preCol + 1; i < targetCol; i++) {
+            for (Piece piece : GamePanel.simPieces) {
+                if (piece.col == i && piece.row == targetRow && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
+                    return true;
+            }
+        }
+
+        // to the top
+        for (int i = preRow - 1; i > targetRow; i--) {
+            for (Piece piece : GamePanel.simPieces) {
+                if (piece.col == targetCol && piece.row == i && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
+                    return true;
+            }
+        }
+
+        // to the bottom
+        for (int i = preRow + 1; i < targetRow; i++) {
+            for (Piece piece : GamePanel.simPieces) {
+                if (piece.col == targetCol && piece.row == i && (piece.type != Type.KING && piece.color != GamePanel.currentColor))
                     return true;
             }
         }
