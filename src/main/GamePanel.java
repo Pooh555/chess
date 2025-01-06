@@ -231,7 +231,7 @@ public class GamePanel extends JPanel implements Runnable {
                         board.updatePiecePositions(simPieces);
                         // board.printOccupiedBoard();
                         board.printCanMoveBoard();
-                        
+
                         System.out.println("col: " + activePiece.col + ", row:" + activePiece.row);
 
                         // check for checkmate
@@ -350,9 +350,29 @@ public class GamePanel extends JPanel implements Runnable {
                     simPieces.remove(activePiece.getIndex());
                     copyPieces(simPieces, pieces);
                     copyPieces(simPieces, checkPieces);
+                    // activePiece.updatePosition();
+                    // board.clearBoard();
+                    board.updatePiecePositions(pieces);
+                    // board.clearOccupiedBoard();
+                    board.updateOccupiedTerratory();
+                    // board.clearCanMoveBoard();
+                    board.updateCanMoveBoard();
 
-                    // reset states
-                    changeTurn();
+                    // check for checkmate
+                    if (isCheckmate()) {
+                        if (currentColor)
+                            System.out.println("Black wins.");
+                        else
+                            System.out.println("White wins.");
+
+                        changeTurn();
+                        changeTurn();
+
+                        gameStatus = false;
+                    } else {
+                        // reset states
+                        changeTurn();
+                    }
                 }
             }
     }
@@ -394,7 +414,10 @@ public class GamePanel extends JPanel implements Runnable {
 
         copyPieces(simPieces, pieces);
         copyPieces(simPieces, checkPieces);
-        activePiece.updatePosition();
+        
+        if (activePiece != null)
+            activePiece.updatePosition();
+
         currentColor = !currentColor; // change color
         moveDirection = currentColor ? 1 : -1; // change pawn's move direction based on the active color
         activePiece = null;
@@ -436,7 +459,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if (king.canMoveSim()) {
                     System.out.println("The king can escape check.");
                     return false;
-                }                
+                }
                 if (king.getAttackingPiece() != null) {
                     attackingPiece = king.getAttackingPiece();
 
@@ -445,7 +468,7 @@ public class GamePanel extends JPanel implements Runnable {
                     if (activePiece.canBeCaptured(attackingPiece)) {
                         System.out.println("The attacking piece can be captured.");
                         return false;
-                    }    
+                    }
 
                     System.out.println("This check can be blocked: " + king.canBeBlocked(attackingPiece));
 
