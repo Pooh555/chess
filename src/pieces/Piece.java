@@ -97,17 +97,23 @@ public class Piece {
     }
 
     public boolean canBeCaptured(Piece attackingPiece) {
-        for (Piece piece : GamePanel.pieces)
-            if (piece != this && piece.color != this.color) {
-                if (piece.type == Type.PAWN) {
-                    if (piece.canMoveExtended(attackingPiece.col, attackingPiece.row))
-                        return true;
-                } else {
-                    if (piece.canMove(attackingPiece.col, attackingPiece.row))
-                        return true;
-                }
-
-            }
+        // for (Piece piece : GamePanel.pieces)
+        if (attackingPiece.color == GamePanel.BLACK)
+            if (Board.boardCanMoveByWhite[attackingPiece.row][attackingPiece.col] == 1)
+                return true;
+        if (attackingPiece.color == GamePanel.WHITE)
+            if (Board.boardCanMoveByBlack[attackingPiece.row][attackingPiece.col] == 1)
+                return true;
+        // if (piece.type == Type.PAWN) {
+        // if (piece.canMoveExtended(attackingPiece.col, attackingPiece.row))
+        // return true;
+        // }
+        // else {
+        // if (piece.canMove(attackingPiece.col, attackingPiece.row)) {
+        // System.out.println(piece.type);
+        // return true;
+        // }
+        // }
 
         return false;
     }
@@ -193,11 +199,10 @@ public class Piece {
                 for (int i = this.col + 1; i < checkingPiece.col; i++) {
                     int diff = Math.abs(i - preCol);
 
-                        return true;
+                    return true;
                 }
             }
         }
-
 
         return false;
     }
