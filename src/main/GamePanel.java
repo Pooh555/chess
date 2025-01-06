@@ -226,10 +226,15 @@ public class GamePanel extends JPanel implements Runnable {
                         board.updateCanMoveBoard();
                         // board.printOccupiedBoard();
                         board.printCanMoveBoard();
+                        
+                        System.out.println("col: " + activePiece.col + ", row:" + activePiece.row);
 
                         // check for checkmate
                         if (isCheckmate()) {
-                            System.out.println(currentColor + " wins.");
+                            if (currentColor)
+                                System.out.println("Black wins.");
+                            else
+                                System.out.println("White wins.");
 
                             gameStatus = false;
                         } else {
@@ -416,7 +421,7 @@ public class GamePanel extends JPanel implements Runnable {
     private boolean isCheckmate() {
         Piece king = getKing();
 
-        System.out.println("King's color is " + king.color);
+        // System.out.println("King's color is " + king.color);
 
         if (king.isPieceUnderAttack()) {
             System.out.println("The king is in check.");
@@ -425,23 +430,22 @@ public class GamePanel extends JPanel implements Runnable {
                 if (king.canMoveSim()) {
                     System.out.println("The king can escape check.");
                     return false;
-                }
-
-                if (activePiece.canBeCaptured()) {
-                    System.out.println("The attacking piece can be captured.");
-                    return false;
-                }
-
+                }                
                 if (king.getAttackingPiece() != null) {
                     attackingPiece = king.getAttackingPiece();
+
+                    if (activePiece.canBeCaptured(attackingPiece)) {
+                        System.out.println("The attacking piece can be captured.");
+                        return false;
+                    }    
 
                     System.out.println("This check can be blocked: " + king.canBeBlocked(attackingPiece));
 
                     if (king.canBeBlocked(attackingPiece))
                         return false;
 
-                    System.out.println("The attacking piece is the " + attackingPiece.type + ", col: "
-                            + attackingPiece.col + ", row: " + attackingPiece.row);
+                    // System.out.println("The attacking piece is the " + attackingPiece.type + ",
+                    // col: " + attackingPiece.col + ", row: " + attackingPiece.row);
                 }
             } else {
                 System.out.println("The king is under double attack.");

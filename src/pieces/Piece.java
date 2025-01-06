@@ -96,11 +96,18 @@ public class Piece {
         return false;
     }
 
-    public boolean canBeCaptured() {
+    public boolean canBeCaptured(Piece attackingPiece) {
         for (Piece piece : GamePanel.pieces)
-            if (piece != this && piece.color != this.color)
-                if (piece.canMove(this.col, this.row))
-                    return true;
+            if (piece != this && piece.color != this.color) {
+                if (piece.type == Type.PAWN) {
+                    if (piece.canMoveExtended(attackingPiece.col, attackingPiece.row))
+                        return true;
+                } else {
+                    if (piece.canMove(attackingPiece.col, attackingPiece.row))
+                        return true;
+                }
+
+            }
 
         return false;
     }
