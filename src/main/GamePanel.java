@@ -88,8 +88,8 @@ public class GamePanel extends JPanel implements Runnable {
         // board.clearBoard(); // clear the chessboard
         // board.clearOccupiedBoard(); // clear terratory simulation board
         // board.clearCanMoveBoard(); // clear can move board
-        setPieces(); // set up the pieces on the board
-        // setPiecesTest();
+        // setPieces(); // set up the pieces on the board
+        setPiecesTest();
         copyPieces(pieces, simPieces); // copy the static pieces' positions to dynamic pieces' positions
         copyPieces(pieces, checkPieces);
         board.updatePiecePositions(pieces);
@@ -304,15 +304,15 @@ public class GamePanel extends JPanel implements Runnable {
     private void setPiecesTest() {
         // white pieces
         pieces.add(new King(WHITE, 0, 0));
-        pieces.add(new Queen(WHITE, 5, 7));
+        pieces.add(new Queen(WHITE, 3, 7));
         // black pieces
         pieces.add(new King(BLACK, 4, 4));
         pieces.add(new Pawn(BLACK, 3, 5));
         pieces.add(new Pawn(BLACK, 5, 3));
         pieces.add(new Pawn(BLACK, 4, 3));
-        // pieces.add(new Pawn(BLACK, 4, 5));
+        pieces.add(new Pawn(BLACK, 4, 5));
         pieces.add(new Pawn(BLACK, 5, 4));
-        pieces.add(new Pawn(BLACK, 3, 4));
+        // pieces.add(new Pawn(BLACK, 3, 4));
         pieces.add(new Pawn(BLACK, 3, 3));
         pieces.add(new Pawn(BLACK, 5, 5));
 
