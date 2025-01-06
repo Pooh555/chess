@@ -107,6 +107,7 @@ public class Piece {
 
     public boolean canBeBlocked(Piece attackingPiece) {
         if (attackingPiece.type == Type.BISHOP)
+            return canBeBlockedDiagonally(attackingPiece);
             ;
         if (attackingPiece.type == Type.ROOK)
             return canBeBlockedStraight(attackingPiece);
@@ -117,6 +118,45 @@ public class Piece {
     }
 
     public boolean canBeBlockedDiagonally(Piece checkingPiece) {
+        if (this.color == GamePanel.BLACK) {
+            if (checkingPiece.row < this.row && checkingPiece.col < this.col) {
+                // the cheking piece is to the top left
+                for (int i = this.col - 1; i > checkingPiece.col; i--) {
+                    int diff = Math.abs(i - preCol);
+
+                    if (Board.boardCanMoveByBlack[this.row - diff][this.col - diff] == 2)
+                        return true;
+                }
+            }
+            if (checkingPiece.row < this.row && checkingPiece.col > this.col) {
+                // the cheking piece is to the top left
+                for (int i = this.col + 1; i < checkingPiece.col; i++) {
+                    int diff = Math.abs(i - preCol);
+
+                    if (Board.boardCanMoveByBlack[this.row - diff][this.col + diff] == 2)
+                        return true;
+                }
+            }
+            if (checkingPiece.row > this.row && checkingPiece.col < this.col) {
+                // the cheking piece is to the bottom left
+                for (int i = this.col - 1; i > checkingPiece.col; i--) {
+                    int diff = Math.abs(i - preCol);
+
+                    if (Board.boardCanMoveByBlack[this.row + diff][this.col - diff] == 2)
+                        return true;
+                }
+            }
+            if (checkingPiece.row > this.row && checkingPiece.col > this.col) {
+                // the cheking piece is to the top left
+                for (int i = this.col + 1; i < checkingPiece.col; i++) {
+                    int diff = Math.abs(i - preCol);
+
+                    if (Board.boardCanMoveByBlack[this.row + diff][this.col + diff] == 2)
+                        return true;
+                }
+            }
+        }
+
         return false;
     }
 
@@ -141,6 +181,28 @@ public class Piece {
             if (this.col == checkingPiece.col && this.row < checkingPiece.row)
                 for (int i = checkingPiece.row - 1; i > this.row; i--)
                     if (Board.boardCanMoveByBlack[i][this.col] == 2)
+                        return true;
+        }
+        if (this.color == GamePanel.WHITE) {
+            // the attacking piece is to the left
+            if (this.col > checkingPiece.col && this.row == checkingPiece.row)
+                for (int i = checkingPiece.col + 1; i < this.col; i++)
+                    if (Board.boardCanMoveByWhite[this.row][i] == 1)
+                        return true;
+            // the attacking piece is to the right
+            if (this.col < checkingPiece.col && this.row == checkingPiece.row)
+                for (int i = checkingPiece.col - 1; i > this.col; i--)
+                    if (Board.boardCanMoveByWhite[this.row][i] == 1)
+                        return true;
+            // the attacking piece is to the top
+            if (this.col == checkingPiece.col && this.row > checkingPiece.row)
+                for (int i = checkingPiece.row + 1; i < this.row; i++)
+                    if (Board.boardCanMoveByWhite[i][this.col] == 1)
+                        return true;
+            // the attacking piece is to the bottom
+            if (this.col == checkingPiece.col && this.row < checkingPiece.row)
+                for (int i = checkingPiece.row - 1; i > this.row; i--)
+                    if (Board.boardCanMoveByWhite[i][this.col] == 1)
                         return true;
         }
 
