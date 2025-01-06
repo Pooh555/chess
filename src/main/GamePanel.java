@@ -45,7 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Piece> checkPieces = new ArrayList<>();
     public static ArrayList<Piece> promotionPieces = new ArrayList<>();
     public static boolean isLegalMove, isCastle;
-    Piece activePiece, hitPiece; // piece that is being held, piece that is about to be captured
+    Piece activePiece, hitPiece, attackingPiece; // piece that is being held, piece that is about to be captured
     int moveDirection = currentColor ? 1 : -1; // pawn's moving direction
 
     // color
@@ -414,11 +414,11 @@ public class GamePanel extends JPanel implements Runnable {
                     return false;
                 }
                 
-                // if (king.canBeBlocked()) {
-                //     System.out.println("The king can be shielded.");
-                //     return false;
-                // }
-
+                if (king.getAttackingPiece() != null) {
+                    attackingPiece = king.getAttackingPiece(); 
+                    
+                    System.out.println("The attacking piece is the " + attackingPiece.type + ", col: " + attackingPiece.col + ", row: " + attackingPiece.row);
+                }
             } else {
                 System.out.println("The king is under double attack.");
 

@@ -69,6 +69,17 @@ public class Piece {
         return 0;
     }
 
+    public Piece getAttackingPiece() {
+        for (Piece piece : GamePanel.pieces) 
+            if (piece.canMoveExtended(this.col, this.row)) {
+                System.out.println(piece.type + " is attacking " + this.type + '.');
+             
+                return piece;
+            }
+
+        return null;
+    }
+
     public boolean canMove(int targetCol, int targetRow) {
         return false;
     }
