@@ -34,6 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
     static final int FPS = 360; // game FPS and tick rate
     Thread gameThread; // main game thread
     Board board = new Board(); // visual chessboard
+    Board tempBoard = new Board(); // temporary board
     
     // devices
     Mouse mouse = new Mouse();
@@ -84,8 +85,9 @@ public class GamePanel extends JPanel implements Runnable {
         // update the window's size
         resizeDisplayComponents();
 
-        board.clearBoard(); // clear the chessboard
-        board.clearOccupiedBoard(); // clear terratory simulation board
+        // board.clearBoard(); // clear the chessboard
+        // board.clearOccupiedBoard(); // clear terratory simulation board
+        // board.clearCanMoveBoard(); // clear can move board
         // setPieces(); // set up the pieces on the board
         setPiecesTest();
         copyPieces(pieces, simPieces); // copy the static pieces' positions to dynamic pieces' positions
@@ -410,11 +412,11 @@ public class GamePanel extends JPanel implements Runnable {
         activePiece = null;
         promotionState = false;
 
-        board.clearBoard();
+        // board.clearBoard();
         board.updatePiecePositions(pieces);
-        board.clearOccupiedBoard();
+        // board.clearOccupiedBoard();
         board.updateOccupiedTerratory();
-        board.clearCanMoveBoard();
+        // board.clearCanMoveBoard();
         board.updateCanMoveBoard();
 
         System.out.println("Legal move, the side has changed.");

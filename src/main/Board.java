@@ -43,6 +43,8 @@ public class Board {
     }
 
     public void updatePiecePositions(ArrayList<Piece> pieces) {
+        clearBoard();
+
         for (Piece piece : pieces)
             boardPieces[piece.row][piece.col] = piece;
     }
@@ -112,10 +114,10 @@ public class Board {
             for (int row = 0; row < MAX_ROW; row++)
                 for (int col = 0; col < MAX_COL; col++) {
                     // check for white's can move to squares
-                    if (piece.canMove(col, row) && piece.color == false)
+                    if (piece.canMove(col, row) && piece.color == GamePanel.WHITE) 
                         boardCanMoveByWhite[row][col] = 1;
                     // check for black's can move to squares
-                    if (piece.canMove(col, row) && piece.color == true)
+                    if (piece.canMove(col, row) && piece.color == GamePanel.BLACK)
                         boardCanMoveByBlack[row][col] = 2;
                 }
         }

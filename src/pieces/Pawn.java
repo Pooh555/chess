@@ -20,7 +20,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(int targetCol, int targetRow) {
-        if (GamePanel.currentColor)
+        if (this.color == GamePanel.BLACK)
             moveDirection = 1; // black
         else
             moveDirection = -1; // white
