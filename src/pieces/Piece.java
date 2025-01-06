@@ -160,6 +160,44 @@ public class Piece {
                 }
             }
         }
+        if (this.color == GamePanel.WHITE) {
+            if (checkingPiece.row < this.row && checkingPiece.col < this.col) {
+                // the cheking piece is to the top left
+                for (int i = this.col - 1; i > checkingPiece.col; i--) {
+                    int diff = Math.abs(i - preCol);
+
+                    if (Board.boardCanMoveByWhite[this.row - diff][this.col - diff] == 2)
+                        return true;
+                }
+            }
+            if (checkingPiece.row < this.row && checkingPiece.col > this.col) {
+                // the cheking piece is to the top left
+                for (int i = this.col + 1; i < checkingPiece.col; i++) {
+                    int diff = Math.abs(i - preCol);
+
+                    if (Board.boardCanMoveByWhite[this.row - diff][this.col + diff] == 2)
+                        return true;
+                }
+            }
+            if (checkingPiece.row > this.row && checkingPiece.col < this.col) {
+                // the cheking piece is to the bottom left
+                for (int i = this.col - 1; i > checkingPiece.col; i--) {
+                    int diff = Math.abs(i - preCol);
+
+                    if (Board.boardCanMoveByWhite[this.row + diff][this.col - diff] == 2)
+                        return true;
+                }
+            }
+            if (checkingPiece.row > this.row && checkingPiece.col > this.col) {
+                // the cheking piece is to the top left
+                for (int i = this.col + 1; i < checkingPiece.col; i++) {
+                    int diff = Math.abs(i - preCol);
+
+                        return true;
+                }
+            }
+        }
+
 
         return false;
     }
