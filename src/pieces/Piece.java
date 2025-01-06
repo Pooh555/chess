@@ -223,44 +223,44 @@ public class Piece {
             // the attacking piece is to the left
             if (this.col > checkingPiece.col && this.row == checkingPiece.row)
                 for (int i = checkingPiece.col + 1; i < this.col; i++)
-                    if (Board.boardCanMoveByBlack[this.row][i] == 2 || verifyCanMove(checkingPiece))
+                    if (Board.boardCanMoveByBlack[this.row][i] == 2 && verifyCanMove(checkingPiece))
                         return true;
             // the attacking piece is to the right
             if (this.col < checkingPiece.col && this.row == checkingPiece.row)
                 for (int i = checkingPiece.col - 1; i > this.col; i--)
-                    if (Board.boardCanMoveByBlack[this.row][i] == 2 || verifyCanMove(checkingPiece))
+                    if (Board.boardCanMoveByBlack[this.row][i] == 2 && verifyCanMove(checkingPiece))
                         return true;
             // the attacking piece is to the top
             if (this.col == checkingPiece.col && this.row > checkingPiece.row)
                 for (int i = checkingPiece.row + 1; i < this.row; i++)
-                    if (Board.boardCanMoveByBlack[i][this.col] == 2 || verifyCanMove(checkingPiece))
+                    if (Board.boardCanMoveByBlack[i][this.col] == 2 && verifyCanMove(checkingPiece))
                         return true;
             // the attacking piece is to the bottom
             if (this.col == checkingPiece.col && this.row < checkingPiece.row)
                 for (int i = checkingPiece.row - 1; i > this.row; i--)
-                    if (Board.boardCanMoveByBlack[i][this.col] == 2 || verifyCanMove(checkingPiece))
+                    if (Board.boardCanMoveByBlack[i][this.col] == 2 && verifyCanMove(checkingPiece))
                         return true;
         }
         if (this.color == GamePanel.WHITE) {
             // the attacking piece is to the left
             if (this.col > checkingPiece.col && this.row == checkingPiece.row)
                 for (int i = checkingPiece.col + 1; i < this.col; i++)
-                    if (Board.boardCanMoveByWhite[this.row][i] == 1 || verifyCanMove(checkingPiece))
+                    if (Board.boardCanMoveByWhite[this.row][i] == 1 && verifyCanMove(checkingPiece))
                         return true;
             // the attacking piece is to the right
             if (this.col < checkingPiece.col && this.row == checkingPiece.row)
                 for (int i = checkingPiece.col - 1; i > this.col; i--)
-                    if (Board.boardCanMoveByWhite[this.row][i] == 1 || verifyCanMove(checkingPiece))
+                    if (Board.boardCanMoveByWhite[this.row][i] == 1 && verifyCanMove(checkingPiece))
                         return true;
             // the attacking piece is to the top
             if (this.col == checkingPiece.col && this.row > checkingPiece.row)
                 for (int i = checkingPiece.row + 1; i < this.row; i++)
-                    if (Board.boardCanMoveByWhite[i][this.col] == 1 || verifyCanMove(checkingPiece))
+                    if (Board.boardCanMoveByWhite[i][this.col] == 1 && verifyCanMove(checkingPiece))
                         return true;
             // the attacking piece is to the bottom
             if (this.col == checkingPiece.col && this.row < checkingPiece.row)
                 for (int i = checkingPiece.row - 1; i > this.row; i--)
-                    if (Board.boardCanMoveByWhite[i][this.col] == 1 || verifyCanMove(checkingPiece))
+                    if (Board.boardCanMoveByWhite[i][this.col] == 1 && verifyCanMove(checkingPiece))
                         return true;
         }
 
