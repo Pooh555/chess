@@ -226,7 +226,7 @@ public class GamePanel extends JPanel implements Runnable {
                         board.updateCanMoveBoard();
                         board.updatePiecePositions(simPieces);
                         // board.printOccupiedBoard();
-                        board.printCanMoveBoard();
+                        // board.printCanMoveBoard();
                         
                         System.out.println("col: " + activePiece.col + ", row:" + activePiece.row);
 
