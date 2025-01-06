@@ -348,6 +348,9 @@ public class GamePanel extends JPanel implements Runnable {
 
                     // remove the promoted pawn from the board
                     simPieces.remove(activePiece.getIndex());
+
+                    activePiece = simPieces.get(simPieces.size() - 1);
+
                     copyPieces(simPieces, pieces);
                     copyPieces(simPieces, checkPieces);
                     // activePiece.updatePosition();
@@ -360,11 +363,6 @@ public class GamePanel extends JPanel implements Runnable {
 
                     // check for checkmate
                     if (isCheckmate()) {
-                        if (currentColor)
-                            System.out.println("Black wins.");
-                        else
-                            System.out.println("White wins.");
-
                         changeTurn();
                         changeTurn();
 
