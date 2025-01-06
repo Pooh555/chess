@@ -458,7 +458,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if (king.getAttackingPiece() != null) {
                     attackingPiece = king.getAttackingPiece(); 
 
-                    System.out.println("This check can be blocked: " + king.canBeBlockedStraight(attackingPiece));
+                    System.out.println("This check can be blocked: " + king.canBeBlocked(attackingPiece));
                     
                     System.out.println("The attacking piece is the " + attackingPiece.type + ", col: " + attackingPiece.col + ", row: " + attackingPiece.row);
                 }

@@ -130,8 +130,12 @@ public class Piece {
             // the attacking piece is to the bottom
             if (this.col == checkingPiece.col && this.row < checkingPiece.row)
                 for (int i = checkingPiece.row - 1; i > this.row; i--)
-                    if (Board.boardOccupiedByBlack[i][this.col] == 2)
+                    if (Board.boardCanMoveByBlack[i][this.col] == 2) {
+                        Board.printCanMoveBoard();
+                        System.out.println(i + " " + this.col);
+                        System.out.println(Board.boardCanMoveByBlack[i][this.col]);
                         return true;
+                    }
         }
 
         return false;
