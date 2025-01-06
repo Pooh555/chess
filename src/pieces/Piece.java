@@ -99,16 +99,16 @@ public class Piece {
     public boolean canBeCaptured(Piece attackingPiece) {
         System.out.println(attackingPiece.color);
 
-        // for (Piece piece : GamePanel.pieces)
-        // if (piece.type == Type.PAWN) {
-        // if (piece.canMoveExtended(attackingPiece.col, attackingPiece.row))
-        // return true;
-        // } else {
-        // if (piece.canMove(attackingPiece.col, attackingPiece.row)) {
-        // System.out.println(piece.type);
-        // return true;
-        // }
-        // }
+        for (Piece piece : GamePanel.pieces)
+            if (piece.type == Type.PAWN) {
+                if (piece.canMoveExtended(attackingPiece.col, attackingPiece.row))
+                    return true;
+            } else {
+                if (piece.canMove(attackingPiece.col, attackingPiece.row)) {
+                    System.out.println(piece.type);
+                    return true;
+                }
+            }
 
         if (attackingPiece.color == GamePanel.BLACK)
             if (Board.boardCanMoveByWhite[attackingPiece.row][attackingPiece.col] == 1)
@@ -121,7 +121,7 @@ public class Piece {
     }
 
     public boolean canBeBlocked(Piece attackingPiece) {
-        if (canBeBlockedDiagonally(attackingPiece)) 
+        if (canBeBlockedDiagonally(attackingPiece))
             return canBeBlockedDiagonally(attackingPiece);
         if (canBeBlockedStraight(attackingPiece))
             return canBeBlockedStraight(attackingPiece);
@@ -136,7 +136,8 @@ public class Piece {
                 for (int i = this.col - 1; i > checkingPiece.col; i--) {
                     int diff = Math.abs(i - preCol);
 
-                    if (Board.boardCanMoveByBlack[this.row - diff][this.col - diff] == 2)
+                    if (Board.boardCanMoveByBlack[this.row - diff][this.col - diff] == 2
+                            && verifyCanMove(checkingPiece))
                         return true;
                 }
             }
@@ -145,7 +146,8 @@ public class Piece {
                 for (int i = this.col + 1; i < checkingPiece.col; i++) {
                     int diff = Math.abs(i - preCol);
 
-                    if (Board.boardCanMoveByBlack[this.row - diff][this.col + diff] == 2)
+                    if (Board.boardCanMoveByBlack[this.row - diff][this.col + diff] == 2
+                            && verifyCanMove(checkingPiece))
                         return true;
                 }
             }
@@ -154,7 +156,8 @@ public class Piece {
                 for (int i = this.col - 1; i > checkingPiece.col; i--) {
                     int diff = Math.abs(i - preCol);
 
-                    if (Board.boardCanMoveByBlack[this.row + diff][this.col - diff] == 2)
+                    if (Board.boardCanMoveByBlack[this.row + diff][this.col - diff] == 2
+                            && verifyCanMove(checkingPiece))
                         return true;
                 }
             }
@@ -163,7 +166,8 @@ public class Piece {
                 for (int i = this.col + 1; i < checkingPiece.col; i++) {
                     int diff = Math.abs(i - preCol);
 
-                    if (Board.boardCanMoveByBlack[this.row + diff][this.col + diff] == 2)
+                    if (Board.boardCanMoveByBlack[this.row + diff][this.col + diff] == 2
+                            && verifyCanMove(checkingPiece))
                         return true;
                 }
             }
@@ -174,7 +178,8 @@ public class Piece {
                 for (int i = this.col - 1; i > checkingPiece.col; i--) {
                     int diff = Math.abs(i - preCol);
 
-                    if (Board.boardCanMoveByWhite[this.row - diff][this.col - diff] == 1)
+                    if (Board.boardCanMoveByWhite[this.row - diff][this.col - diff] == 1
+                            && verifyCanMove(checkingPiece))
                         return true;
                 }
             }
@@ -183,7 +188,8 @@ public class Piece {
                 for (int i = this.col + 1; i < checkingPiece.col; i++) {
                     int diff = Math.abs(i - preCol);
 
-                    if (Board.boardCanMoveByWhite[this.row - diff][this.col + diff] == 1)
+                    if (Board.boardCanMoveByWhite[this.row - diff][this.col + diff] == 1
+                            && verifyCanMove(checkingPiece))
                         return true;
                 }
             }
@@ -192,7 +198,8 @@ public class Piece {
                 for (int i = this.col - 1; i > checkingPiece.col; i--) {
                     int diff = Math.abs(i - preCol);
 
-                    if (Board.boardCanMoveByWhite[this.row + diff][this.col - diff] == 1)
+                    if (Board.boardCanMoveByWhite[this.row + diff][this.col - diff] == 1
+                            && verifyCanMove(checkingPiece))
                         return true;
                 }
             }
@@ -201,7 +208,8 @@ public class Piece {
                 for (int i = this.col + 1; i < checkingPiece.col; i++) {
                     int diff = Math.abs(i - preCol);
 
-                    if (Board.boardCanMoveByBlack[this.row + diff][this.col + diff] == 1)
+                    if (Board.boardCanMoveByBlack[this.row + diff][this.col + diff] == 1
+                            && verifyCanMove(checkingPiece))
                         return true;
                 }
             }
@@ -261,7 +269,7 @@ public class Piece {
 
     private boolean verifyCanMove(Piece checkingPiece) {
         for (Piece piece : GamePanel.pieces)
-            if (piece.canMove(checkingPiece.col, checkingPiece.row)) {
+            if (piece.canMove(checkingPiece.col, checkingPiece.row) && piece.color != checkingPiece.color) {
                 System.out.println(piece.type + " " + piece.col + " " + piece.row);
                 return true;
             }
