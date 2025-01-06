@@ -160,7 +160,7 @@ public class Board {
         System.out.println("-----------------------------------------------------");
     }
 
-    public static void printCanMoveBoard() {
+    public void printCanMoveBoard() {
         for (int row = 0; row < MAX_ROW; row++) {
             for (int col = 0; col < MAX_COL; col++)
                 System.out.print(boardCanMoveByWhite[row][col] + " ");

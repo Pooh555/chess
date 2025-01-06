@@ -71,7 +71,7 @@ public class Piece {
 
     public Piece getAttackingPiece() {
         for (Piece piece : GamePanel.pieces)
-            if (piece.canMoveExtended(this.col, this.row)) {
+            if (piece.canMoveExtended(this.col, this.row) && piece.color != this.color) {
                 System.out.println(piece.type + " is attacking " + this.type + '.');
 
                 return piece;
@@ -99,11 +99,22 @@ public class Piece {
     public boolean canBeCaptured(Piece attackingPiece) {
         System.out.println(attackingPiece.color);
 
+        // for (Piece piece : GamePanel.pieces)
+        // if (piece.type == Type.PAWN) {
+        // if (piece.canMoveExtended(attackingPiece.col, attackingPiece.row))
+        // return true;
+        // } else {
+        // if (piece.canMove(attackingPiece.col, attackingPiece.row)) {
+        // System.out.println(piece.type);
+        // return true;
+        // }
+        // }
+
         if (attackingPiece.color == GamePanel.BLACK)
             if (Board.boardCanMoveByWhite[attackingPiece.row][attackingPiece.col] == 1)
                 return true;
         if (attackingPiece.color == GamePanel.WHITE)
-            if (Board.boardCanMoveByBlack[attackingPiece.row][attackingPiece.col] == 1)
+            if (Board.boardCanMoveByBlack[attackingPiece.row][attackingPiece.col] == 2)
                 return true;
 
         return false;
@@ -121,7 +132,7 @@ public class Piece {
     public boolean canBeBlockedDiagonally(Piece checkingPiece) {
         if (this.color == GamePanel.BLACK) {
             if (checkingPiece.row < this.row && checkingPiece.col < this.col) {
-                // the cheking piece is to the top left
+                // the checking piece is to the top left
                 for (int i = this.col - 1; i > checkingPiece.col; i--) {
                     int diff = Math.abs(i - preCol);
 
@@ -130,7 +141,7 @@ public class Piece {
                 }
             }
             if (checkingPiece.row < this.row && checkingPiece.col > this.col) {
-                // the cheking piece is to the top left
+                // the checking piece is to the top left
                 for (int i = this.col + 1; i < checkingPiece.col; i++) {
                     int diff = Math.abs(i - preCol);
 
@@ -139,7 +150,7 @@ public class Piece {
                 }
             }
             if (checkingPiece.row > this.row && checkingPiece.col < this.col) {
-                // the cheking piece is to the bottom left
+                // the checking piece is to the bottom left
                 for (int i = this.col - 1; i > checkingPiece.col; i--) {
                     int diff = Math.abs(i - preCol);
 
@@ -148,7 +159,7 @@ public class Piece {
                 }
             }
             if (checkingPiece.row > this.row && checkingPiece.col > this.col) {
-                // the cheking piece is to the top left
+                // the checking piece is to the bottom right
                 for (int i = this.col + 1; i < checkingPiece.col; i++) {
                     int diff = Math.abs(i - preCol);
 
@@ -159,38 +170,39 @@ public class Piece {
         }
         if (this.color == GamePanel.WHITE) {
             if (checkingPiece.row < this.row && checkingPiece.col < this.col) {
-                // the cheking piece is to the top left
+                // the checking piece is to the top left
                 for (int i = this.col - 1; i > checkingPiece.col; i--) {
                     int diff = Math.abs(i - preCol);
 
-                    if (Board.boardCanMoveByWhite[this.row - diff][this.col - diff] == 2)
+                    if (Board.boardCanMoveByWhite[this.row - diff][this.col - diff] == 1)
                         return true;
                 }
             }
             if (checkingPiece.row < this.row && checkingPiece.col > this.col) {
-                // the cheking piece is to the top left
+                // the chceking piece is to the top left
                 for (int i = this.col + 1; i < checkingPiece.col; i++) {
                     int diff = Math.abs(i - preCol);
 
-                    if (Board.boardCanMoveByWhite[this.row - diff][this.col + diff] == 2)
+                    if (Board.boardCanMoveByWhite[this.row - diff][this.col + diff] == 1)
                         return true;
                 }
             }
             if (checkingPiece.row > this.row && checkingPiece.col < this.col) {
-                // the cheking piece is to the bottom left
+                // the checking piece is to the bottom left
                 for (int i = this.col - 1; i > checkingPiece.col; i--) {
                     int diff = Math.abs(i - preCol);
 
-                    if (Board.boardCanMoveByWhite[this.row + diff][this.col - diff] == 2)
+                    if (Board.boardCanMoveByWhite[this.row + diff][this.col - diff] == 1)
                         return true;
                 }
             }
             if (checkingPiece.row > this.row && checkingPiece.col > this.col) {
-                // the cheking piece is to the top left
+                // the checking piece is to the bottom right
                 for (int i = this.col + 1; i < checkingPiece.col; i++) {
                     int diff = Math.abs(i - preCol);
 
-                    return true;
+                    if (Board.boardCanMoveByBlack[this.row + diff][this.col + diff] == 1)
+                        return true;
                 }
             }
         }
