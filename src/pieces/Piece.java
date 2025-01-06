@@ -122,20 +122,26 @@ public class Piece {
 
     public boolean canBeBlockedStraight(Piece checkingPiece) {
         if (this.color == GamePanel.BLACK) {
+            // the attacking piece is to the left
+            if (this.col > checkingPiece.col && this.row == checkingPiece.row)
+                for (int i = checkingPiece.col + 1; i < this.col; i++)
+                    if (Board.boardCanMoveByBlack[this.row][i] == 2)
+                        return true;
             // the attacking piece is to the right
             if (this.col < checkingPiece.col && this.row == checkingPiece.row)
                 for (int i = checkingPiece.col - 1; i > this.col; i--)
                     if (Board.boardCanMoveByBlack[this.row][i] == 2)
                         return true;
+            // the attacking piece is to the top
+            if (this.col == checkingPiece.col && this.row > checkingPiece.row)
+                for (int i = checkingPiece.row + 1; i < this.row; i++)
+                    if (Board.boardCanMoveByBlack[i][this.col] == 2)
+                        return true;
             // the attacking piece is to the bottom
             if (this.col == checkingPiece.col && this.row < checkingPiece.row)
                 for (int i = checkingPiece.row - 1; i > this.row; i--)
-                    if (Board.boardCanMoveByBlack[i][this.col] == 2) {
-                        Board.printCanMoveBoard();
-                        System.out.println(i + " " + this.col);
-                        System.out.println(Board.boardCanMoveByBlack[i][this.col]);
+                    if (Board.boardCanMoveByBlack[i][this.col] == 2)
                         return true;
-                    }
         }
 
         return false;

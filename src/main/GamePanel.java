@@ -293,12 +293,12 @@ public class GamePanel extends JPanel implements Runnable {
     private void setPiecesTest() {
         // white pieces
         pieces.add(new King(WHITE, 0, 0));
-        pieces.add(new Bishop(WHITE, 0, 6));
+        pieces.add(new Rook(WHITE, 2, 2));
         // black pieces
         pieces.add(new King(BLACK, 4, 4));
         pieces.add(new Pawn(BLACK, 3, 5));
         pieces.add(new Pawn(BLACK, 5, 3));
-        pieces.add(new Pawn(BLACK, 4, 3));
+        //pieces.add(new Pawn(BLACK, 4, 3));
         pieces.add(new Pawn(BLACK, 4, 5));
         pieces.add(new Pawn(BLACK, 5, 4));
         pieces.add(new Pawn(BLACK, 3, 4));
@@ -436,6 +436,9 @@ public class GamePanel extends JPanel implements Runnable {
                     attackingPiece = king.getAttackingPiece();
 
                     System.out.println("This check can be blocked: " + king.canBeBlocked(attackingPiece));
+
+                    if (king.canBeBlocked(attackingPiece))
+                        return false;
 
                     System.out.println("The attacking piece is the " + attackingPiece.type + ", col: "
                             + attackingPiece.col + ", row: " + attackingPiece.row);
