@@ -61,8 +61,9 @@ public class GamePanel extends JPanel implements Runnable {
     public static boolean currentColor = WHITE; // the game starts with white
     public static boolean gameStatus = true; // the game is ongoing
     public static boolean promotionState; // a pawn is being promoted
+    public static boolean isDrawBy50MoveRule; // is a draw by the 50-move rule?
     public static boolean stalemate; // is stalemate?
-    public static int is50Move;
+    public static int is50Move = 99;
 
     public GamePanel() {
         setPreferredSize(windowSize); // set initial window size
@@ -129,7 +130,7 @@ public class GamePanel extends JPanel implements Runnable {
     private void update() {
         if (promotionState) {
             promoting();
-        } else if (gameStatus != false || stalemate) {
+        } else if (gameStatus != false && stalemate == false && isDrawBy50MoveRule == false) {
             if (mouse.isPressed) {
                 // check if the player is holding a piece
                 if (activePiece == null) {
@@ -250,7 +251,10 @@ public class GamePanel extends JPanel implements Runnable {
                                 activePiece.updatePosition();
                                 promotionState = true; // promoted
                                 System.out.println("The pawn is promoted sucesfully.");
-                            } else
+                            } else 
+                                if (is50MoveRule())
+                                    isDrawBy50MoveRule = true;
+
                                 changeTurn(); // change player's turn
 
                             if (isStalemate()) {
@@ -523,6 +527,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private boolean is50MoveRule() {
+        System.out.println("50-move rule: " + is50Move);
+
         if (is50Move / 2 == 50)
             return true;
 
@@ -581,6 +587,14 @@ public class GamePanel extends JPanel implements Runnable {
             g2.setFont(new Font("Fira code", Font.PLAIN, (int) (0.05 * WIDTH)));
             g2.setColor(FOREGROUND_TEXT_COLOR);
             g2.drawString(stalemateStr, 200, 420);
+        }
+
+        if (isDrawBy50MoveRule) {
+            String drawStr = "Draw by the 50-move rule.";
+
+            g2.setFont(new Font("Fira code", Font.PLAIN, (int) (0.05 * WIDTH)));
+            g2.setColor(FOREGROUND_TEXT_COLOR);
+            g2.drawString(drawStr, 200, 420);
         }
 
         if (gameStatus == false) {

@@ -27,10 +27,8 @@ public class Rook extends Piece {
                 // capture
                 if (!isObstacleOnStraightLine(targetCol, targetRow))
                     if (targetCol == preCol || targetRow == preRow)
-                        if (isCapturable(targetCol, targetRow)) {
-                            GamePanel.is50Move = 0;
+                        if (isCapturable(targetCol, targetRow))
                             return true;
-                        }
             }
         }
 

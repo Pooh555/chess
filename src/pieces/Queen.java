@@ -29,16 +29,12 @@ public class Queen extends Piece {
             } else {
                 if (targetCol == preCol || targetRow == preRow)
                     if (!isObstacleOnStraightLine(targetCol, targetRow))
-                        if (isCapturable(targetCol, targetRow)) {
-                            GamePanel.is50Move = 0;
+                        if (isCapturable(targetCol, targetRow))
                             return true;
-                        }
                 if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
                     if (!isObstacleOnDiagonalLine(targetCol, targetRow))
-                        if (isCapturable(targetCol, targetRow)) {
-                            GamePanel.is50Move = 0;
+                        if (isCapturable(targetCol, targetRow))
                             return true;
-                        }
             }
         }
 

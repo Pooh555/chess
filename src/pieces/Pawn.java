@@ -30,31 +30,24 @@ public class Pawn extends Piece {
                 // basic pawn movement
                 if (!isObstacleOnStraightLine(targetCol, targetRow)) {
                     // 1 square move
-                    if (targetCol == preCol && targetRow - preRow == moveDirection) {
-                        GamePanel.is50Move = 0;
+                    if (targetCol == preCol && targetRow - preRow == moveDirection)
                         return true;
-                    }
                     // 2 square move
                     if (targetCol == preCol && targetRow - preRow == 2 * moveDirection && hasMoved == false) {
                         canBeEnPassent = true;
-                        GamePanel.is50Move = 0;
                         return true;
                     }
                 }
                 // en passent
                 if ((targetCol == preCol + 1 || targetCol == preCol - 1) && targetRow - preRow == moveDirection)
                     if (isCapturable(targetCol, targetRow - moveDirection)
-                            && Board.boardPieces[targetRow - moveDirection][targetCol].canBeEnPassent) {
-                                GamePanel.is50Move = 0;
-                                return true;
-                            }
+                            && Board.boardPieces[targetRow - moveDirection][targetCol].canBeEnPassent)
+                        return true;
             } else {
                 // capture
                 if (targetRow - preRow == moveDirection && (targetCol == preCol + 1 || targetCol == preCol - 1)
-                        && isCapturable(targetCol, targetRow)) {
-                            GamePanel.is50Move = 0;
-                            return true;
-                        }
+                        && isCapturable(targetCol, targetRow))
+                    return true;
             }
         }
 
