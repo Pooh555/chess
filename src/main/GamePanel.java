@@ -61,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static boolean currentColor = WHITE; // the game starts with white
     public static boolean gameStatus = true; // the game is ongoing
     public static boolean promotionState; // a pawn is being promoted
+    public static boolean stalemate; // is stalemate?
 
     public GamePanel() {
         setPreferredSize(windowSize); // set initial window size
@@ -127,7 +128,7 @@ public class GamePanel extends JPanel implements Runnable {
     private void update() {
         if (promotionState) {
             promoting();
-        } else if (gameStatus != false) {
+        } else if (gameStatus != false || stalemate) {
             if (mouse.isPressed) {
                 // check if the player is holding a piece
                 if (activePiece == null) {
@@ -250,6 +251,10 @@ public class GamePanel extends JPanel implements Runnable {
                                 System.out.println("The pawn is promoted sucesfully.");
                             } else
                                 changeTurn(); // change player's turn
+
+                            if (isStalemate()) {
+                                stalemate = true;
+                            }
                         }
 
                         // changeTurn();
@@ -412,7 +417,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         copyPieces(simPieces, pieces);
         copyPieces(simPieces, checkPieces);
-        
+
         if (activePiece != null)
             activePiece.updatePosition();
 
@@ -497,6 +502,22 @@ public class GamePanel extends JPanel implements Runnable {
                 return piece;
 
         return null;
+    }
+
+    private boolean isStalemate() {
+        if (currentColor) {
+            for (int row = 0; row < Board.MAX_ROW; row++)
+                for (int col = 0; col < Board.MAX_COL; col++)
+                    if (Board.boardCanMoveByBlack[row][col] == 2)
+                        return false;
+        } else {
+            for (int row = 0; row < Board.MAX_ROW; row++)
+                for (int col = 0; col < Board.MAX_COL; col++)
+                    if (Board.boardCanMoveByWhite[row][col] == 1)
+                        return false;
+        }
+
+        return true;
     }
 
     public void paintComponent(Graphics g) {
