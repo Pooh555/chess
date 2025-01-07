@@ -566,6 +566,14 @@ public class GamePanel extends JPanel implements Runnable {
                 g2.drawString("Black's turn", (int) (0.75 * WIDTH), (int) (0.25 * HEIGHT));
         }
 
+        if (stalemate) {
+            String stalemateStr = "Stalemate";
+
+            g2.setFont(new Font("Fira code", Font.PLAIN, (int) (0.05 * WIDTH)));
+            g2.setColor(FOREGROUND_TEXT_COLOR);
+            g2.drawString(stalemateStr, 200, 420);
+        }
+
         if (gameStatus == false) {
             String checkmateStr = "";
 
