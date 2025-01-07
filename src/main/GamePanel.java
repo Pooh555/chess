@@ -170,6 +170,9 @@ public class GamePanel extends JPanel implements Runnable {
                         activePiece.hasMoved = true;
                         activePiece.updatePosition();
 
+                        if (activePiece.type == Type.PAWN)
+                            is50Move = 0;
+
                         // removed the captured piece
                         if (Board.boardPieces[activePiece.row][activePiece.col] != null) {
                             for (Piece piece : simPieces)
@@ -177,8 +180,10 @@ public class GamePanel extends JPanel implements Runnable {
                                         && piece.color != activePiece.color)
                                     hitPiece = piece;
 
-                            if (hitPiece != null)
+                            if (hitPiece != null) {
+                                is50Move = 0;
                                 simPieces.remove(hitPiece);
+                            }
                         }
 
                         // removed the en passent piece
@@ -201,6 +206,7 @@ public class GamePanel extends JPanel implements Runnable {
                                     if (piece.type == Type.ROOK && piece.col == 0 && piece.row == 7) {
                                         piece.col = 3;
                                         piece.preCol = 3;
+                                        is50Move = 0;
                                         System.out.println("O-O-O by white.");
                                     }
                             // white short castle
@@ -209,6 +215,7 @@ public class GamePanel extends JPanel implements Runnable {
                                     if (piece.type == Type.ROOK && piece.col == 7 && piece.row == 7) {
                                         piece.col = 5;
                                         piece.preCol = 5;
+                                        is50Move = 0;
                                         System.out.println("O-O by white.");
                                     }
                             // black long castle
@@ -217,6 +224,7 @@ public class GamePanel extends JPanel implements Runnable {
                                     if (piece.type == Type.ROOK && piece.col == 0 && piece.row == 0) {
                                         piece.col = 3;
                                         piece.preCol = 3;
+                                        is50Move = 0;
                                         System.out.println("O-O-O by black.");
                                     }
                             // black short castle
@@ -225,6 +233,7 @@ public class GamePanel extends JPanel implements Runnable {
                                     if (piece.type == Type.ROOK && piece.col == 7 && piece.row == 0) {
                                         piece.col = 5;
                                         piece.preCol = 5;
+                                        is50Move = 0;
                                         System.out.println("O-O by black.");
                                     }
                         }
@@ -251,11 +260,10 @@ public class GamePanel extends JPanel implements Runnable {
                                 activePiece.updatePosition();
                                 promotionState = true; // promoted
                                 System.out.println("The pawn is promoted sucesfully.");
-                            } else 
-                                if (is50MoveRule())
-                                    isDrawBy50MoveRule = true;
+                            } else if (is50MoveRule())
+                                isDrawBy50MoveRule = true;
 
-                                changeTurn(); // change player's turn
+                            changeTurn(); // change player's turn
 
                             if (isStalemate()) {
                                 stalemate = true;
