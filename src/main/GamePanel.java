@@ -62,6 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static boolean gameStatus = true; // the game is ongoing
     public static boolean promotionState; // a pawn is being promoted
     public static boolean stalemate; // is stalemate?
+    public static int is50Move;
 
     public GamePanel() {
         setPreferredSize(windowSize); // set initial window size
@@ -425,6 +426,7 @@ public class GamePanel extends JPanel implements Runnable {
         moveDirection = currentColor ? 1 : -1; // change pawn's move direction based on the active color
         activePiece = null;
         promotionState = false;
+        is50Move++;
 
         // board.clearBoard();
         board.updatePiecePositions(pieces);
@@ -518,6 +520,13 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         return true;
+    }
+
+    private boolean is50MoveRule() {
+        if (is50Move / 2 == 50)
+            return true;
+
+        return false;
     }
 
     public void paintComponent(Graphics g) {

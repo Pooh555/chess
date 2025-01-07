@@ -50,8 +50,10 @@ public class King extends Piece {
                         // capture
                         if (Math.abs(targetCol - this.preCol) + Math.abs(targetRow - this.preRow) == 1
                                 || Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 1)
-                            if (isCapturable(targetCol, targetRow))
+                            if (isCapturable(targetCol, targetRow)) {
+                                GamePanel.is50Move = 0;
                                 return true;
+                            }
                     }
                 }
             }

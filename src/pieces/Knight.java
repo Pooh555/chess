@@ -25,8 +25,10 @@ public class Knight extends Piece {
             } else {
                 // capture
                 if (Math.abs((targetCol - this.preCol) * (targetRow - this.preRow)) == 2)
-                    if (isCapturable(targetCol, targetRow))
+                    if (isCapturable(targetCol, targetRow)) {
+                        GamePanel.is50Move = 0;
                         return true;
+                    }
             }
         }
 

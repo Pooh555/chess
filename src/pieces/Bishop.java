@@ -26,8 +26,10 @@ public class Bishop extends Piece {
                 // capture
                 if (!isObstacleOnDiagonalLine(targetCol, targetRow))
                     if (Math.abs(targetCol - preCol) - Math.abs(targetRow - preRow) == 0)
-                        if (isCapturable(targetCol, targetRow))
+                        if (isCapturable(targetCol, targetRow)) {
+                            GamePanel.is50Move = 0;
                             return true;
+                        }
             }
         }
 
